@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/screens/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -51,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
+    //login button
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -85,12 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                        height: 250,
+                        height: 150,
                         child: Image.asset(
                           "assets/Logo.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 5),
+                    SizedBox(height: 25),
                     emailField,
                     SizedBox(height: 25),
                     passwordField,
@@ -102,7 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: <Widget>[
                         Text("Dont have an Account?"),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegistrationScreen()));
+                          },
                           child: Text(
                             "Sign Up Here!",
                             style: TextStyle(
