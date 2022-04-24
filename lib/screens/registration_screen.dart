@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:youmart_mobitech/utils.dart';
@@ -80,6 +81,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (email) =>
+      email != null && !EmailValidator.validate(email)
+          ? 'Enter a valid email'
+          : null,
     );
 
     //password field
@@ -97,6 +103,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => value != null && value.length < 6
+          ? 'Enter min. 6 characters'
+          : null,
     );
 
     //confirm password field
@@ -114,6 +124,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => value != passwordEditingController.text
+          ? 'Password inputted is different'
+          : null,
     );
 
     //signup button

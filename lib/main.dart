@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/utils.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/login_screen.dart';
 import 'package:youmart_mobitech/pages/auth_page.dart';
@@ -38,6 +39,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
       navigatorKey: navigatorKey,
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
