@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/login_screen.dart';
+import 'package:youmart_mobitech/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async{
@@ -48,7 +49,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasData) {
             return HomePage();
           } else {
-            return LoginScreen();
+            return AuthPage();
           }
         },
       ),
