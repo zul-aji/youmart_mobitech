@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
 
+import '../main.dart';
+
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -132,13 +134,23 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
     );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    // Navigator.of(context) not working!
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
+
 }
-  // Future signIn() async{
-  //     // Navigator.pushReplacement(
-  //     //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
-  // }
