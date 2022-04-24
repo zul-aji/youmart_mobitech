@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
@@ -129,8 +130,15 @@ class _LoginScreenState extends State<LoginScreen> {
       )),
     );
   }
-}
-  Future signIn() async{
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
   }
+}
+  // Future signIn() async{
+  //     // Navigator.pushReplacement(
+  //     //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  // }
