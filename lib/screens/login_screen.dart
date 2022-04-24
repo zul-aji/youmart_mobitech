@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:youmart_mobitech/utils.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
+import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
 
 import '../main.dart';
@@ -109,7 +111,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 25),
                     loginButton,
                     SizedBox(height: 15),
-                RichText(
+                    GestureDetector(
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 20,
+                        ),
+                      ),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ForgotPasswordPage(),
+                      )),
+                    ),
+                    SizedBox(height: 15),
+                    RichText(
                   text: TextSpan(
                     style: TextStyle(color: Colors.black, fontSize: 20),
                     text: 'No account?  ',
@@ -148,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } on FirebaseAuthException catch (e) {
       print(e);
+      Utils.showSnackBar(e.message);
     }
 
     // Navigator.of(context) not working!
