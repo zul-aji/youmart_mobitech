@@ -44,6 +44,7 @@ dependencies:
 
   #Email Validator
   email_validator: ^2.0.1
+  fluttertoast: ^8.0.9
 
 
 dev_dependencies:

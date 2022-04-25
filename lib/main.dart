@@ -6,7 +6,7 @@ import 'package:youmart_mobitech/screens/login_screen.dart';
 import 'package:youmart_mobitech/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-Future main() async{
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

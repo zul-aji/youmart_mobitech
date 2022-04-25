@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:youmart_mobitech/utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
@@ -28,6 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
+  // string for displaying the error Message
+  String? errorMessage;
+
   @override
   Widget build(BuildContext context) {
     //email field
@@ -35,7 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
       onSaved: (value) {
         emailController.text = value!;
       },
@@ -52,7 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
       autofocus: false,
       controller: passwordController,
       obscureText: true,
-      // validator: () {},
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{6,}$');
+        if (value!.isEmpty) {
+          return ("Password is required for login");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid Password(Min. 6 Character)");
+        }
+      },
       onSaved: (value) {
         passwordController.text = value!;
       },
@@ -126,22 +147,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 15),
                     RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                    text: 'No account?  ',
-                    children: [
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = widget.onClickedSignUp,
-                        text: 'Sign Up',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        text: 'No account yet?  ',
+                        children: [
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onClickedSignUp,
+                            text: 'Sign Up',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  ),
+                    ),
                   ],
                 ),
               ),
@@ -158,17 +179,40 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      Utils.showSnackBar(e.message);
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          )
+          .then((uid) => {Fluttertoast.showToast(msg: "Login Successful")});
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          errorMessage = "Wrong email format";
+          break;
+        case "wrong-password":
+          errorMessage = "Password is wrong.";
+          break;
+        case "user-not-found":
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "user-disabled":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Signing in with Email and Password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      Utils.showSnackBar(errorMessage);
+      print(error.code);
     }
 
     // Navigator.of(context) not working!
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-
 }

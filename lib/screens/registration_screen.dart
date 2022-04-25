@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/model/user_model.dart';
 import 'package:youmart_mobitech/utils.dart';
 import 'package:youmart_mobitech/main.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
@@ -29,6 +32,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
+
+  // string for displaying the error Message
+  String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +88,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (email) =>
-      email != null && !EmailValidator.validate(email)
+      validator: (email) => email != null && !EmailValidator.validate(email)
           ? 'Enter a valid email'
           : null,
     );
@@ -104,9 +109,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           hintText: "Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) => value != null && value.length < 6
-          ? 'Enter min. 6 characters'
-          : null,
+      validator: (value) =>
+          value != null && value.length < 6 ? 'Enter min. 6 characters' : null,
     );
 
     //confirm password field
@@ -180,6 +184,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           "assets/Logo.png",
                           fit: BoxFit.contain,
                         )),
+                    SizedBox(height: 45),
+                    firstNameField,
+                    SizedBox(height: 25),
+                    secondNameField,
                     SizedBox(height: 25),
                     emailField,
                     SizedBox(height: 25),
@@ -195,7 +203,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         text: 'Already Have account?  ',
                         children: [
                           TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = widget.onClickedSignIn,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onClickedSignIn,
                             text: 'Sign In',
                             style: TextStyle(
                               decoration: TextDecoration.underline,
@@ -212,6 +221,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       )),
     );
   }
+
   Future signUp() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) return;
@@ -223,17 +233,63 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailEditingController.text.trim(),
-        password: passwordEditingController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e);
-
-      Utils.showSnackBar(e.message);
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailEditingController.text.trim(),
+            password: passwordEditingController.text.trim(),
+          )
+          .then((value) => {postDetailsToFirestore()});
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case "wrong-password":
+          errorMessage = "Your password is wrong.";
+          break;
+        case "user-not-found":
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "user-disabled":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Signing in with Email and Password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      Utils.showSnackBar(errorMessage);
+      print(error.code);
     }
 
     // Navigator.of(context) not working!
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.firstName = firstNameEditingController.text;
+    userModel.secondName = secondNameEditingController.text;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account created successfully");
   }
 }
