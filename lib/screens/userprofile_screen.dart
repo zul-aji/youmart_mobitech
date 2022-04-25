@@ -134,9 +134,15 @@ class _UserProfileState extends State<UserProfile> {
     final profileName =
         Container(child: LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.admin == true) {
-        return Text("Admin ${loggedInUser.firstName} Profile");
+        return Text(
+          "Admin ${loggedInUser.firstName}'s Profile",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        );
       } else {
-        return Text("${loggedInUser.firstName} Profile");
+        return Text(
+          "${loggedInUser.firstName}'s Profile",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        );
       }
     }));
 
@@ -148,7 +154,6 @@ class _UserProfileState extends State<UserProfile> {
             Navigator.of(context).pop();
           },
         ),
-        title: profileName,
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -167,14 +172,21 @@ class _UserProfileState extends State<UserProfile> {
                           "assets/Profile.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 35),
+                    profileName,
+                    SizedBox(height: 1),
+                    Text(
+                      '${loggedInUser.email}',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(height: 20),
                     firstNameField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     secondNameField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 15),
                     updateButton,
-                    SizedBox(height: 25),
+                    SizedBox(height: 15),
                     deleteButton,
+                    SizedBox(height: 45),
                   ],
                 ),
               ),

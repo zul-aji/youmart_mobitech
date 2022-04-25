@@ -104,6 +104,26 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
+    //guest login button
+    final guestLoginButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.blue.shade50,
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: guestSignIn,
+        child: Text(
+          "Login as Guest",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       body: Center(
@@ -126,10 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                     SizedBox(height: 25),
                     emailField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     passwordField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     loginButton,
+                    // SizedBox(height: 15),
+                    // guestLoginButton,
                     SizedBox(height: 15),
                     GestureDetector(
                       child: Text(
@@ -207,6 +229,29 @@ class _LoginScreenState extends State<LoginScreen> {
         default:
           errorMessage = "An undefined Error happened.";
       }
+      Utils.showSnackBar(errorMessage);
+      print(error.code);
+    }
+
+    // Navigator.of(context) not working!
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  Future guestSignIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          )
+          .then((uid) => {Fluttertoast.showToast(msg: "Login Successful")});
+    } on FirebaseAuthException catch (error) {
       Utils.showSnackBar(errorMessage);
       print(error.code);
     }
