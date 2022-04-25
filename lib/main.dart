@@ -15,26 +15,6 @@ Future main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-//
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title: 'Email and Password Login',
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         home: LoginScreen());
-//   }
-// }
-
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,7 +29,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Something went wrong!'));
           } else if (snapshot.hasData) {
-            return HomePage();
+            return HomeScreen();
           } else {
             return AuthPage();
           }

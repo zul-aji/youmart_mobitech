@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
-
 import '../main.dart';
 
 class LoginScreen extends StatefulWidget {

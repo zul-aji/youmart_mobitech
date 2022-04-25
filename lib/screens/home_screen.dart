@@ -1,16 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/model/user_model.dart';
 import 'package:youmart_mobitech/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/screens/userprofile_screen.dart';
 
-class HomePage extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final welcomeName =
+        Container(child: LayoutBuilder(builder: (context, constraints) {
+      if (loggedInUser.admin == true) {
+        return Text("Hello, Admin ${loggedInUser.firstName}");
+      } else {
+        return Text("Hello, ${loggedInUser.firstName}");
+      }
+    }));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: welcomeName,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person, color: Colors.white),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserProfile()));
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(32),
@@ -18,15 +60,17 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Signed In as',
-              style: TextStyle(fontSize: 16),
+              'Welcome to',
+              style: TextStyle(fontSize: 30),
             ),
-            SizedBox(height: 8),
-            Text(
-              user.email!,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
+            SizedBox(
+                height: 150,
+                child: Image.asset(
+                  "assets/Logo.png",
+                  fit: BoxFit.contain,
+                )),
+            SizedBox(height: 20),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size.fromHeight(50),

@@ -43,7 +43,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       autofocus: false,
       controller: firstNameEditingController,
       keyboardType: TextInputType.name,
-      // validator: () {},
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return ("First Name cannot be Empty");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid name(Min. 3 Character)");
+        }
+        return null;
+      },
       onSaved: (value) {
         firstNameEditingController.text = value!;
       },
@@ -60,7 +69,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       autofocus: false,
       controller: secondNameEditingController,
       keyboardType: TextInputType.name,
-      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Second Name cannot be Empty");
+        }
+        return null;
+      },
       onSaved: (value) {
         secondNameEditingController.text = value!;
       },
@@ -77,7 +91,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       autofocus: false,
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
-      // validator: () {},
       onSaved: (value) {
         emailEditingController.text = value!;
       },
@@ -159,12 +172,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -240,28 +247,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )
           .then((value) => {postDetailsToFirestore()});
     } on FirebaseAuthException catch (error) {
-      switch (error.code) {
-        case "invalid-email":
-          errorMessage = "Your email address appears to be malformed.";
-          break;
-        case "wrong-password":
-          errorMessage = "Your password is wrong.";
-          break;
-        case "user-not-found":
-          errorMessage = "User with this email doesn't exist.";
-          break;
-        case "user-disabled":
-          errorMessage = "User with this email has been disabled.";
-          break;
-        case "too-many-requests":
-          errorMessage = "Too many requests";
-          break;
-        case "operation-not-allowed":
-          errorMessage = "Signing in with Email and Password is not enabled.";
-          break;
-        default:
-          errorMessage = "An undefined Error happened.";
-      }
       Utils.showSnackBar(errorMessage);
       print(error.code);
     }
@@ -285,6 +270,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.secondName = secondNameEditingController.text;
+    userModel.admin = false;
 
     await firebaseFirestore
         .collection("users")
