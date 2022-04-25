@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7860040973",
+    "project_id": "youmart-app-test",
+    "storage_bucket": "youmart-app-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7860040973:android:ffdf66205ccdc514c7ec44",
+        "android_client_info": {
+          "package_name": "com.example.youmart_mobitech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7860040973-3eotf4ugrr7d9dtn81i8iv7e1nl5i2dt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtCmpJ_Q33wB19r46sYMh5qCvnASHRr8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7860040973-3eotf4ugrr7d9dtn81i8iv7e1nl5i2dt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

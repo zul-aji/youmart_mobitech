@@ -1,9 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:youmart_mobitech/utils.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
+import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
 
+import '../main.dart';
+
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  final VoidCallback onClickedSignUp;
+
+  const LoginScreen({
+    Key? key,
+    required this.onClickedSignUp,
+  }) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -61,10 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        },
+        onPressed: signIn,
         child: Text(
           "Login",
           textAlign: TextAlign.center,
@@ -103,28 +111,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 25),
                     loginButton,
                     SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Dont have an Account?"),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        RegistrationScreen()));
-                          },
-                          child: Text(
-                            "Sign Up Here!",
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        )
-                      ],
-                    )
+                    GestureDetector(
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontSize: 20,
+                        ),
+                      ),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ForgotPasswordPage(),
+                      )),
+                    ),
+                    SizedBox(height: 15),
+                    RichText(
+                  text: TextSpan(
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    text: 'No account?  ',
+                    children: [
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignUp,
+                        text: 'Sign Up',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  ),
                   ],
                 ),
               ),
@@ -132,4 +149,26 @@ class _LoginScreenState extends State<LoginScreen> {
       )),
     );
   }
+
+  Future signIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Utils.showSnackBar(e.message);
+    }
+
+    // Navigator.of(context) not working!
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
 }

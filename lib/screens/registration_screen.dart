@@ -1,7 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:youmart_mobitech/utils.dart';
+import 'package:youmart_mobitech/main.dart';
+import 'package:youmart_mobitech/screens/home_screen.dart';
+import 'package:youmart_mobitech/screens/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  RegistrationScreen({Key? key}) : super(key: key);
+  final VoidCallback onClickedSignIn;
+
+  const RegistrationScreen({
+    Key? key,
+    required this.onClickedSignIn,
+  }) : super(key: key);
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -69,6 +81,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (email) =>
+      email != null && !EmailValidator.validate(email)
+          ? 'Enter a valid email'
+          : null,
     );
 
     //password field
@@ -86,6 +103,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => value != null && value.length < 6
+          ? 'Enter min. 6 characters'
+          : null,
     );
 
     //confirm password field
@@ -103,6 +124,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => value != passwordEditingController.text
+          ? 'Password inputted is different'
+          : null,
     );
 
     //signup button
@@ -113,7 +138,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: signUp,
         child: Text(
           "Sign Up",
           textAlign: TextAlign.center,
@@ -155,10 +180,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           "assets/Logo.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 20),
-                    firstNameField,
-                    SizedBox(height: 25),
-                    secondNameField,
                     SizedBox(height: 25),
                     emailField,
                     SizedBox(height: 25),
@@ -167,12 +188,52 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     confirmPasswordField,
                     SizedBox(height: 25),
                     signUpButton,
-                    SizedBox(height: 10)
+                    SizedBox(height: 10),
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        text: 'Already Have account?  ',
+                        children: [
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()..onTap = widget.onClickedSignIn,
+                            text: 'Sign In',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             )),
       )),
     );
+  }
+  Future signUp() async {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailEditingController.text.trim(),
+        password: passwordEditingController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+
+      Utils.showSnackBar(e.message);
+    }
+
+    // Navigator.of(context) not working!
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
