@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -7,6 +8,8 @@ import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
 import 'package:youmart_mobitech/screens/registration_screen.dart';
 import '../main.dart';
+import '../model/user_model.dart';
+import 'dart:math';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -112,7 +115,6 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: guestSignIn,
         child: Text(
           "Login as Guest",
           textAlign: TextAlign.center,
@@ -121,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.blueAccent,
               fontWeight: FontWeight.bold),
         ),
+        onPressed: guestSignIn,
       ),
     );
 
@@ -144,14 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           "assets/Logo.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 25),
+                    SizedBox(height: 10),
                     emailField,
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     passwordField,
                     SizedBox(height: 20),
                     loginButton,
-                    // SizedBox(height: 15),
-                    // guestLoginButton,
+                    SizedBox(height: 15),
+                    guestLoginButton,
                     SizedBox(height: 15),
                     GestureDetector(
                       child: Text(
@@ -237,26 +240,42 @@ class _LoginScreenState extends State<LoginScreen> {
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
-  Future guestSignIn() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
-    );
+  int randomEmail = Random().nextInt(10000);
+  int randomPass = Random().nextInt(10000);
 
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = 'guest$randomEmail@youmail.com';
+    userModel.uid = user?.uid;
+    userModel.firstName = 'Guest';
+    userModel.secondName = 'Account$randomEmail';
+    userModel.role = 'Guest';
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(userModel.toMap());
+  }
+
+  Future guestSignIn() async {
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim(),
-          )
-          .then((uid) => {Fluttertoast.showToast(msg: "Login Successful")});
+          .signInAnonymously()
+          .then((value) => {postDetailsToFirestore()});
     } on FirebaseAuthException catch (error) {
       Utils.showSnackBar(errorMessage);
       print(error.code);
-    }
 
-    // Navigator.of(context) not working!
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -168,11 +170,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade50,
-        elevation: 0,
-      ),
+      backgroundColor: Colors.white,
       body: Center(
           child: SingleChildScrollView(
         child: Container(
@@ -191,15 +189,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           "assets/Logo.png",
                           fit: BoxFit.contain,
                         )),
-                    SizedBox(height: 45),
+                    SizedBox(height: 10),
                     firstNameField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     secondNameField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     emailField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     passwordField,
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     confirmPasswordField,
                     SizedBox(height: 25),
                     signUpButton,
@@ -227,6 +225,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             )),
       )),
     );
+  }
+
+  int randomEmail() {
+    int randomNum1 = Random().nextInt(1000); //1000 is MAX value
+    //generate random number below 1000
+    return randomNum1;
+  }
+
+  int randomPass() {
+    int randomNum2 = Random().nextInt(1000); //1000 is MAX value
+    //generate random number below 1000
+    return randomNum2;
   }
 
   Future signUp() async {
@@ -270,7 +280,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.secondName = secondNameEditingController.text;
-    userModel.admin = false;
+    userModel.role = 'User';
 
     await firebaseFirestore
         .collection("users")

@@ -109,6 +109,28 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
 
+    //sign out button
+    final signOutButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.blue.shade50,
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          signOut();
+        },
+        child: Text(
+          "Sign Out",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     //delete button
     final deleteButton = Material(
       elevation: 5,
@@ -133,7 +155,7 @@ class _UserProfileState extends State<UserProfile> {
 
     final profileName =
         Container(child: LayoutBuilder(builder: (context, constraints) {
-      if (loggedInUser.admin == true) {
+      if (loggedInUser.role == 'Admin') {
         return Text(
           "Admin ${loggedInUser.firstName}'s Profile",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -185,6 +207,8 @@ class _UserProfileState extends State<UserProfile> {
                     SizedBox(height: 15),
                     updateButton,
                     SizedBox(height: 15),
+                    signOutButton,
+                    SizedBox(height: 15),
                     deleteButton,
                     SizedBox(height: 45),
                   ],
@@ -231,9 +255,16 @@ class _UserProfileState extends State<UserProfile> {
     userModel.uid = user.uid;
 
     await firebaseFirestore.collection("users").doc(user.uid).delete();
+    user.delete();
     Fluttertoast.showToast(msg: "Account Deleted");
 
     FirebaseAuth.instance.signOut();
+    Navigator.of(context).pop();
+  }
+
+  signOut() async {
+    FirebaseAuth.instance.signOut();
+    Fluttertoast.showToast(msg: "Signed Out");
     Navigator.of(context).pop();
   }
 }
