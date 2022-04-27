@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:youmart_mobitech/model/user_model.dart';
-import 'package:youmart_mobitech/screens/adminhome_screen.dart';
 import 'package:youmart_mobitech/utils.dart';
 import 'package:youmart_mobitech/screens/home_screen.dart';
 import 'package:youmart_mobitech/screens/login_screen.dart';
@@ -32,10 +31,8 @@ class MainPage extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Something went wrong!'));
-          } else if (snapshot.hasData && loggedInUser.role == 'Admin') {
-            return AdminHomeScreen(); // ga kesini
-          } else if (snapshot.hasData && loggedInUser.role != 'Admin') {
-            return HomeScreen(); // masih kesini semua
+          } else if (snapshot.hasData) {
+            return HomeScreen();
           } else {
             return AuthPage();
           }

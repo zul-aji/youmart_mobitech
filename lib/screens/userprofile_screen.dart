@@ -262,7 +262,7 @@ class _UserProfileState extends State<UserProfile> {
     Navigator.of(context).pop();
   }
 
-  signOut() async {
+  signOut() {
     FirebaseAuth.instance.signOut();
     Fluttertoast.showToast(msg: "Signed Out");
     Navigator.of(context).pop();
