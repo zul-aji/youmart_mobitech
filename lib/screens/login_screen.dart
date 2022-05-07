@@ -127,71 +127,75 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.blue.shade50,
-      body: Center(
-          child: SingleChildScrollView(
-        child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 150,
-                        child: Image.asset(
-                          "assets/Logo.png",
-                          fit: BoxFit.contain,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.blue.shade50,
+        body: Center(
+            child: SingleChildScrollView(
+          child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                          height: 150,
+                          child: Image.asset(
+                            "assets/Logo.png",
+                            fit: BoxFit.contain,
+                          )),
+                      SizedBox(height: 10),
+                      emailField,
+                      SizedBox(height: 10),
+                      passwordField,
+                      SizedBox(height: 20),
+                      loginButton,
+                      SizedBox(height: 15),
+                      guestLoginButton,
+                      SizedBox(height: 15),
+                      GestureDetector(
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 20,
+                          ),
+                        ),
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage(),
                         )),
-                    SizedBox(height: 10),
-                    emailField,
-                    SizedBox(height: 10),
-                    passwordField,
-                    SizedBox(height: 20),
-                    loginButton,
-                    SizedBox(height: 15),
-                    guestLoginButton,
-                    SizedBox(height: 15),
-                    GestureDetector(
-                      child: Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 20,
+                      ),
+                      SizedBox(height: 15),
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          text: 'No account yet?  ',
+                          children: [
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = widget.onClickedSignUp,
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ForgotPasswordPage(),
-                      )),
-                    ),
-                    SizedBox(height: 15),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black, fontSize: 20),
-                        text: 'No account yet?  ',
-                        children: [
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = widget.onClickedSignUp,
-                            text: 'Sign Up',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )),
-      )),
+              )),
+        )),
+      ),
     );
   }
 

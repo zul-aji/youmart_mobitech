@@ -16,6 +16,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  final _formKey = GlobalKey<FormState>();
+
   //Controllers
   final firstNameEditingController = new TextEditingController();
   final secondNameEditingController = new TextEditingController();
@@ -65,6 +67,7 @@ class _UserProfileState extends State<UserProfile> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: loggedInUser.firstName,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
 
     // second name field
@@ -87,6 +90,7 @@ class _UserProfileState extends State<UserProfile> {
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: loggedInUser.secondName,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
 
     //update button
@@ -168,55 +172,57 @@ class _UserProfileState extends State<UserProfile> {
       }
     }));
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Center(
-          child: SingleChildScrollView(
-        child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 100,
-                        child: Image.asset(
-                          "assets/Profile.png",
-                          fit: BoxFit.contain,
-                        )),
-                    profileName,
-                    SizedBox(height: 1),
-                    Text(
-                      '${loggedInUser.email}',
-                      style: TextStyle(fontSize: 18),
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          body: Center(
+              child: SingleChildScrollView(
+            child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                            height: 100,
+                            child: Image.asset(
+                              "assets/Profile.png",
+                              fit: BoxFit.contain,
+                            )),
+                        profileName,
+                        SizedBox(height: 1),
+                        Text(
+                          '${loggedInUser.email}',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(height: 20),
+                        firstNameField,
+                        SizedBox(height: 20),
+                        secondNameField,
+                        SizedBox(height: 15),
+                        updateButton,
+                        SizedBox(height: 15),
+                        signOutButton,
+                        SizedBox(height: 15),
+                        deleteButton,
+                        SizedBox(height: 45),
+                      ],
                     ),
-                    SizedBox(height: 20),
-                    firstNameField,
-                    SizedBox(height: 20),
-                    secondNameField,
-                    SizedBox(height: 15),
-                    updateButton,
-                    SizedBox(height: 15),
-                    signOutButton,
-                    SizedBox(height: 15),
-                    deleteButton,
-                    SizedBox(height: 45),
-                  ],
-                ),
-              ),
-            )),
-      )),
-    );
+                  ),
+                )),
+          )),
+        ));
   }
 
   updateProfile() async {

@@ -42,7 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }));
 
-    final upperLeftIcon =
+    final upperLeftIcon1 =
+        Container(child: LayoutBuilder(builder: (context, constraints) {
+      if (loggedInUser.role == 'Admin') {
+        return Text(" ");
+      } else {
+        return IconButton(
+          icon: Icon(Icons.shopping_cart_rounded, color: Colors.white),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => UserProfile()));
+          },
+        );
+      }
+    }));
+
+    final upperLeftIcon2 =
         Container(child: LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Guest') {
         return Text(" ");
@@ -57,14 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }));
 
-    return Scaffold(
-        appBar: AppBar(
-          title: welcomeName,
-          actions: [
-            upperLeftIcon,
-          ],
-        ),
-        body: homeOrAdmin());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              title: welcomeName,
+              actions: [
+                upperLeftIcon1,
+                upperLeftIcon2,
+              ],
+            ),
+            body: homeOrAdmin()));
   }
 
   deleteAccount() async {

@@ -113,7 +113,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       autofocus: false,
       controller: passwordEditingController,
       obscureText: true,
-      // validator: () {},
       onSaved: (value) {
         passwordEditingController.text = value!;
       },
@@ -133,7 +132,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       autofocus: false,
       controller: confirmPasswordEditingController,
       obscureText: true,
-      // validator: () {},
       onSaved: (value) {
         confirmPasswordEditingController.text = value!;
       },
@@ -169,62 +167,65 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-          child: SingleChildScrollView(
-        child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 150,
-                        child: Image.asset(
-                          "assets/Logo.png",
-                          fit: BoxFit.contain,
-                        )),
-                    SizedBox(height: 10),
-                    firstNameField,
-                    SizedBox(height: 20),
-                    secondNameField,
-                    SizedBox(height: 20),
-                    emailField,
-                    SizedBox(height: 20),
-                    passwordField,
-                    SizedBox(height: 20),
-                    confirmPasswordField,
-                    SizedBox(height: 25),
-                    signUpButton,
-                    SizedBox(height: 10),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black, fontSize: 20),
-                        text: 'Already Have account?  ',
-                        children: [
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = widget.onClickedSignIn,
-                            text: 'Sign In',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+              child: SingleChildScrollView(
+            child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                            height: 150,
+                            child: Image.asset(
+                              "assets/Logo.png",
+                              fit: BoxFit.contain,
+                            )),
+                        SizedBox(height: 10),
+                        firstNameField,
+                        SizedBox(height: 20),
+                        secondNameField,
+                        SizedBox(height: 20),
+                        emailField,
+                        SizedBox(height: 20),
+                        passwordField,
+                        SizedBox(height: 20),
+                        confirmPasswordField,
+                        SizedBox(height: 25),
+                        signUpButton,
+                        SizedBox(height: 10),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            text: 'Already Have account?  ',
+                            children: [
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = widget.onClickedSignIn,
+                                text: 'Sign In',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            )),
-      )),
-    );
+                  ),
+                )),
+          )),
+        ));
   }
 
   int randomEmail() {
@@ -268,7 +269,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
-    // sedning these values
+    // sending these values
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;

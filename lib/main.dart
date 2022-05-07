@@ -22,6 +22,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: Utils.messengerKey,
       navigatorKey: navigatorKey,
       home: StreamBuilder<User?>(
