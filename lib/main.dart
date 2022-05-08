@@ -25,7 +25,7 @@ class MainPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: Utils.messengerKey,
       navigatorKey: navigatorKey,
-      theme: ThemeData(fontFamily: 'Montserrat'),
+      theme: ThemeData(fontFamily: 'Poppins'),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

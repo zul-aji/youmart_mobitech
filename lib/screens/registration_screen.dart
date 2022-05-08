@@ -200,7 +200,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20,
-              color: Colors.cyan.shade50,
+              color: Color(0xFFF6E8EA),
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -208,13 +208,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Montserrat'),
+        theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFFF6E8EA),
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: Colors.white,
+                color: Color(0xFFF6E8EA),
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(
@@ -229,7 +229,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               "images/Logo.png",
                               fit: BoxFit.contain,
                             )),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         firstNameField,
                         SizedBox(height: 20),
                         secondNameField,
@@ -246,7 +246,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           text: TextSpan(
                             style: TextStyle(
                               color: Colors.grey.shade600,
-                              fontFamily: 'Montserrat',
+                              fontFamily: 'Poppins',
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -257,7 +257,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ..onTap = widget.onClickedSignIn,
                                 text: 'Sign In',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Poppins',
                                   decoration: TextDecoration.underline,
                                   color: Colors.cyan.shade800,
                                 ),

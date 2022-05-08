@@ -120,7 +120,7 @@ class _UserProfileState extends State<UserProfile> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18,
-              color: Colors.cyan.shade50,
+              color: Color(0xFFF6E8EA),
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -130,7 +130,7 @@ class _UserProfileState extends State<UserProfile> {
     final signOutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.cyan.shade50,
+      color: Color(0xFFF6E8EA),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -142,7 +142,7 @@ class _UserProfileState extends State<UserProfile> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18,
-              color: Colors.cyan.shade800,
+              color: Color(0xFFCC444B),
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -152,7 +152,7 @@ class _UserProfileState extends State<UserProfile> {
     final deleteButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.red.shade600,
+      color: Color(0xFFCC444B),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -193,10 +193,10 @@ class _UserProfileState extends State<UserProfile> {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Montserrat'),
+        theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xFFFFFFFF),
             elevation: 0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
@@ -208,7 +208,7 @@ class _UserProfileState extends State<UserProfile> {
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: Colors.white,
+                color: Color(0xFFFFFFFF),
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(

@@ -34,18 +34,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final welcomeName =
-        Container(child: LayoutBuilder(builder: (context, constraints) {
-      if (loggedInUser.role == 'Admin') {
-        return Text("Hello, Admin ${loggedInUser.firstName}",
-            style: TextStyle(
-                color: Colors.cyan.shade900, fontWeight: FontWeight.bold));
-      } else {
-        return Text("Hello, ${loggedInUser.firstName}",
-            style: TextStyle(
-                color: Colors.cyan.shade900, fontWeight: FontWeight.bold));
-      }
-    }));
+    final welcomeName = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: LayoutBuilder(builder: (context, constraints) {
+        if (loggedInUser.role == 'Admin') {
+          return Text("Hello, Admin ${loggedInUser.firstName}",
+              style: TextStyle(
+                  color: Color(0xFF00838F), fontWeight: FontWeight.bold));
+        } else {
+          return Text("Hello, ${loggedInUser.firstName}",
+              style: TextStyle(
+                  color: Color(0xFF00838F), fontWeight: FontWeight.bold));
+        }
+      }),
+    );
 
     final upperLeftIcon1 =
         Container(child: LayoutBuilder(builder: (context, constraints) {
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: Icon(Icons.search_outlined, color: Colors.cyan.shade900),
+          icon: Icon(Icons.search_outlined, color: Color(0xFF00838F)),
           onPressed: () {},
         );
       }
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: Icon(Icons.shopping_cart_rounded, color: Colors.cyan.shade900),
+          icon: Icon(Icons.shopping_cart_rounded, color: Color(0xFF00838F)),
           onPressed: () {},
         );
       }
@@ -75,14 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(child: LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Guest') {
         return IconButton(
-          icon: Icon(Icons.logout_outlined, color: Colors.cyan.shade900),
+          icon: Icon(Icons.logout_outlined, color: Color(0xFF00838F)),
           onPressed: () {
             deleteAccount();
           },
         );
       } else {
         return IconButton(
-          icon: Icon(Icons.person, color: Colors.cyan.shade900),
+          icon: Icon(Icons.person, color: Color(0xFF00838F)),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UserProfile()));
@@ -93,8 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Montserrat'),
+        theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
+            backgroundColor: Color(0xFFF6E8EA),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

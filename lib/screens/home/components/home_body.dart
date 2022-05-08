@@ -9,15 +9,15 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             "Shop Items",
             style: TextStyle(
               fontSize: 35,
-              color: Colors.cyan.shade800,
-              fontFamily: 'Montserrat',
+              color: Color(0xFF00838F),
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),

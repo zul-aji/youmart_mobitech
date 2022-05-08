@@ -23,12 +23,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Montserrat'),
+        theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
+          backgroundColor: Color(0xFFF6E8EA),
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Text('Reset Password'),
+            title: Text(
+              'Reset Password',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.cyan.shade800,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
               onPressed: () {
@@ -49,7 +58,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     style: TextStyle(
                       fontSize: 24,
                       color: Colors.grey.shade600,
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -92,7 +101,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.cyan.shade50,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),

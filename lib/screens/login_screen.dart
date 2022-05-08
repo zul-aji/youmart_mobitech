@@ -57,8 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
           hintText: "Email",
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.mail),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           border: OutlineInputBorder(
             borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
             borderRadius: BorderRadius.circular(15),
@@ -89,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: "Password",
-        prefixIcon: Icon(Icons.lock),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.lock),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         border: OutlineInputBorder(
           borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
           borderRadius: BorderRadius.circular(15),
@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.cyan.shade800,
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: signIn,
         child: Text(
@@ -116,8 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
-            color: Colors.cyan.shade50,
-            fontFamily: 'Montserrat',
+            color: Color(0xFFFFFFFF),
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -128,32 +128,33 @@ class _LoginScreenState extends State<LoginScreen> {
     final guestLoginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.cyan.shade50,
+      color: Color(0xFFF6E8EA),
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
+        onPressed: guestSignIn,
         child: Text(
           "Login as Guest",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
             color: Colors.cyan.shade800,
-            fontFamily: 'Montserrat',
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
           ),
         ),
-        onPressed: guestSignIn,
       ),
     );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Poppins'),
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFFFFFFF),
         body: Center(
             child: SingleChildScrollView(
           child: Container(
-              color: Colors.white,
+              color: Color(0xFFFFFFFF),
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Form(
@@ -168,15 +169,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             "images/Logo.png",
                             fit: BoxFit.contain,
                           )),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 25),
                       emailField,
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       passwordField,
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       loginButton,
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       guestLoginButton,
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       GestureDetector(
                         child: Text(
                           'Forgot Password?',
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: TextDecoration.underline,
                             color: Colors.cyan.shade800,
                             fontSize: 20,
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -193,13 +194,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (context) => ForgotPasswordPage(),
                         )),
                       ),
-                      SizedBox(height: 8),
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
                             color: Colors.grey.shade600,
                             fontSize: 20,
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                           text: 'No account yet?  ',
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.cyan.shade800,
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Poppins',
                               ),
                             ),
                           ],
@@ -230,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) =>
+          const Center(child: const CircularProgressIndicator()),
     );
 
     try {
