@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/main.dart';
-import 'package:youmart_mobitech/model/user_model.dart';
-import 'package:youmart_mobitech/pages/auth_page.dart';
-import 'package:youmart_mobitech/screens/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:youmart_mobitech/utils.dart';
+
+import '../model/user_model.dart';
 
 class UserProfile extends StatefulWidget {
   UserProfile({Key? key}) : super(key: key);
@@ -63,10 +60,18 @@ class _UserProfileState extends State<UserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.person),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: loggedInUser.firstName,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: loggedInUser.firstName,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );
 
@@ -86,10 +91,18 @@ class _UserProfileState extends State<UserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.person),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: loggedInUser.secondName,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: loggedInUser.secondName,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );
 
@@ -97,7 +110,7 @@ class _UserProfileState extends State<UserProfile> {
     final updateButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Colors.cyan.shade800,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -106,8 +119,8 @@ class _UserProfileState extends State<UserProfile> {
           "Update Profile",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.blue.shade50,
+              fontSize: 18,
+              color: Colors.cyan.shade50,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -117,7 +130,7 @@ class _UserProfileState extends State<UserProfile> {
     final signOutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blue.shade50,
+      color: Colors.cyan.shade50,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -128,8 +141,8 @@ class _UserProfileState extends State<UserProfile> {
           "Sign Out",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.blueAccent,
+              fontSize: 18,
+              color: Colors.cyan.shade800,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -139,7 +152,7 @@ class _UserProfileState extends State<UserProfile> {
     final deleteButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.red.shade600,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -150,8 +163,8 @@ class _UserProfileState extends State<UserProfile> {
           "Delete Account",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.blue.shade50,
+              fontSize: 18,
+              color: Colors.cyan.shade50,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -162,22 +175,31 @@ class _UserProfileState extends State<UserProfile> {
       if (loggedInUser.role == 'Admin') {
         return Text(
           "Admin ${loggedInUser.firstName}'s Profile",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.cyan.shade800),
         );
       } else {
         return Text(
           "${loggedInUser.firstName}'s Profile",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.cyan.shade800),
         );
       }
     }));
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Montserrat'),
         home: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
+              icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -197,14 +219,15 @@ class _UserProfileState extends State<UserProfile> {
                         SizedBox(
                             height: 100,
                             child: Image.asset(
-                              "assets/Profile.png",
+                              "images/Profile.png",
                               fit: BoxFit.contain,
                             )),
                         profileName,
-                        SizedBox(height: 1),
+                        SizedBox(height: 3),
                         Text(
                           '${loggedInUser.email}',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.cyan.shade800),
                         ),
                         SizedBox(height: 20),
                         firstNameField,

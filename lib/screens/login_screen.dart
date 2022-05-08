@@ -1,15 +1,15 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:youmart_mobitech/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/screens/home_screen.dart';
-import 'package:youmart_mobitech/screens/forgotpass_screen.dart';
-import 'package:youmart_mobitech/screens/registration_screen.dart';
+
 import '../main.dart';
 import '../model/user_model.dart';
-import 'dart:math';
+import '../utils.dart';
+import 'forgotpass_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -56,10 +56,17 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
+          hintText: "Email",
           prefixIcon: Icon(Icons.mail),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+            borderRadius: BorderRadius.circular(15),
+          )),
     );
 
     //password field
@@ -81,17 +88,25 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.lock),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        hintText: "Password",
+        prefixIcon: Icon(Icons.lock),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
     );
 
     //login button
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Colors.cyan.shade800,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -100,9 +115,11 @@ class _LoginScreenState extends State<LoginScreen> {
           "Login",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.blue.shade50,
-              fontWeight: FontWeight.bold),
+            fontSize: 20,
+            color: Colors.cyan.shade50,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ),
     );
@@ -111,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final guestLoginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blue.shade50,
+      color: Colors.cyan.shade50,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -119,9 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
           "Login as Guest",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.bold),
+            fontSize: 20,
+            color: Colors.cyan.shade800,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w700,
+          ),
         ),
         onPressed: guestSignIn,
       ),
@@ -130,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.blue.shade50,
+        backgroundColor: Colors.white,
         body: Center(
             child: SingleChildScrollView(
           child: Container(
@@ -146,25 +165,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                           height: 150,
                           child: Image.asset(
-                            "assets/Logo.png",
+                            "images/Logo.png",
                             fit: BoxFit.contain,
                           )),
-                      SizedBox(height: 10),
-                      emailField,
-                      SizedBox(height: 10),
-                      passwordField,
                       SizedBox(height: 20),
+                      emailField,
+                      SizedBox(height: 20),
+                      passwordField,
+                      SizedBox(height: 30),
                       loginButton,
                       SizedBox(height: 15),
                       guestLoginButton,
-                      SizedBox(height: 15),
+                      SizedBox(height: 25),
                       GestureDetector(
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Colors.cyan.shade800,
                             fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         onTap: () =>
@@ -172,10 +193,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (context) => ForgotPasswordPage(),
                         )),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 8),
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 20),
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                          ),
                           text: 'No account yet?  ',
                           children: [
                             TextSpan(
@@ -184,7 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Sign Up',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Colors.cyan.shade800,
+                                fontFamily: 'Montserrat',
                               ),
                             ),
                           ],

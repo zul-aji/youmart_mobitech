@@ -1,8 +1,7 @@
-import 'package:youmart_mobitech/screens/home_screen.dart';
-import 'package:youmart_mobitech/screens/login_screen.dart';
-import 'package:youmart_mobitech/screens/registration_screen.dart';
-import 'package:youmart_mobitech/main.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/login_screen.dart';
+import '../screens/registration_screen.dart';
 
 class AuthPage extends StatefulWidget {
   @override

@@ -1,16 +1,15 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/model/user_model.dart';
-import 'package:youmart_mobitech/utils.dart';
-import 'package:youmart_mobitech/main.dart';
-import 'package:youmart_mobitech/screens/home_screen.dart';
-import 'package:youmart_mobitech/screens/login_screen.dart';
+
+import '../main.dart';
+import '../model/user_model.dart';
+import '../utils.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final VoidCallback onClickedSignIn;
@@ -60,10 +59,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.person),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "First Name",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "First Name",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
     );
 
     // second name field
@@ -82,10 +89,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.person),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Second Name",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Second Name",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
     );
 
     //email field
@@ -98,10 +113,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.mail),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Email",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (email) => email != null && !EmailValidator.validate(email)
           ? 'Enter a valid email'
@@ -118,10 +141,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.lock),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.lock),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Password",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) =>
           value != null && value.length < 6 ? 'Enter min. 6 characters' : null,
@@ -137,10 +168,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.lock),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Confirm Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        prefixIcon: Icon(Icons.lock),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Confirm Password",
+        border: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => value != passwordEditingController.text
           ? 'Password inputted is different'
@@ -151,7 +190,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Colors.cyan.shade800,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -161,7 +200,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20,
-              color: Colors.blue.shade50,
+              color: Colors.cyan.shade50,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -169,6 +208,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Montserrat'),
         home: Scaffold(
           backgroundColor: Colors.white,
           body: Center(
@@ -186,7 +226,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         SizedBox(
                             height: 150,
                             child: Image.asset(
-                              "assets/Logo.png",
+                              "images/Logo.png",
                               fit: BoxFit.contain,
                             )),
                         SizedBox(height: 10),
@@ -199,12 +239,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         passwordField,
                         SizedBox(height: 20),
                         confirmPasswordField,
-                        SizedBox(height: 25),
+                        SizedBox(height: 20),
                         signUpButton,
-                        SizedBox(height: 10),
+                        SizedBox(height: 15),
                         RichText(
                           text: TextSpan(
-                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontFamily: 'Montserrat',
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                             text: 'Already Have account?  ',
                             children: [
                               TextSpan(
@@ -212,9 +257,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ..onTap = widget.onClickedSignIn,
                                 text: 'Sign In',
                                 style: TextStyle(
+                                  fontFamily: 'Montserrat',
                                   decoration: TextDecoration.underline,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                                  color: Colors.cyan.shade800,
                                 ),
                               ),
                             ],

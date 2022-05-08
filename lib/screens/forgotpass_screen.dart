@@ -1,7 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:youmart_mobitech/utils.dart';
 import 'package:flutter/material.dart';
+
+import '../utils.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -22,11 +23,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(fontFamily: 'Montserrat'),
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: Text('Reset Password'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: Padding(
             padding: EdgeInsets.all(16),
@@ -38,14 +46,31 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Text(
                     'Receive an email to\nreset your password.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.grey.shade600,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
                     controller: emailController,
                     cursorColor: Colors.white,
                     textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 3, color: Colors.cyan.shade800),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 3, color: Colors.cyan.shade800),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (email) =>
                         email != null && !EmailValidator.validate(email)
@@ -53,16 +78,23 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             : null,
                   ),
                   SizedBox(height: 20),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(50),
+                  Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.cyan.shade800,
+                    child: MaterialButton(
+                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      minWidth: MediaQuery.of(context).size.width,
+                      onPressed: verifyEmail,
+                      child: Text(
+                        "Reset Password",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.cyan.shade50,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    icon: Icon(Icons.email_outlined),
-                    label: Text(
-                      'Reset Password',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    onPressed: verifyEmail,
                   ),
                 ],
               ),
