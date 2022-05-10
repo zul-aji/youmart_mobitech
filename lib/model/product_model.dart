@@ -2,9 +2,9 @@ class UserModel {
   String? pid;
   String? name;
   String? price;
-  String? image;
+  String? category;
 
-  UserModel({this.pid, this.name, this.price, this.image});
+  UserModel({this.pid, this.name, this.price, this.category});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -12,7 +12,7 @@ class UserModel {
         pid: map['pid'],
         name: map['name'],
         price: map['price'],
-        image: map['image']);
+        category: map['category']);
   }
 
   // sending data to our server
@@ -21,7 +21,7 @@ class UserModel {
       'pid': pid,
       'name': name,
       'price': price,
-      'image': image,
+      'category': category,
     };
   }
 }

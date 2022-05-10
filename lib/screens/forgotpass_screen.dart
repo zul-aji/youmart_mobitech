@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import '../utils.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({Key? key}) : super(key: key);
+
   @override
+  // ignore: library_private_types_in_public_api
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
@@ -25,7 +28,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: Color(0xFFF6E8EA),
+          backgroundColor: const Color(0xFFF6E8EA),
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -46,7 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
           body: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Form(
               key: formKey,
               child: Column(
@@ -62,7 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: emailController,
                     cursorColor: Colors.white,
@@ -86,13 +89,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ? 'Enter a valid email'
                             : null,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Material(
                     elevation: 5,
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.cyan.shade800,
                     child: MaterialButton(
-                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                       minWidth: MediaQuery.of(context).size.width,
                       onPressed: verifyEmail,
                       child: Text(
@@ -116,7 +119,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
     try {

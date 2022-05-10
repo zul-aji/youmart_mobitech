@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/constants.dart';
 
 import '../main.dart';
 import '../model/user_model.dart';
@@ -60,11 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
           prefixIcon: const Icon(Icons.mail),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           border: OutlineInputBorder(
-            borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+            borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
             borderRadius: BorderRadius.circular(15),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+            borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
             borderRadius: BorderRadius.circular(15),
           )),
     );
@@ -92,11 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
         prefixIcon: const Icon(Icons.lock),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -106,12 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.cyan.shade800,
+      color: colorPrimaryDark,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: signIn,
-        child: Text(
+        child: const Text(
           "Login",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -128,17 +129,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final guestLoginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color(0xFFF6E8EA),
+      color: colorSecondary,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: guestSignIn,
-        child: Text(
+        child: const Text(
           "Login as Guest",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
-            color: Colors.cyan.shade800,
+            color: colorPrimaryDark,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
           ),
@@ -150,11 +151,11 @@ class _LoginScreenState extends State<LoginScreen> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
       home: Scaffold(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFFFFFFF),
         body: Center(
             child: SingleChildScrollView(
           child: Container(
-              color: Color(0xFFFFFFFF),
+              color: const Color(0xFFFFFFFF),
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Form(
@@ -179,11 +180,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       guestLoginButton,
                       const SizedBox(height: 25),
                       GestureDetector(
-                        child: Text(
+                        child: const Text(
                           'Forgot Password?',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: Colors.cyan.shade800,
+                            color: colorPrimaryDark,
                             fontSize: 20,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -191,13 +192,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         onTap: () =>
                             Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ForgotPasswordPage(),
+                          builder: (context) => const ForgotPasswordPage(),
                         )),
                       ),
                       RichText(
                         text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
+                          style: const TextStyle(
+                            color: colorAccent,
                             fontSize: 20,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -208,9 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = widget.onClickedSignUp,
                               text: 'Sign Up',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: Colors.cyan.shade800,
+                                color: colorPrimaryDark,
                                 fontFamily: 'Poppins',
                               ),
                             ),
@@ -230,8 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) =>
-          const Center(child: const CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
     try {

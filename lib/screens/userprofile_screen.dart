@@ -13,11 +13,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final _formKey = GlobalKey<FormState>();
-
   //Controllers
-  final firstNameEditingController = new TextEditingController();
-  final secondNameEditingController = new TextEditingController();
+  final firstNameEditingController = TextEditingController();
+  final secondNameEditingController = TextEditingController();
 
   // string for displaying the error Message
   String? errorMessage;
@@ -46,7 +44,7 @@ class _UserProfileState extends State<UserProfile> {
       controller: firstNameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("First Name cannot be Empty");
         }
@@ -60,8 +58,8 @@ class _UserProfileState extends State<UserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.person),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.firstName,
         border: OutlineInputBorder(
           borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
@@ -91,8 +89,8 @@ class _UserProfileState extends State<UserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.person),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.secondName,
         border: OutlineInputBorder(
           borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
@@ -112,10 +110,10 @@ class _UserProfileState extends State<UserProfile> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.cyan.shade800,
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: updateProfile,
-        child: Text(
+        child: const Text(
           "Update Profile",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -130,14 +128,14 @@ class _UserProfileState extends State<UserProfile> {
     final signOutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color(0xFFF6E8EA),
+      color: const Color(0xFFF6E8EA),
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signOut();
         },
-        child: Text(
+        child: const Text(
           "Sign Out",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -152,9 +150,9 @@ class _UserProfileState extends State<UserProfile> {
     final deleteButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Color(0xFFCC444B),
+      color: const Color(0xFFCC444B),
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           deleteAccount();
@@ -170,8 +168,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
 
-    final profileName =
-        Container(child: LayoutBuilder(builder: (context, constraints) {
+    final profileName = LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Admin') {
         return Text(
           "Admin ${loggedInUser.firstName}'s Profile",
@@ -189,14 +186,14 @@ class _UserProfileState extends State<UserProfile> {
               color: Colors.cyan.shade800),
         );
       }
-    }));
+    });
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFFFFFFFF),
+            backgroundColor: const Color(0xFFFFFFFF),
             elevation: 0,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
@@ -208,7 +205,7 @@ class _UserProfileState extends State<UserProfile> {
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: Color(0xFFFFFFFF),
+                color: const Color(0xFFFFFFFF),
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(
@@ -223,23 +220,23 @@ class _UserProfileState extends State<UserProfile> {
                               fit: BoxFit.contain,
                             )),
                         profileName,
-                        SizedBox(height: 3),
+                        const SizedBox(height: 3),
                         Text(
                           '${loggedInUser.email}',
                           style: TextStyle(
                               fontSize: 18, color: Colors.cyan.shade800),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         firstNameField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         secondNameField,
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         updateButton,
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         signOutButton,
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         deleteButton,
-                        SizedBox(height: 45),
+                        const SizedBox(height: 45),
                       ],
                     ),
                   ),

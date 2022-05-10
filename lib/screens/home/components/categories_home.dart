@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/constants.dart';
+
+import '../../../model/user_model.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -8,15 +13,39 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = [
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
+  List<String> customerCategories = [
     "Snacks",
     "Instant Food",
     "Beverages",
-    "Ice Cream",
     "Personal Care",
   ];
+
+  List<String> adminCategories = [
+    "Add Item",
+    "Update Item",
+    "Delete Item",
+    "Orders",
+  ];
+
   // By default our first item will be selected
   int selectedIndex = 0;
+  int categoryLength = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +55,7 @@ class _CategoriesState extends State<Categories> {
         height: 30,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
+          itemCount: categoryCount(),
           itemBuilder: (context, index) => buildCategory(index),
         ),
       ),
@@ -45,26 +74,44 @@ class _CategoriesState extends State<Categories> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              categories[index],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: selectedIndex == index
-                    ? Color(0xFFCC444B)
-                    : Color(0xFFACACAC),
-              ),
-            ),
+            categoryShown(index),
             Container(
               margin: EdgeInsets.only(top: 5), //top padding 5
               height: 3,
               width: 40,
-              color: selectedIndex == index
-                  ? Color(0xFFCC444B)
-                  : Colors.transparent,
+              color: selectedIndex == index ? colorAccent : Colors.transparent,
             )
           ],
         ),
       ),
     );
+  }
+
+  categoryShown(index) {
+    if (loggedInUser.role == 'Admin') {
+      return Text(
+        adminCategories[index],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: selectedIndex == index ? colorAccent : colorUnpicked,
+        ),
+      );
+    } else {
+      return Text(
+        customerCategories[index],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: selectedIndex == index ? colorAccent : colorUnpicked,
+        ),
+      );
+    }
+  }
+
+  categoryCount() {
+    if (loggedInUser.role == 'Admin') {
+      return categoryLength = adminCategories.length;
+    } else {
+      return categoryLength = customerCategories.length;
+    }
   }
 }

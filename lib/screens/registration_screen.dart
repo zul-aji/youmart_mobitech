@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/constants.dart';
 
 import '../main.dart';
 import '../model/user_model.dart';
@@ -28,11 +29,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
 
   //Controllers
-  final firstNameEditingController = new TextEditingController();
-  final secondNameEditingController = new TextEditingController();
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final confirmPasswordEditingController = new TextEditingController();
+  final firstNameEditingController = TextEditingController();
+  final secondNameEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final confirmPasswordEditingController = TextEditingController();
 
   // string for displaying the error Message
   String? errorMessage;
@@ -45,7 +46,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       controller: firstNameEditingController,
       keyboardType: TextInputType.name,
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("First Name cannot be Empty");
         }
@@ -59,15 +60,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.person),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "First Name",
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -89,15 +90,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.person),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Second Name",
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -113,15 +114,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.mail),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -141,15 +142,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.lock),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -168,15 +169,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon: const Icon(Icons.lock),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm Password",
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -190,18 +191,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.cyan.shade800,
+      color: colorPrimaryDark,
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: signUp,
-        child: Text(
+        child: const Text(
           "Sign Up",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFFF6E8EA),
-              fontWeight: FontWeight.bold),
+              fontSize: 20, color: colorSecondary, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -210,11 +209,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: Color(0xFFF6E8EA),
+          backgroundColor: colorSecondary,
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: Color(0xFFF6E8EA),
+                color: colorSecondary,
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(
@@ -229,19 +228,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               "images/Logo.png",
                               fit: BoxFit.contain,
                             )),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         firstNameField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         secondNameField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         emailField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         passwordField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         confirmPasswordField,
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         signUpButton,
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         RichText(
                           text: TextSpan(
                             style: TextStyle(
@@ -256,10 +255,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = widget.onClickedSignIn,
                                 text: 'Sign In',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   decoration: TextDecoration.underline,
-                                  color: Colors.cyan.shade800,
+                                  color: colorPrimaryDark,
                                 ),
                               ),
                             ],
@@ -292,7 +291,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
     try {
@@ -304,6 +303,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           .then((value) => {postDetailsToFirestore()});
     } on FirebaseAuthException catch (error) {
       Utils.showSnackBar(errorMessage);
+      // ignore: avoid_print
       print(error.code);
     }
 

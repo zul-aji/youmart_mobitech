@@ -42,6 +42,9 @@ dependencies:
   #Firebase
   firebase_auth: ^3.3.4
   firebase_core: ^1.0.4
+  firebase_storage: ^10.2.15
+  
+  file_picker: ^4.5.1
 
   #Email Validator
   email_validator: ^2.0.1
