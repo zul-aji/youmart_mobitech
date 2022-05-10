@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
-
+//these are function to upload file / bytes (for textfile maybe)
 class FirebaseApi {
   static UploadTask? uploadFile(String destination, File file) {
     try {

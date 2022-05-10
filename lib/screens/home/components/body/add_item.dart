@@ -10,6 +10,17 @@ import 'package:youmart_mobitech/widget/button_widget.dart';
 import 'package:youmart_mobitech/api/firebase_api.dart';
 import 'package:path/path.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/constants.dart';
+
+import 'package:youmart_mobitech/model/product_model.dart';
+
+import 'package:uuid/uuid.dart';
 
 class AddItem extends StatefulWidget {
   AddItem({Key? key}) : super(key: key);
@@ -21,13 +32,12 @@ class AddItem extends StatefulWidget {
 class _AddItemState extends State<AddItem> {
   File? file;
   UploadTask? task;
+  //Controllers
+  final itemNameController = TextEditingController();
+  final itemPriceController = TextEditingController();
+  final itemCategoryController = TextEditingController();
   @override
-
   Widget build(BuildContext context) {
-    //Controllers
-    final itemNameController = TextEditingController();
-    final itemPriceController = TextEditingController();
-    final itemCategoryController = TextEditingController();
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
 
     // item name field
@@ -95,7 +105,7 @@ class _AddItemState extends State<AddItem> {
     // item category field
     final itemCategoryField = TextFormField(
       autofocus: false,
-      controller: itemPriceController,
+      controller: itemCategoryController,
       keyboardType: TextInputType.name,
       validator: (value) {
         RegExp regex = RegExp(r'^.{5,}$');
@@ -144,6 +154,23 @@ class _AddItemState extends State<AddItem> {
       ),
     );
 
+    final createItemButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: colorPrimaryDark,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: postItemDetailsToFirestore,
+        child: const Text(
+          "Create Item",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, color: colorSecondary, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     //Upload item button
     final uploadItemButton = Material(
       elevation: 5,
@@ -183,12 +210,12 @@ class _AddItemState extends State<AddItem> {
           const SizedBox(height: 25),
           itemCategoryField,
           const SizedBox(height: 25),
+          createItemButton,
+          const SizedBox(height: 25),
           uploadImageButton,
           Text(
             fileName,
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w500
-            ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 20),
           uploadItemButton,
@@ -197,6 +224,7 @@ class _AddItemState extends State<AddItem> {
       ),
     );
   }
+
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
@@ -224,22 +252,41 @@ class _AddItemState extends State<AddItem> {
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-    stream: task.snapshotEvents,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        final snap = snapshot.data!;
-        final progress = snap.bytesTransferred / snap.totalBytes;
-        final percentage = (progress * 100).toStringAsFixed(2);
+        stream: task.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data!;
+            final progress = snap.bytesTransferred / snap.totalBytes;
+            final percentage = (progress * 100).toStringAsFixed(2);
 
-        return Text(
-          '$percentage %',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        );
-      } else {
-        return Container();
-      }
-    },
-  );
+            return Text(
+              '$percentage %',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            );
+          } else {
+            return Container();
+          }
+        },
+      );
 
+  postItemDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sending these values
+    var uuid = Uuid();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    ProductModel productModel = ProductModel();
+
+    // writing all the values
+    productModel.pid = uuid.v1();
+    productModel.name = itemNameController.text;
+    productModel.price = itemPriceController.text;
+    productModel.category = itemCategoryController.text;
+
+    FirebaseFirestore.instance
+        .collection("product")
+        .doc(uuid.v1())
+        .set(productModel.toMap());
+    Fluttertoast.showToast(msg: "Product created successfully");
+  }
 }
-

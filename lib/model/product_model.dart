@@ -1,14 +1,14 @@
-class UserModel {
+class ProductModel {
   String? pid;
   String? name;
   String? price;
   String? category;
 
-  UserModel({this.pid, this.name, this.price, this.category});
+  ProductModel({this.pid, this.name, this.price, this.category});
 
   // receiving data from server
-  factory UserModel.fromMap(map) {
-    return UserModel(
+  factory ProductModel.fromMap(map) {
+    return ProductModel(
         pid: map['pid'],
         name: map['name'],
         price: map['price'],
