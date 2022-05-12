@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/constants.dart';
 
 import '../model/user_model.dart';
 
@@ -62,11 +63,11 @@ class _UserProfileState extends State<UserProfile> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.firstName,
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -93,11 +94,11 @@ class _UserProfileState extends State<UserProfile> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.secondName,
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 3, color: Colors.cyan.shade800),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -108,7 +109,7 @@ class _UserProfileState extends State<UserProfile> {
     final updateButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.cyan.shade800,
+      color: colorPrimaryDark,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -117,9 +118,7 @@ class _UserProfileState extends State<UserProfile> {
           "Update Profile",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18,
-              color: Color(0xFFF6E8EA),
-              fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -128,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
     final signOutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: const Color(0xFFF6E8EA),
+      color: colorBase,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -139,9 +138,7 @@ class _UserProfileState extends State<UserProfile> {
           "Sign Out",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18,
-              color: Color(0xFFCC444B),
-              fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorAccent, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -150,20 +147,18 @@ class _UserProfileState extends State<UserProfile> {
     final deleteButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: const Color(0xFFCC444B),
+      color: colorAccent,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           deleteAccount();
         },
-        child: Text(
+        child: const Text(
           "Delete Account",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18,
-              color: Colors.cyan.shade50,
-              fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -172,18 +167,18 @@ class _UserProfileState extends State<UserProfile> {
       if (loggedInUser.role == 'Admin') {
         return Text(
           "Admin ${loggedInUser.firstName}'s Profile",
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Colors.cyan.shade800),
+              color: colorPrimaryDark),
         );
       } else {
         return Text(
           "${loggedInUser.firstName}'s Profile",
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Colors.cyan.shade800),
+              color: colorPrimaryDark),
         );
       }
     });
@@ -196,7 +191,7 @@ class _UserProfileState extends State<UserProfile> {
             backgroundColor: const Color(0xFFFFFFFF),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
+              icon: const Icon(Icons.arrow_back, color: colorAccent),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -223,8 +218,8 @@ class _UserProfileState extends State<UserProfile> {
                         const SizedBox(height: 3),
                         Text(
                           '${loggedInUser.email}',
-                          style: TextStyle(
-                              fontSize: 18, color: Colors.cyan.shade800),
+                          style: const TextStyle(
+                              fontSize: 18, color: colorPrimary),
                         ),
                         const SizedBox(height: 20),
                         firstNameField,

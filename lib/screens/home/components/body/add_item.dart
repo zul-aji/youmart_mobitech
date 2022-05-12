@@ -149,7 +149,7 @@ class _AddItemState extends State<AddItem> {
           "Upload Image",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorSecondary, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -166,7 +166,7 @@ class _AddItemState extends State<AddItem> {
           "Create Item",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorSecondary, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -184,7 +184,7 @@ class _AddItemState extends State<AddItem> {
           "Upload Item",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorSecondary, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );

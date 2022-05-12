@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
-            color: Color(0xFFFFFFFF),
+            color: colorBase,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
           ),
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final guestLoginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: colorSecondary,
+      color: colorBase,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -164,13 +164,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      const SizedBox(height: 20),
                       SizedBox(
-                          height: 150,
+                          height: 110,
                           child: Image.asset(
                             "images/Logo.png",
                             fit: BoxFit.contain,
                           )),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 30),
                       emailField,
                       const SizedBox(height: 20),
                       passwordField,
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Forgot Password?',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: colorPrimaryDark,
+                            color: colorAccent,
                             fontSize: 20,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -198,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       RichText(
                         text: TextSpan(
                           style: const TextStyle(
-                            color: colorAccent,
+                            color: colorPrimary,
                             fontSize: 20,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
@@ -211,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Sign Up',
                               style: const TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: colorPrimaryDark,
+                                color: colorAccent,
                                 fontFamily: 'Poppins',
                               ),
                             ),

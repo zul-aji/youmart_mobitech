@@ -64,11 +64,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "First Name",
         border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -94,11 +94,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Second Name",
         border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -118,11 +118,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -146,11 +146,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -173,11 +173,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm Password",
         border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),
@@ -200,7 +200,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           "Sign Up",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: colorSecondary, fontWeight: FontWeight.bold),
+              fontSize: 20, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -209,11 +209,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: colorSecondary,
+          backgroundColor: const Color(0xFFFFFFFF),
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: colorSecondary,
+                color: const Color(0xFFFFFFFF),
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(
@@ -222,8 +222,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        const SizedBox(height: 20),
                         SizedBox(
-                            height: 150,
+                            height: 110,
                             child: Image.asset(
                               "images/Logo.png",
                               fit: BoxFit.contain,
@@ -243,8 +244,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         const SizedBox(height: 15),
                         RichText(
                           text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
+                            style: const TextStyle(
+                              color: colorPrimary,
                               fontFamily: 'Poppins',
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -258,7 +259,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   decoration: TextDecoration.underline,
-                                  color: colorPrimaryDark,
+                                  color: colorAccent,
                                 ),
                               ),
                             ],

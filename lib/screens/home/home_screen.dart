@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/constants.dart';
 import 'package:youmart_mobitech/screens/home/components/home_body.dart';
 
 import '../../model/user_model.dart';
@@ -39,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
         if (loggedInUser.role == 'Admin') {
           return Text("Hello, Admin ${loggedInUser.firstName}",
               style: const TextStyle(
-                  color: Color(0xFF00838F), fontWeight: FontWeight.bold));
+                  color: colorPrimary, fontWeight: FontWeight.bold));
         } else {
           return Text("Hello, ${loggedInUser.firstName}",
               style: const TextStyle(
-                  color: Color(0xFF00838F), fontWeight: FontWeight.bold));
+                  color: colorPrimary, fontWeight: FontWeight.bold));
         }
       }),
     );
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: const Icon(Icons.search_outlined, color: Color(0xFFCC444B)),
+          icon: const Icon(Icons.search_outlined, color: colorAccent),
           onPressed: () {},
         );
       }
@@ -64,8 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon:
-              const Icon(Icons.shopping_cart_rounded, color: Color(0xFFCC444B)),
+          icon: const Icon(Icons.shopping_cart_rounded, color: colorAccent),
           onPressed: () {},
         );
       }
@@ -74,14 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final upperLeftIcon3 = LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Guest') {
         return IconButton(
-          icon: const Icon(Icons.logout_outlined, color: Color(0xFFCC444B)),
+          icon: const Icon(Icons.logout_outlined, color: colorAccent),
           onPressed: () {
             deleteAccount();
           },
         );
       } else {
         return IconButton(
-          icon: const Icon(Icons.person, color: Color(0xFFCC444B)),
+          icon: const Icon(Icons.person, color: colorAccent),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UserProfile()));
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-            backgroundColor: const Color(0xFFF6E8EA),
+            backgroundColor: colorBase,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/constants.dart';
 
 import '../utils.dart';
 
@@ -28,21 +29,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: const Color(0xFFF6E8EA),
+          backgroundColor: const Color(0xFFFFFFFF),
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Text(
+            title: const Text(
               'Reset Password',
               style: TextStyle(
                 fontSize: 24,
-                color: Colors.cyan.shade800,
+                color: colorPrimaryDark,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
               ),
             ),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.cyan.shade800),
+              icon: const Icon(Icons.arrow_back, color: colorPrimary),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -55,12 +56,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Receive an email to\nreset your password.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
-                      color: Colors.grey.shade600,
+                      color: colorPrimary,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w600,
                     ),
@@ -74,12 +75,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       labelText: 'Email',
                       border: OutlineInputBorder(
                         borderSide:
-                            BorderSide(width: 3, color: Colors.cyan.shade800),
+                            const BorderSide(width: 3, color: colorPrimary),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(width: 3, color: Colors.cyan.shade800),
+                            const BorderSide(width: 3, color: colorPrimary),
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
@@ -93,17 +94,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Material(
                     elevation: 5,
                     borderRadius: BorderRadius.circular(30),
-                    color: Colors.cyan.shade800,
+                    color: colorPrimaryDark,
                     child: MaterialButton(
                       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                       minWidth: MediaQuery.of(context).size.width,
                       onPressed: verifyEmail,
-                      child: Text(
+                      child: const Text(
                         "Reset Password",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
-                            color: Colors.cyan.shade50,
+                            color: colorBase,
                             fontWeight: FontWeight.w600),
                       ),
                     ),

@@ -93,7 +93,7 @@ class _CategoriesState extends State<Categories> {
         adminCategories[index],
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: selectedIndex == index ? colorAccent : colorUnpicked,
+          color: selectedIndex == index ? colorPrimaryDark : colorUnpicked,
         ),
       );
     } else {
@@ -101,7 +101,7 @@ class _CategoriesState extends State<Categories> {
         customerCategories[index],
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: selectedIndex == index ? colorAccent : colorUnpicked,
+          color: selectedIndex == index ? colorPrimaryDark : colorUnpicked,
         ),
       );
     }
