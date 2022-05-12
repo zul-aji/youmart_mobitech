@@ -166,12 +166,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       const SizedBox(height: 20),
                       SizedBox(
-                          height: 110,
+                          height: 120,
                           child: Image.asset(
                             "images/Logo.png",
                             fit: BoxFit.contain,
                           )),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 15),
                       emailField,
                       const SizedBox(height: 20),
                       passwordField,

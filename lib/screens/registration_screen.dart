@@ -224,12 +224,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: <Widget>[
                         const SizedBox(height: 20),
                         SizedBox(
-                            height: 110,
+                            height: 120,
                             child: Image.asset(
                               "images/Logo.png",
                               fit: BoxFit.contain,
                             )),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         firstNameField,
                         const SizedBox(height: 20),
                         secondNameField,
