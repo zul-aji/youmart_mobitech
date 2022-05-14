@@ -1,26 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
-import '../../../../constants.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:youmart_mobitech/widget/button_widget.dart';
-import 'package:youmart_mobitech/api/firebase_api.dart';
-import 'package:path/path.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/constants.dart';
-
-import 'package:youmart_mobitech/model/product_model.dart';
-
+import 'package:path/path.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../../api/firebase_api.dart';
+import '../../../../constants.dart';
+import '../../../../model/product_model.dart';
 
 class AddItem extends StatefulWidget {
   AddItem({Key? key}) : super(key: key);
@@ -35,8 +25,16 @@ class _AddItemState extends State<AddItem> {
   //Controllers
   final itemNameController = TextEditingController();
   final itemPriceController = TextEditingController();
-  final itemCategoryController = TextEditingController();
+  // final itemCategoryController = TextEditingController();
+
+  String currentItem = '';
+
   @override
+  void initState() {
+    currentItem = customerCategories[0];
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
 
@@ -102,41 +100,30 @@ class _AddItemState extends State<AddItem> {
       ),
     );
 
-    // item category field
-    final itemCategoryField = TextFormField(
-      autofocus: false,
-      controller: itemCategoryController,
-      keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{5,}$');
-        if (value!.isEmpty) {
-          return ("Category cannot be Empty");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Valid Input(Min. 5 Char)");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        itemCategoryController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 8, 15),
-        hintText: "Item Category",
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
-          borderRadius: BorderRadius.circular(15),
+    // item category list
+    final itemCategoryList = DropdownButtonFormField(
+        decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: colorPrimaryDark, width: 3),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          filled: true,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-    );
+        validator: (value) => value == null ? "Choose Category" : null,
+        dropdownColor: colorBase,
+        value: currentItem,
+        onChanged: (String? newValue) {
+          setState(() {
+            currentItem = newValue!;
+          });
+        },
+        items: dropdownItems);
 
     //Upload image button
-
     final uploadImageButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -203,21 +190,31 @@ class _AddItemState extends State<AddItem> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           itemNameField,
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           itemPriceField,
-          const SizedBox(height: 25),
-          itemCategoryField,
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
+          const Text(
+            'Item Category',
+            style: TextStyle(
+              fontSize: 18,
+              color: colorPrimaryDark,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 10),
+          itemCategoryList,
+          const SizedBox(height: 15),
           createItemButton,
-          const SizedBox(height: 25),
+          const SizedBox(height: 15),
           uploadImageButton,
           Text(
             fileName,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           uploadItemButton,
           task != null ? buildUploadStatus(task!) : Container(),
         ],
@@ -261,7 +258,7 @@ class _AddItemState extends State<AddItem> {
 
             return Text(
               '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             );
           } else {
             return Container();
@@ -273,7 +270,7 @@ class _AddItemState extends State<AddItem> {
     // calling our firestore
     // calling our user model
     // sending these values
-    var uuid = Uuid();
+    var uuid = const Uuid();
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     ProductModel productModel = ProductModel();
 
@@ -281,7 +278,7 @@ class _AddItemState extends State<AddItem> {
     productModel.pid = uuid.v1();
     productModel.name = itemNameController.text;
     productModel.price = itemPriceController.text;
-    productModel.category = itemCategoryController.text;
+    productModel.category = currentItem;
 
     FirebaseFirestore.instance
         .collection("product")

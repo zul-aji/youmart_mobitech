@@ -29,20 +29,6 @@ class _CategoriesState extends State<Categories> {
     });
   }
 
-  List<String> customerCategories = [
-    "Snacks",
-    "Instant Food",
-    "Beverages",
-    "Personal Care",
-  ];
-
-  List<String> adminCategories = [
-    "Add Item",
-    "Update Item",
-    "Delete Item",
-    "Orders",
-  ];
-
   // By default our first item will be selected
   int selectedIndex = 0;
   int categoryLength = 0;
@@ -76,7 +62,7 @@ class _CategoriesState extends State<Categories> {
           children: <Widget>[
             categoryShown(index),
             Container(
-              margin: EdgeInsets.only(top: 5), //top padding 5
+              margin: const EdgeInsets.only(top: 5), //top padding 5
               height: 3,
               width: 40,
               color: selectedIndex == index ? colorAccent : Colors.transparent,

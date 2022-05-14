@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:youmart_mobitech/constants.dart';
 import 'package:youmart_mobitech/screens/home/components/body/add_item.dart';
+import 'package:youmart_mobitech/screens/home/components/itemcard.dart';
 
 import '../../../model/user_model.dart';
 import 'categories_home.dart';
@@ -91,5 +92,7 @@ class _HomeBodyState extends State<HomeBody> {
     return AddItem();
   }
 
-  customerBody() {}
+  customerBody() {
+    return ItemList();
+  }
 }
