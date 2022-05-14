@@ -25,7 +25,6 @@ class _AddItemState extends State<AddItem> {
   //Controllers
   final itemNameController = TextEditingController();
   final itemPriceController = TextEditingController();
-  // final itemCategoryController = TextEditingController();
 
   String currentItem = '';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../screens/login_screen.dart';
-import '../screens/registration_screen.dart';
+import '../screens/login/login_screen.dart';
+import '../screens/login/registration_screen.dart';
 
 class AuthPage extends StatefulWidget {
   @override

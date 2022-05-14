@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/constants.dart';
-import 'package:youmart_mobitech/screens/home/components/home_body.dart';
 
+import '../../constants.dart';
 import '../../model/user_model.dart';
-import '../userprofile_screen.dart';
+import 'components/home_body.dart';
+import 'userprofile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

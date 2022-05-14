@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/constants.dart';
 
-import '../main.dart';
-import '../model/user_model.dart';
-import '../utils.dart';
+import '../../constants.dart';
+import '../../main.dart';
+import '../../model/user_model.dart';
+import '../../utils.dart';
 import 'forgotpass_screen.dart';
 
 class LoginScreen extends StatefulWidget {

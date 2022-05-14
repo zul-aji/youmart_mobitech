@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../model/user_model.dart';
-import 'admin/add_item.dart';
-import 'categories_home.dart';
-import 'customer/itemlist.dart';
+import '../../constants.dart';
+import 'components/admin/add_item.dart';
+import 'components/categories_home.dart';
+import 'components/customer/itemlist.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
