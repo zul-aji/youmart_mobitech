@@ -274,6 +274,9 @@ class _AddItemState extends State<AddItem> {
     // calling our user model
     // sending these values
     var uuid = Uuid();
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     ProductModel productModel = ProductModel();
 
@@ -283,10 +286,25 @@ class _AddItemState extends State<AddItem> {
     productModel.price = itemPriceController.text;
     productModel.category = itemCategoryController.text;
 
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child('${productModel.pid}/images')
+        .child("post_$uuid");
+
+    // cloud firestore
+    await firebaseFirestore
+        .collection("product")
+        .doc(productModel.pid)
+        .collection("itemimage")
+        .add({'downloadURL': urlDownload});
+
     FirebaseFirestore.instance
         .collection("product")
-        .doc(uuid.v1())
+        .doc(productModel.pid)
         .set(productModel.toMap());
+
     Fluttertoast.showToast(msg: "Product created successfully");
+
   }
+
 }
