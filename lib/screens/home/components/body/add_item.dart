@@ -123,8 +123,8 @@ class _AddItemState extends State<AddItem> {
         },
         items: dropdownItems);
 
-    //Upload image button
-    final uploadImageButton = Material(
+    //select image button
+    final selectImageButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: colorPrimaryDark,
@@ -133,7 +133,7 @@ class _AddItemState extends State<AddItem> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: selectFile,
         child: const Text(
-          "Upload Image",
+          "Select Image",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
@@ -141,7 +141,8 @@ class _AddItemState extends State<AddItem> {
       ),
     );
 
-    final createItemButton = Material(
+    // upload item button
+    final uploadItemButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: colorPrimaryDark,
@@ -150,7 +151,7 @@ class _AddItemState extends State<AddItem> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: postItemDetailsToFirestore,
         child: const Text(
-          "Create Item",
+          "Upload Item",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
@@ -158,8 +159,8 @@ class _AddItemState extends State<AddItem> {
       ),
     );
 
-    //Upload item button
-    final uploadItemButton = Material(
+    //Upload image button
+    final uploadImageButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: colorPrimaryDark,
@@ -168,7 +169,7 @@ class _AddItemState extends State<AddItem> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: uploadFile,
         child: const Text(
-          "Upload Item",
+          "Upload Image",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
@@ -207,16 +208,16 @@ class _AddItemState extends State<AddItem> {
           const SizedBox(height: 10),
           itemCategoryList,
           const SizedBox(height: 15),
-          createItemButton,
-          const SizedBox(height: 15),
-          uploadImageButton,
+          selectImageButton,
           Text(
             fileName,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 10),
-          uploadItemButton,
+          uploadImageButton,
           task != null ? buildUploadStatus(task!) : Container(),
+          const SizedBox(height: 15),
+          uploadItemButton,
         ],
       ),
     );
