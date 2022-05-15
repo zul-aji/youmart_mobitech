@@ -1,7 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+import '../model/product_model.dart';
+import '../notifier/product_notifier.dart';
+
 //these are function to upload file / bytes (for textfile maybe)
 class FirebaseApi {
   static UploadTask? uploadFile(String destination, File file) {
@@ -22,5 +27,21 @@ class FirebaseApi {
     } on FirebaseException catch (e) {
       return null;
     }
+  }
+
+  getProduct(ProductNotifier productNotifier) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('product')
+        .orderBy("name", descending: true)
+        .get();
+
+    List<ProductModel> _productList = [];
+
+    snapshot.docs.forEach((document) {
+      ProductModel product = ProductModel.fromMap(document.data);
+      _productList.add(product);
+    });
+
+    productNotifier.productList = _productList;
   }
 }

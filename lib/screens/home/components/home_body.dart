@@ -29,12 +29,6 @@ class _HomeBodyState extends State<HomeBody> {
   void initState() {
     super.initState();
 
-    void initState() {
-      ProductNotifier productNotifier = Provider.of<ProductNotifier>(context, listen: false);
-      getProduct(productNotifier);
-      super.initState();
-    }
-
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
@@ -104,28 +98,28 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   customerBody() {
-    body: ListView.separated(
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: Image.network(
-              productNotifier.itemList[index].image != null
-                  ? productNotifier.itemList[index].image
-                  : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
-              width: 120,
-              fit: BoxFit.fitWidth,
-            ),
-            title: Text(productNotifier.itemList[index].name),
-            subtitle: Text(productNotifier.itemList[index].category),
-            onTap: () {
-              productNotifier.currentFood = productNotifier.itemList[index];
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return ProductDetail();
-                  }));
-            },
-          );
-        }).
-    );
+    // body: ListView.separated(
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return ListTile(
+    //         leading: Image.network(
+    //           productNotifier.itemList[index].image != null
+    //               ? productNotifier.itemList[index].image
+    //               : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
+    //           width: 120,
+    //           fit: BoxFit.fitWidth,
+    //         ),
+    //         title: Text(productNotifier.itemList[index].name),
+    //         subtitle: Text(productNotifier.itemList[index].category),
+    //         onTap: () {
+    //           productNotifier.currentFood = productNotifier.itemList[index];
+    //           Navigator.of(context).push(
+    //               MaterialPageRoute(builder: (BuildContext context) {
+    //                 return ProductDetail();
+    //               }));
+    //         },
+    //       );
+    //     }).
+    // );
     return ItemList();
   }
 }
