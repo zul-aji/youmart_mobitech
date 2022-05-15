@@ -53,6 +53,9 @@ dependencies:
   #uuid generator
   uuid: ^3.0.6
 
+  #provider:
+  provider: ^4.1.1
+
 
 
 dev_dependencies:

@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
+import '../../../notifier/product_notifier.dart';
 import 'admin/add_item.dart';
 import 'categories_home.dart';
 import 'customer/itemlist.dart';
+
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -25,6 +28,13 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     super.initState();
+
+    void initState() {
+      ProductNotifier productNotifier = Provider.of<ProductNotifier>(context, listen: false);
+      getProduct(productNotifier);
+      super.initState();
+    }
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
@@ -37,6 +47,8 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
+    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
+
     final headingTitle = Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: LayoutBuilder(builder: (context, constraints) {
@@ -82,8 +94,7 @@ class _HomeBodyState extends State<HomeBody> {
       );
     } else {
       return Expanded(
-        child:
-            Padding(padding: const EdgeInsets.all(36.0), child: customerBody()),
+        child: Padding(padding: const EdgeInsets.all(36.0), child: customerBody())
       );
     }
   }
@@ -93,6 +104,28 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   customerBody() {
+    body: ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Image.network(
+              productNotifier.itemList[index].image != null
+                  ? productNotifier.itemList[index].image
+                  : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
+              width: 120,
+              fit: BoxFit.fitWidth,
+            ),
+            title: Text(productNotifier.itemList[index].name),
+            subtitle: Text(productNotifier.itemList[index].category),
+            onTap: () {
+              productNotifier.currentFood = productNotifier.itemList[index];
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return ProductDetail();
+                  }));
+            },
+          );
+        }).
+    );
     return ItemList();
   }
 }
