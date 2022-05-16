@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'model/user_model.dart';
 import 'pages/auth_page.dart';
 import 'screens/home/home_screen.dart';
-import 'notifier/product_notifier.dart';
-import 'screens/home/components/home_body.dart';
 import 'utils.dart';
 
 Future main() async {

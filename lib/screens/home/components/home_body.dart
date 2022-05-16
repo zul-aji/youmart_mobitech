@@ -6,7 +6,6 @@ import '../../../constants.dart';
 import '../../../model/user_model.dart';
 import 'admin/add_item.dart';
 import 'categories_home.dart';
-import 'customer/details_screen.dart';
 import 'customer/itemlist.dart';
 
 class HomeBody extends StatefulWidget {
@@ -102,19 +101,12 @@ class _HomeBodyState extends State<HomeBody> {
             itemCount: 8,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 15,
+              mainAxisSpacing: 10,
               crossAxisSpacing: 30,
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.65,
             ),
             itemBuilder: (context, index) => ItemList(
-                // product: products[index],
-                // press: () => Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => DetailsScreen(
-                //           product: products[index],
-                //           ),
-                //     )),
+                // product: products[index],p
                 )),
       ),
     );

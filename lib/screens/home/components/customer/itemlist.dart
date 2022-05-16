@@ -1,20 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:youmart_mobitech/constants.dart';
-import 'package:youmart_mobitech/model/product_model.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/details_screen.dart';
-import 'itemlist.dart';
-import 'package:youmart_mobitech/api/firebase_api.dart';
+
+import '../../../../constants.dart';
 
 class ItemList extends StatefulWidget {
   // final Product product;
-  // final Function press;
 
   const ItemList({
     Key? key,
     // this.product,
-    // this.press,
   }) : super(key: key);
 
   @override
@@ -22,10 +15,10 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
+  int numOfItems = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: press,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -60,6 +53,37 @@ class _ItemListState extends State<ItemList> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 45.0,
+            child: Row(
+              children: [
+                IconButton(
+                  iconSize: 25,
+                  icon: Icon(Icons.remove, color: colorAccent),
+                  onPressed: () {
+                    if (numOfItems > 0) {
+                      setState(() {
+                        numOfItems--;
+                      });
+                    }
+                  },
+                ),
+                Text(
+                  // if our item is less  then 10 then  it shows 01 02 like that
+                  numOfItems.toString().padLeft(2, "0"),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                IconButton(
+                    iconSize: 25,
+                    icon: Icon(Icons.add, color: colorAccent),
+                    onPressed: () {
+                      setState(() {
+                        numOfItems++;
+                      });
+                    }),
               ],
             ),
           ),
