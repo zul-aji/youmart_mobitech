@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
-import '../../../notifier/product_notifier.dart';
 import 'admin/add_item.dart';
 import 'categories_home.dart';
+import 'customer/details_screen.dart';
 import 'customer/itemlist.dart';
 
 class HomeBody extends StatefulWidget {
@@ -40,13 +40,13 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     final headingTitle = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       child: LayoutBuilder(builder: (context, constraints) {
         if (loggedInUser.role == 'Admin') {
           return const Text(
             "Manage Items",
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               color: colorPrimaryDark,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
@@ -56,7 +56,7 @@ class _HomeBodyState extends State<HomeBody> {
           return const Text(
             "Shop Items",
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               color: colorPrimaryDark,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
@@ -85,7 +85,8 @@ class _HomeBodyState extends State<HomeBody> {
     } else {
       return Expanded(
           child: Padding(
-              padding: const EdgeInsets.all(36.0), child: customerBody()));
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: customerBody()));
     }
   }
 
@@ -94,28 +95,28 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   customerBody() {
-    // body: ListView.separated(
-    //     itemBuilder: (BuildContext context, int index) {
-    //       return ListTile(
-    //         leading: Image.network(
-    //           productNotifier.itemList[index].image != null
-    //               ? productNotifier.itemList[index].image
-    //               : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
-    //           width: 120,
-    //           fit: BoxFit.fitWidth,
-    //         ),
-    //         title: Text(productNotifier.itemList[index].name),
-    //         subtitle: Text(productNotifier.itemList[index].category),
-    //         onTap: () {
-    //           productNotifier.currentFood = productNotifier.itemList[index];
-    //           Navigator.of(context).push(
-    //               MaterialPageRoute(builder: (BuildContext context) {
-    //                 return ProductDetail();
-    //               }));
-    //         },
-    //       );
-    //     }).
-    // );
-    return ItemList();
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: GridView.builder(
+            itemCount: 8,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 30,
+              childAspectRatio: 0.75,
+            ),
+            itemBuilder: (context, index) => ItemList(
+                // product: products[index],
+                // press: () => Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => DetailsScreen(
+                //           product: products[index],
+                //           ),
+                //     )),
+                )),
+      ),
+    );
   }
 }
