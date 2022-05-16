@@ -39,51 +39,57 @@ class _ItemListState extends State<ItemList> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8, top: 15),
+            padding: const EdgeInsets.only(top: 5, right: 15),
             child: Column(
-              children: const [
-                Text(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
                   'Product name',
                   style: TextStyle(color: colorPrimaryDark),
                 ),
+                const Text(
+                  "Price RM",
+                  style: TextStyle(
+                      color: colorPrimaryDark, fontWeight: FontWeight.w700),
+                ),
                 Padding(
-                  padding: EdgeInsets.only(right: 39.0, bottom: 10),
-                  child: Text(
-                    "Price RM",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        iconSize: 25,
+                        icon: const Icon(Icons.remove, color: colorAccent),
+                        onPressed: () {
+                          if (numOfItems > 0) {
+                            setState(() {
+                              numOfItems--;
+                            });
+                          }
+                        },
+                      ),
+                      Text(
+                        // if our item is less  then 10 then  it shows 01 02 like that
+                        numOfItems.toString().padLeft(2, "0"),
+                        style: const TextStyle(
+                            color: colorPrimaryDark,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800),
+                      ),
+                      IconButton(
+                        iconSize: 25,
+                        icon: const Icon(Icons.add, color: colorAccent),
+                        onPressed: () {
+                          setState(() {
+                            numOfItems++;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 45.0,
-            child: Row(
-              children: [
-                IconButton(
-                  iconSize: 25,
-                  icon: Icon(Icons.remove, color: colorAccent),
-                  onPressed: () {
-                    if (numOfItems > 0) {
-                      setState(() {
-                        numOfItems--;
-                      });
-                    }
-                  },
-                ),
-                Text(
-                  // if our item is less  then 10 then  it shows 01 02 like that
-                  numOfItems.toString().padLeft(2, "0"),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                IconButton(
-                    iconSize: 25,
-                    icon: Icon(Icons.add, color: colorAccent),
-                    onPressed: () {
-                      setState(() {
-                        numOfItems++;
-                      });
-                    }),
               ],
             ),
           ),
