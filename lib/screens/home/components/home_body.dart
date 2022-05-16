@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
@@ -9,7 +8,6 @@ import '../../../notifier/product_notifier.dart';
 import 'admin/add_item.dart';
 import 'categories_home.dart';
 import 'customer/itemlist.dart';
-
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -41,10 +39,8 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
-
     final headingTitle = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: LayoutBuilder(builder: (context, constraints) {
         if (loggedInUser.role == 'Admin') {
           return const Text(
@@ -88,8 +84,8 @@ class _HomeBodyState extends State<HomeBody> {
       );
     } else {
       return Expanded(
-        child: Padding(padding: const EdgeInsets.all(36.0), child: customerBody())
-      );
+          child: Padding(
+              padding: const EdgeInsets.all(36.0), child: customerBody()));
     }
   }
 

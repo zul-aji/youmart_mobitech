@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:youmart_mobitech/constants.dart';
 import 'package:youmart_mobitech/model/product_model.dart';
 import 'package:youmart_mobitech/screens/home/components/customer/details_screen.dart';
@@ -23,10 +22,6 @@ class _ItemListState extends State<ItemList> {
 
   @override
   void initState() {
-    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context, listen: false);
-    getProduct(productNotifier);
-    super.initState();
-
     FirebaseFirestore.instance
         .collection("product")
         .doc(widget.productId)
@@ -39,7 +34,6 @@ class _ItemListState extends State<ItemList> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection("product")
@@ -83,14 +77,10 @@ class _ItemListState extends State<ItemList> {
                           child: Hero(
                             tag: "${productItem.pid}",
                             child: Image.network(
-                              ProductNotifier.productList[index].imageitem != null
-                                  ? ProductNotifier.productList[index].imageitem
-                                  : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
-                              width: 120,
+                              url,
+                              height: 300,
                               fit: BoxFit.fitWidth,
                             ),
-                            title: Text(ProductNotifier.productList[index].name),
-                            subtitle: Text(ProductNotifier.productList[index].category),
                           ),
                         ),
                       ),
