@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 // import 'package:provider/provider.dart';
 import 'package:youmart_mobitech/constants.dart';
-import 'package:youmart_mobitech/model/product_model_view.dart';
 import 'package:youmart_mobitech/screens/home/components/customer/details_screen.dart';
 
 import '../../../../notifier/product_notifier.dart';
