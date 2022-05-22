@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
@@ -41,8 +41,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
-
+    // ProductNotifier productNotifier = Provider.of<ProductNotifier>(context);
     final headingTitle = Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: LayoutBuilder(builder: (context, constraints) {

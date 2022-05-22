@@ -1,117 +1,139 @@
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutterfire_ui/firestore.dart';
+// import 'package:provider/provider.dart';
 import 'package:youmart_mobitech/constants.dart';
-import 'package:youmart_mobitech/model/product_model.dart';
+import 'package:youmart_mobitech/model/product_model_view.dart';
 import 'package:youmart_mobitech/screens/home/components/customer/details_screen.dart';
 
 import '../../../../notifier/product_notifier.dart';
 import 'package:youmart_mobitech/api/firebase_api.dart';
+import 'package:youmart_mobitech/model/product_fix.dart';
+//
+// class ItemList extends StatefulWidget {
+//   final String? productId;
+//   ItemList({Key? key, this.productId}) : super(key: key);
+//
+//   @override
+//   State<ItemList> createState() => _ItemListState();
+// }
+//
+// class _ItemListState extends State<ItemList> {
+//   User? product = FirebaseAuth.instance.currentUser;
+//
+//   @override
+//   Widget build(BuildContext context) => MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         title: title,
+//         theme: ThemeData(
+//           primarySwatch: Colors.red,
+//           elevatedButtonTheme: ElevatedButtonThemeData(
+//             style: ElevatedButton.styleFrom(
+//               minimumSize: Size.fromHeight(46),
+//               textStyle: TextStyle(fontSize: 24),
+//             ),
+//           ),
+//         ),
+//       );
+//
+//   static final String title = 'Firestore CRUD Write';
+//
+//   Widget buildProductModelView() => StreamBuilder<List<ProductModelView>>(
+//       stream: readProduct(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasError) {
+//           return Text('Something went wrong! ${snapshot.error}');
+//         } else if (snapshot.hasData) {
+//           final productModelView = snapshot.data!;
+//           return ListView(children: productModelView.docs.toList());
+//         } else {
+//           return Center(child: CircularProgressIndicator());
+//         }
+//       });
+//
+//   Widget buildProduct(ProductModelView productModelView) => ListTile(
+//         leading: Text(productModelView.category),
+//         title: Text(productModelView.name),
+//         subtitle: Text(productModelView.price),
+//       );
+//
+//   Stream<List<ProductModelView>> readProduct() => FirebaseFirestore.instance
+//       .collection('product')
+//       .snapshots()
+//       .map((snapshot) => snapshot.docs
+//           .map((doc) => ProductModelView.fromJson(doc.data()))
+//           .toList());
+// }
 
-class ItemList extends StatefulWidget {
-  final String? productId;
-  ItemList({Key? key, this.productId}) : super(key: key);
+
+class ItemList extends StatelessWidget {
+  final queryProductList = FirebaseFirestore.instance
+      .collection('product')
+      .orderBy('name')
+      .withConverter<ProductList>(
+    fromFirestore: (snapshot, _) => ProductList.fromJson(snapshot.data()!),
+    toFirestore: (user, _) => user.toJson(),
+  );
 
   @override
-  State<ItemList> createState() => _ItemListState();
-}
+  Widget build(BuildContext context) => FirestoreQueryBuilder<ProductList>(
+    query: queryProductList,
+    pageSize: 2,
+    builder: (context, snapshot, _) {
+      if (snapshot.isFetching) {
+        return Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError) {
+        return Text('Something went wrong! ${snapshot.error}');
+      } else {
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemCount: snapshot.docs.length + 1,
+          itemBuilder: (context, index) {
+            final hasEndReached = snapshot.hasMore &&
+                index == snapshot.docs.length &&
+                !snapshot.isFetchingMore;
 
-class _ItemListState extends State<ItemList> {
-  User? product = FirebaseAuth.instance.currentUser;
-  ProductModel productItem = ProductModel();
+            if (hasEndReached) {
+              snapshot.fetchMore();
+            }
 
-  @override
-  void initState() {
-    ProductNotifier productNotifier = Provider.of<ProductNotifier>(context, listen: false);
-    getProduct(productNotifier);
-    super.initState();
+            if (index == snapshot.docs.length) {
+              return Center(
+                child: snapshot.isFetchingMore
+                    ? CircularProgressIndicator()
+                    : Container(),
+              );
+            }
 
-    FirebaseFirestore.instance
-        .collection("product")
-        .doc(widget.productId)
-        .get()
-        .then((value) {
-      this.productItem = ProductModel.fromMap(value.data());
-      setState(() {});
-    });
-  }
+            final ProductList = snapshot.docs[index].data();
+            return buildProductList(ProductList);
+          },
+        );
+      }
+    },
+  );
 
-  @override
-  Widget build(BuildContext context) {
-
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection("product")
-          .doc(widget.productId)
-          .collection("itemimage")
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return (const Center(child: Text("No Images Found")));
-        } else {
-          return GridView.builder(
-              itemCount: snapshot.data!.docs.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                childAspectRatio: 0.75,
-              ),
-              itemBuilder: (context, index) {
-                String url = snapshot.data!.docs[index]['downloadURL'];
-                return GestureDetector(
-                  // onTap: () {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) => DetailsScreen(
-                  //           product: snapshot.data!.docs[index],
-                  //         ),
-                  //       ));
-                  // },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: colorBase,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Hero(
-                            tag: "${productItem.pid}",
-                            child: Image.network(
-                              ProductNotifier.productList[index].imageitem != null
-                                  ? ProductNotifier.productList[index].imageitem
-                                  : 'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
-                              width: 120,
-                              fit: BoxFit.fitWidth,
-                            ),
-                            title: Text(ProductNotifier.productList[index].name),
-                            subtitle: Text(ProductNotifier.productList[index].category),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Text(
-                          // products is out demo list
-                          '${productItem.name}',
-                          style: TextStyle(color: colorPrimaryDark),
-                        ),
-                      ),
-                      Text(
-                        "\$${productItem.price}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                );
-              });
-        }
-      },
-    );
-  }
+  Widget buildProductList(ProductList ProductList) => Card(
+    child: Container(
+      padding: EdgeInsets.all(8),
+      child: Column(
+        children: [
+          Expanded(
+            child: Image.network(
+              ProductList.image,
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(ProductList.name),
+        ],
+      ),
+    ),
+  );
 }
