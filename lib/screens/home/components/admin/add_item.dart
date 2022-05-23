@@ -282,6 +282,7 @@ class _AddItemState extends State<AddItem> {
     productModel.name = itemNameController.text;
     productModel.price = itemPriceController.text;
     productModel.category = currentItem;
+    productModel.image = urlDownload;
 
     Reference reference = FirebaseStorage.instance
         .ref()
@@ -289,16 +290,15 @@ class _AddItemState extends State<AddItem> {
         .child("post_$uuid");
 
     // cloud firestore
-    await firebaseFirestore
-        .collection("product")
-        .doc(productModel.pid)
-        .collection("itemimage")
-        .add({'downloadURL': urlDownload});
+    // await firebaseFirestore
+    //     .collection("product")
+    //     .doc(productModel.pid)
+    //     .add({'downloadURL': urlDownload});
 
     FirebaseFirestore.instance
         .collection("product")
         .doc(productModel.pid)
-        .set(productModel.toMap());
+        .set(productModel.toJson());
 
     Fluttertoast.showToast(msg: "Product created successfully");
   }
