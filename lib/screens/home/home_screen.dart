@@ -12,6 +12,7 @@ import '../../model/product_model.dart';
 import '../../model/user_model.dart';
 
 import 'components/categories_home.dart';
+import 'components/home_body.dart';
 import 'userprofile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -144,62 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 upperLeftIcon3,
               ],
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                headingTitle,
-                const SizedBox(height: 18),
-                const Categories(),
-                adminOrCustomer(),
-              ],
-            )));
-  }
-
-  adminOrCustomer() {
-    if (loggedInUser.role == 'Admin') {
-      return Expanded(
-        child: Padding(padding: const EdgeInsets.all(36.0), child: adminBody()),
-      );
-    } else {
-      return Expanded(
-          child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-              child: customerBody()));
-    }
-  }
-
-  adminBody() {
-    return AddItem();
-  }
-
-  customerBody() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("product")
-                .doc(widget.pid)
-                .collection("itemimage")
-                .snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              return GridView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 30,
-                    childAspectRatio: 0.65,
-                  ),
-                  itemBuilder: (context, index) {
-                    String url = snapshot.data!.docs[index]['downloadURL'];
-                    return Image.network(
-                      url,
-                    );
-                  });
-            }),
-      ),
-    );
+            body: const HomeBody()));
   }
 
   deleteAccount() async {

@@ -14,14 +14,9 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MainPage());
-  // runApp(MultiProvider(
-  //     providers: [
-  //         create: (context) => ProductNotifier(),
-  //       ),
-  //     ],
-  //     child: MainPage()
-  // ));
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 UserModel loggedInUser = UserModel();
 
