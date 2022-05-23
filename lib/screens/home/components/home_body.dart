@@ -82,8 +82,9 @@ class _HomeBodyState extends State<HomeBody> {
       );
     } else {
       return Expanded(
-        child:
-            Padding(padding: const EdgeInsets.all(36.0), child: customerBody()),
+        child: Padding(
+            padding: const EdgeInsets.only(left: 24.0, right: 10.0, top: 20),
+            child: customerBody()),
       );
     }
   }

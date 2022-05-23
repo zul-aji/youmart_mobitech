@@ -2,16 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/screens/home/components/admin/add_item.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/cart_screen.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/itemlist.dart';
+import 'package:get/get.dart';
 
 import '../../constants.dart';
-import '../../model/local_product.dart';
 import '../../model/product_model.dart';
 import '../../model/user_model.dart';
-
-import 'components/categories_home.dart';
+import 'components/customer/cart_screen.dart';
 import 'components/home_body.dart';
 import 'userprofile_screen.dart';
 
@@ -130,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }),
     );
 
-    return MaterialApp(
+    return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(

@@ -29,13 +29,15 @@ class ItemList extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Something went wrong! ${snapshot.error}');
+          } else if (snapshot.hasData == false) {
+            return Text('No item available');
           } else {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                childAspectRatio: 0.75,
+                childAspectRatio: 0.69,
               ),
               itemCount: snapshot.docs.length + 1,
               itemBuilder: (context, index) {
@@ -69,12 +71,12 @@ class ItemList extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(12),
                 height: 180,
                 width: 160,
                 decoration: BoxDecoration(
                   color: colorPrimaryLight,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(25),
                 ),
                 child: Hero(
                   tag: ProductList.pid,
@@ -83,21 +85,25 @@ class ItemList extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5, right: 15),
+              padding: const EdgeInsets.only(top: 5, right: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Text(
-                    // 'title',
                     ProductList.name,
-                    style: TextStyle(color: colorPrimaryDark),
+                    style: TextStyle(
+                      color: colorPrimaryDark,
+                      fontSize: 18,
+                    ),
                   ),
                   Text(
-                    // 'price',
                     "${ProductList.price} RM",
                     style: const TextStyle(
-                        color: colorPrimaryDark, fontWeight: FontWeight.w700),
+                      color: colorPrimaryDark,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
                   ),
                   CartCounter(),
                 ],

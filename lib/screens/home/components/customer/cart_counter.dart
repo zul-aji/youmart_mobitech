@@ -10,11 +10,11 @@ class CartCounter extends StatefulWidget {
 }
 
 class _CartCounterState extends State<CartCounter> {
+  int numOfItems = 0;
   @override
   Widget build(BuildContext context) {
-    int numOfItems = 0;
     return Padding(
-      padding: const EdgeInsets.only(left: 3, bottom: 8),
+      padding: const EdgeInsets.only(left: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

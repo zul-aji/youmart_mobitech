@@ -289,12 +289,6 @@ class _AddItemState extends State<AddItem> {
         .child('${productModel.pid}/images')
         .child("post_$uuid");
 
-    // cloud firestore
-    // await firebaseFirestore
-    //     .collection("product")
-    //     .doc(productModel.pid)
-    //     .add({'downloadURL': urlDownload});
-
     FirebaseFirestore.instance
         .collection("product")
         .doc(productModel.pid)
