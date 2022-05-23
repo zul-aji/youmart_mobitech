@@ -1,9 +1,5 @@
 class ProductModel {
-  String? pid;
-  String? name;
-  String? price;
-  String? category;
-  String? image;
+  String? pid, name, price, category, image;
 
   ProductModel({this.pid, this.name, this.price, this.category, this.image});
 
