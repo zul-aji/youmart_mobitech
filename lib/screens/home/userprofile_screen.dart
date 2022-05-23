@@ -211,7 +211,7 @@ class _UserProfileState extends State<UserProfile> {
                         SizedBox(
                             height: 100,
                             child: Image.asset(
-                              "images/Profile.png",
+                              "images/Logo/Profile.png",
                               fit: BoxFit.contain,
                             )),
                         profileName,

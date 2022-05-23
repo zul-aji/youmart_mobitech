@@ -8,8 +8,6 @@ import 'model/user_model.dart';
 import 'model/product_model.dart';
 import 'pages/auth_page.dart';
 import 'screens/home/home_screen.dart';
-import 'notifier/product_notifier.dart';
-import 'screens/home/components/home_body.dart';
 import 'utils.dart';
 
 Future main() async {
@@ -18,15 +16,12 @@ Future main() async {
   runApp(MainPage());
   // runApp(MultiProvider(
   //     providers: [
-  //       ChangeNotifierProvider(
   //         create: (context) => ProductNotifier(),
   //       ),
   //     ],
   //     child: MainPage()
   // ));
 }
-
-final navigatorKey = GlobalKey<NavigatorState>();
 
 UserModel loggedInUser = UserModel();
 
@@ -42,11 +37,11 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Something went wrong!'));
+            return const Center(child: Text('Something went wrong!'));
           } else if (snapshot.hasData) {
-            return HomeScreen();
+            return const HomeScreen();
           } else {
             return AuthPage();
           }
@@ -55,4 +50,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-

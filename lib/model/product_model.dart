@@ -29,18 +29,18 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() => {
-    'pid': pid,
-    'name': name,
-    'price': price,
-    'category': category,
-    'image': image,
-  };
+        'pid': pid,
+        'name': name,
+        'price': price,
+        'category': category,
+        'image': image,
+      };
 
   static ProductModel fromJson(Map<String, dynamic> json) => ProductModel(
-    pid: json['id'],
-    name: json['name'],
-    price: json['price'],
-    category: json['category'],
-    image: json['image'],
-  );
+        pid: json['id'],
+        name: json['name'],
+        price: json['price'],
+        category: json['category'],
+        image: json['image'],
+      );
 }
