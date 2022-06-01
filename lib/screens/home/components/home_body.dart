@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import '../../../../model/user_model.dart';
 import '../../../constants.dart';
 import 'admin/add_item.dart';
-import 'categories_home.dart';
+import 'admin/delete_item.dart';
+import 'admin/orders.dart';
+import 'admin/update_item.dart';
 import 'customer/itemlist.dart';
 
 class HomeBody extends StatefulWidget {
@@ -34,6 +36,10 @@ class _HomeBodyState extends State<HomeBody> {
       setState(() {});
     });
   }
+
+  // By default our first item will be selected
+  int selectedIndex = 0;
+  int categoryLength = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +75,48 @@ class _HomeBodyState extends State<HomeBody> {
       children: <Widget>[
         headingTitle,
         const SizedBox(height: 18),
-        const Categories(),
-        adminOrCustomer(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          child: SizedBox(
+            height: 30,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categoryCount(),
+              itemBuilder: (context, index) => buildCategory(index),
+            ),
+          ),
+        ),
+        adminOrCustomer(selectedIndex),
       ],
     );
   }
 
-  adminOrCustomer() {
+  Widget buildCategory(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            categoryShown(index),
+            Container(
+              margin: const EdgeInsets.only(top: 5), //top padding 5
+              height: 3,
+              width: 40,
+              color: selectedIndex == index ? colorAccent : Colors.transparent,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget adminOrCustomer(int index) {
     if (loggedInUser.role == 'Admin') {
       return Expanded(
         child: Padding(padding: const EdgeInsets.all(36.0), child: adminBody()),
@@ -90,10 +131,46 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   adminBody() {
-    return AddItem();
+    if (selectedIndex == 0) {
+      return AddItem();
+    } else if (selectedIndex == 1) {
+      return UpdateItem();
+    } else if (selectedIndex == 2) {
+      return DeleteItem();
+    } else if (selectedIndex == 3) {
+      return Orders();
+    }
   }
 
   customerBody() {
     return ItemList();
+  }
+
+  categoryShown(index) {
+    if (loggedInUser.role == 'Admin') {
+      return Text(
+        adminCategories[index],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: selectedIndex == index ? colorPrimaryDark : colorUnpicked,
+        ),
+      );
+    } else {
+      return Text(
+        customerCategories[index],
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: selectedIndex == index ? colorPrimaryDark : colorUnpicked,
+        ),
+      );
+    }
+  }
+
+  categoryCount() {
+    if (loggedInUser.role == 'Admin') {
+      return categoryLength = adminCategories.length;
+    } else {
+      return categoryLength = customerCategories.length;
+    }
   }
 }

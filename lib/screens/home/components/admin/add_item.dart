@@ -13,7 +13,7 @@ import '../../../../constants.dart';
 import '../../../../model/product_upload.dart';
 
 class AddItem extends StatefulWidget {
-  AddItem({Key? key}) : super(key: key);
+  const AddItem({Key? key}) : super(key: key);
 
   @override
   State<AddItem> createState() => _AddItemState();
@@ -34,6 +34,7 @@ class _AddItemState extends State<AddItem> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'No File Selected';
 
@@ -186,7 +187,6 @@ class _AddItemState extends State<AddItem> {
             style: TextStyle(
               fontSize: 25,
               color: colorPrimaryDark,
-              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -200,7 +200,6 @@ class _AddItemState extends State<AddItem> {
             style: TextStyle(
               fontSize: 18,
               color: colorPrimaryDark,
-              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -283,11 +282,6 @@ class _AddItemState extends State<AddItem> {
     productUploadModel.price = itemPriceController.text;
     productUploadModel.category = currentItem;
     productUploadModel.image = urlDownload;
-
-    Reference reference = FirebaseStorage.instance
-        .ref()
-        .child('${productUploadModel.pid}/images')
-        .child("post_$uuid");
 
     FirebaseFirestore.instance
         .collection("product")

@@ -1,27 +1,41 @@
-import 'dart:core';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:youmart_mobitech/model/local_product.dart';
 import 'package:youmart_mobitech/model/product_download.dart';
+import 'package:youmart_mobitech/model/product_upload.dart';
 
 import '../../../../constants.dart';
 
-class ItemList extends StatelessWidget {
-  final queryProductDownloadModel = FirebaseFirestore.instance
-      .collection('product')
-      .orderBy('name')
-      .withConverter<ProductDownloadModel>(
-        fromFirestore: (snapshot, _) =>
-            ProductDownloadModel.fromJson(snapshot.data()!),
-        toFirestore: (user, _) => user.toJson(),
-      );
+final queryProductDownloadModel = FirebaseFirestore.instance
+    .collection('product')
+    .orderBy('name')
+    .withConverter<ProductDownloadModel>(
+      fromFirestore: (snapshot, _) =>
+          ProductDownloadModel.fromJson(snapshot.data()!),
+      toFirestore: (user, _) => user.toJson(),
+    );
 
-  ItemList({Key? key}) : super(key: key);
+class UpdateItem extends StatefulWidget {
+  UpdateItem({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
+  State<UpdateItem> createState() => _UpdateItemState();
+}
+
+class _UpdateItemState extends State<UpdateItem> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: buildList(context));
+  }
+
+  Widget buildList(BuildContext context) =>
       FirestoreQueryBuilder<ProductDownloadModel>(
         query: queryProductDownloadModel,
         pageSize: 2,
@@ -33,13 +47,7 @@ class ItemList extends StatelessWidget {
           } else if (snapshot.hasData == false) {
             return const Text('No item available');
           } else {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                childAspectRatio: 0.68,
-              ),
+            return ListView.builder(
               itemCount: snapshot.docs.length + 1,
               itemBuilder: (context, index) {
                 final hasEndReached = snapshot.hasMore &&
@@ -59,7 +67,33 @@ class ItemList extends StatelessWidget {
                 }
 
                 final productData = snapshot.docs[index].data();
-                return buildProductDownloadModel(productData);
+                return ListTile(
+                    leading: Image.network(productData.image),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        FirebaseFirestore firebaseFirestore =
+                            FirebaseFirestore.instance;
+
+                        firebaseFirestore
+                            .collection("product")
+                            .doc(productData.pid)
+                            .delete();
+                        Fluttertoast.showToast(msg: "Product Deleted");
+                      },
+                      child: Text('Update Item'),
+                      style: ElevatedButton.styleFrom(
+                        primary: colorPrimaryDark,
+                        onPrimary: colorBase,
+                      ),
+                    ),
+                    title: Text(
+                      productData.name,
+                      style: const TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ));
               },
             );
           }
@@ -135,5 +169,16 @@ class ItemList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  deleteAccount() async {
+    // calling our firestore
+    // calling our user model
+    // sending these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    ProductUploadModel productUploadModel = ProductUploadModel();
+
+    Fluttertoast.showToast(msg: "Product Deleted");
   }
 }
