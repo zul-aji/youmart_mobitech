@@ -17,6 +17,14 @@ class _CartScreenState extends State<CartScreen> {
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
           appBar: AppBar(
+            title: const Text(
+              "Your Cart",
+              style: TextStyle(
+                fontSize: 25,
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             backgroundColor: const Color(0xFFFFFFFF),
             elevation: 0,
             leading: IconButton(

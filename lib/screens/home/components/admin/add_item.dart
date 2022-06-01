@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../api/firebase_api.dart';
 import '../../../../constants.dart';
-import '../../../../model/product_model.dart';
+import '../../../../model/product_upload.dart';
 
 class AddItem extends StatefulWidget {
   AddItem({Key? key}) : super(key: key);
@@ -275,24 +275,24 @@ class _AddItemState extends State<AddItem> {
     final urlDownload = await snapshot.ref.getDownloadURL();
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    ProductModel productModel = ProductModel();
+    ProductUploadModel productUploadModel = ProductUploadModel();
 
     // writing all the values
-    productModel.pid = uuid.v1();
-    productModel.name = itemNameController.text;
-    productModel.price = itemPriceController.text;
-    productModel.category = currentItem;
-    productModel.image = urlDownload;
+    productUploadModel.pid = uuid.v1();
+    productUploadModel.name = itemNameController.text;
+    productUploadModel.price = itemPriceController.text;
+    productUploadModel.category = currentItem;
+    productUploadModel.image = urlDownload;
 
     Reference reference = FirebaseStorage.instance
         .ref()
-        .child('${productModel.pid}/images')
+        .child('${productUploadModel.pid}/images')
         .child("post_$uuid");
 
     FirebaseFirestore.instance
         .collection("product")
-        .doc(productModel.pid)
-        .set(productModel.toJson());
+        .doc(productUploadModel.pid)
+        .set(productUploadModel.toJson());
 
     Fluttertoast.showToast(msg: "Product created successfully");
   }

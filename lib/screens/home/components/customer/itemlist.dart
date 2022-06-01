@@ -4,40 +4,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 
-import 'package:youmart_mobitech/model/product_fix.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/cart_counter.dart';
+import 'package:youmart_mobitech/model/product_download.dart';
 
 import '../../../../constants.dart';
 
 class ItemList extends StatelessWidget {
-  final queryProductList = FirebaseFirestore.instance
+  final queryProductDownloadModel = FirebaseFirestore.instance
       .collection('product')
       .orderBy('name')
-      .withConverter<ProductList>(
-        fromFirestore: (snapshot, _) => ProductList.fromJson(snapshot.data()!),
+      .withConverter<ProductDownloadModel>(
+        fromFirestore: (snapshot, _) =>
+            ProductDownloadModel.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );
 
   ItemList({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => FirestoreQueryBuilder<ProductList>(
-        query: queryProductList,
+  Widget build(BuildContext context) =>
+      FirestoreQueryBuilder<ProductDownloadModel>(
+        query: queryProductDownloadModel,
         pageSize: 2,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData == false) {
-            return Text('No item available');
+            return const Text('No item available');
           } else {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                childAspectRatio: 0.69,
+                childAspectRatio: 0.68,
               ),
               itemCount: snapshot.docs.length + 1,
               itemBuilder: (context, index) {
@@ -52,22 +53,26 @@ class ItemList extends StatelessWidget {
                 if (index == snapshot.docs.length) {
                   return Center(
                     child: snapshot.isFetchingMore
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Container(),
                   );
                 }
 
-                final ProductList = snapshot.docs[index].data();
-                return buildProductList(ProductList);
+                final productData = snapshot.docs[index].data();
+                return buildProductDownloadModel(productData);
               },
             );
           }
         },
       );
 
-  Widget buildProductList(ProductList ProductList) => GestureDetector(
+  Widget buildProductDownloadModel(ProductDownloadModel productData) {
+    final price = productData.price.toString();
+    return GestureDetector(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
               child: Container(
@@ -79,37 +84,56 @@ class ItemList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Hero(
-                  tag: ProductList.pid,
-                  child: Image.network(ProductList.image),
+                  tag: productData.pid,
+                  child: Image.network(productData.image),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5, right: 24),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  SizedBox(height: 8),
                   Text(
-                    ProductList.name,
-                    style: TextStyle(
+                    productData.name,
+                    style: const TextStyle(
                       color: colorPrimaryDark,
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    "${ProductList.price} RM",
+                    "$price RM",
                     style: const TextStyle(
                       color: colorPrimaryDark,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
                   ),
-                  CartCounter(),
+                  SizedBox(height: 5),
+                  Material(
+                    borderRadius: BorderRadius.circular(15),
+                    color: colorPrimaryDark,
+                    child: MaterialButton(
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      onPressed: () {},
+                      child: const Text(
+                        "Add to Cart",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: colorBase,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
           ],
         ),
-      );
+      ),
+    );
+  }
 }

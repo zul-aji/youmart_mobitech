@@ -2,33 +2,24 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
-import '../model/product_model.dart';
+import '../model/product_upload.dart';
 
 class ProductNotifier with ChangeNotifier {
-  List<ProductModel> _productList = [];
-  late ProductModel _currentProduct;
+  List<ProductUploadModel> _productList = [];
+  late ProductUploadModel _currentProduct;
 
-  UnmodifiableListView<ProductModel> get productList => UnmodifiableListView(_productList);
+  UnmodifiableListView<ProductUploadModel> get productList =>
+      UnmodifiableListView(_productList);
 
-  ProductModel get currentProduct => _currentProduct;
+  ProductUploadModel get currentProduct => _currentProduct;
 
-  set productList(List<ProductModel> productList) {
+  set productList(List<ProductUploadModel> productList) {
     _productList = productList;
     notifyListeners();
   }
 
-  set currentProduct(ProductModel productModel) {
-    _currentProduct = productModel;
+  set currentProduct(ProductUploadModel ProductUploadModel) {
+    _currentProduct = ProductUploadModel;
     notifyListeners();
   }
-
-  // addFood(ProductModel productModel) {
-  //   _productList.insert(0, productModel);
-  //   notifyListeners();
-  // }
-
-  // deleteFood(Food food) {
-  //   _foodList.removeWhere((_food) => _food.id == food.id);
-  //   notifyListeners();
-  // }
 }

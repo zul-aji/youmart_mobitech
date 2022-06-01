@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 
 import '../../constants.dart';
-import '../../model/product_model.dart';
 import '../../model/user_model.dart';
 import 'components/customer/cart_screen.dart';
 import 'components/home_body.dart';
@@ -22,8 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
-  ProductModel productModel = ProductModel();
   @override
   void initState() {
     super.initState();
@@ -126,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }),
     );
 
-    return GetMaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
