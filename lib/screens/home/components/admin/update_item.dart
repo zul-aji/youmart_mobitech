@@ -65,8 +65,26 @@ class _UpdateItemState extends State<UpdateItem> {
                 }
 
                 final productData = snapshot.docs[index].data();
-                return ListTile(
+                return Card(
+                  elevation: 3.0,
+                  child: ListTile(
                     leading: Image.network(productData.image),
+                    title: Text(
+                      productData.name,
+                      style: const TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      productData.category,
+                      style: const TextStyle(
+                        color: colorUnpicked,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),
+                    ),
                     trailing: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -81,14 +99,8 @@ class _UpdateItemState extends State<UpdateItem> {
                       ),
                       child: const Text('Update Item'),
                     ),
-                    title: Text(
-                      productData.name,
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                      ),
-                    ));
+                  ),
+                );
               },
             );
           }
