@@ -68,6 +68,7 @@ class ItemList extends StatelessWidget {
 
   Widget buildProductDownloadModel(ProductDownloadModel productData) {
     final price = productData.price.toString();
+
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.only(right: 15.0),
@@ -112,22 +113,7 @@ class ItemList extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Material(
-                    borderRadius: BorderRadius.circular(15),
-                    color: colorPrimaryDark,
-                    child: MaterialButton(
-                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      onPressed: () {},
-                      child: const Text(
-                        "Add to Cart",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: colorBase,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )
+                  stockCheck(productData),
                 ],
               ),
             ),
@@ -135,5 +121,35 @@ class ItemList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  stockCheck(productData) {
+    int stock = int.parse(productData.stock);
+
+    if (stock == 0) {
+      return const Padding(
+        padding: EdgeInsets.only(bottom: 14, top: 5),
+        child: Text(
+          "No Stock",
+          style: TextStyle(
+              fontSize: 20, color: colorAccent, fontWeight: FontWeight.bold),
+        ),
+      );
+    } else {
+      return Material(
+        borderRadius: BorderRadius.circular(15),
+        color: colorPrimaryDark,
+        child: MaterialButton(
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          onPressed: () {},
+          child: const Text(
+            "Add to Cart",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+    }
   }
 }
