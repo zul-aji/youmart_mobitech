@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/model/local_product.dart';
-import 'package:youmart_mobitech/model/product_download.dart';
-import 'package:youmart_mobitech/model/product_upload.dart';
 
 import '../../../../constants.dart';
+import '../../../../model/product_download.dart';
+import 'item_details.dart';
 
 final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
@@ -18,7 +16,7 @@ final queryProductDownloadModel = FirebaseFirestore.instance
     );
 
 class UpdateItem extends StatefulWidget {
-  UpdateItem({Key? key}) : super(key: key);
+  const UpdateItem({Key? key}) : super(key: key);
 
   @override
   State<UpdateItem> createState() => _UpdateItemState();
@@ -71,20 +69,17 @@ class _UpdateItemState extends State<UpdateItem> {
                     leading: Image.network(productData.image),
                     trailing: ElevatedButton(
                       onPressed: () {
-                        FirebaseFirestore firebaseFirestore =
-                            FirebaseFirestore.instance;
-
-                        firebaseFirestore
-                            .collection("product")
-                            .doc(productData.pid)
-                            .delete();
-                        Fluttertoast.showToast(msg: "Product Deleted");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ItemDetails(productData.pid)));
                       },
-                      child: Text('Update Item'),
                       style: ElevatedButton.styleFrom(
                         primary: colorPrimaryDark,
                         onPrimary: colorBase,
                       ),
+                      child: const Text('Update Item'),
                     ),
                     title: Text(
                       productData.name,
@@ -99,86 +94,4 @@ class _UpdateItemState extends State<UpdateItem> {
           }
         },
       );
-
-  Widget buildProductDownloadModel(ProductDownloadModel productData) {
-    final price = productData.price.toString();
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.only(right: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                height: 180,
-                width: 160,
-                decoration: BoxDecoration(
-                  color: colorPrimaryLight,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Hero(
-                  tag: productData.pid,
-                  child: Image.network(productData.image),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const SizedBox(height: 8),
-                  Text(
-                    productData.name,
-                    style: const TextStyle(
-                      color: colorPrimaryDark,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    "$price RM",
-                    style: const TextStyle(
-                      color: colorPrimaryDark,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Material(
-                    borderRadius: BorderRadius.circular(15),
-                    color: colorPrimaryDark,
-                    child: MaterialButton(
-                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      onPressed: () {},
-                      child: const Text(
-                        "Add to Cart",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: colorBase,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  deleteAccount() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    ProductUploadModel productUploadModel = ProductUploadModel();
-
-    Fluttertoast.showToast(msg: "Product Deleted");
-  }
 }

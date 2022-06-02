@@ -25,6 +25,7 @@ class _AddItemState extends State<AddItem> {
   //Controllers
   final itemNameController = TextEditingController();
   final itemPriceController = TextEditingController();
+  final itemStockController = TextEditingController();
 
   String currentItem = '';
 
@@ -89,6 +90,35 @@ class _AddItemState extends State<AddItem> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Item Price",
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+    );
+
+    // item stock field
+    final itemStockField = TextFormField(
+      autofocus: false,
+      controller: itemStockController,
+      keyboardType: TextInputType.number,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Stock cannot be Empty");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        itemStockController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Item Stock",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -195,6 +225,8 @@ class _AddItemState extends State<AddItem> {
           const SizedBox(height: 10),
           itemPriceField,
           const SizedBox(height: 10),
+          itemStockField,
+          const SizedBox(height: 10),
           const Text(
             'Item Category',
             style: TextStyle(
@@ -280,6 +312,7 @@ class _AddItemState extends State<AddItem> {
     productUploadModel.pid = uuid.v1();
     productUploadModel.name = itemNameController.text;
     productUploadModel.price = itemPriceController.text;
+    productUploadModel.stock = itemStockController.text;
     productUploadModel.category = currentItem;
     productUploadModel.image = urlDownload;
 

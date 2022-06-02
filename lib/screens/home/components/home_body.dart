@@ -119,7 +119,9 @@ class _HomeBodyState extends State<HomeBody> {
   Widget adminOrCustomer(int index) {
     if (loggedInUser.role == 'Admin') {
       return Expanded(
-        child: Padding(padding: const EdgeInsets.all(36.0), child: adminBody()),
+        child: Padding(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 10),
+            child: adminBody()),
       );
     } else {
       return Expanded(

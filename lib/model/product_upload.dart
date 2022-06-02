@@ -1,8 +1,8 @@
 class ProductUploadModel {
-  String? pid, name, category, image, price;
+  String? pid, name, category, image, price, stock;
 
   ProductUploadModel(
-      {this.pid, this.name, this.price, this.category, this.image});
+      {this.pid, this.name, this.price, this.stock, this.category, this.image});
 
   // receiving data from server
   factory ProductUploadModel.fromMap(map) {
@@ -10,6 +10,7 @@ class ProductUploadModel {
         pid: map['pid'],
         name: map['name'],
         price: map['price'],
+        stock: map['stock'],
         category: map['category'],
         image: map['image']);
   }
@@ -20,6 +21,7 @@ class ProductUploadModel {
       'pid': pid,
       'name': name,
       'price': price,
+      'stock': stock,
       'category': category,
       'image': image,
     };
@@ -29,6 +31,7 @@ class ProductUploadModel {
         'pid': pid,
         'name': name,
         'price': price,
+        'stock': stock,
         'category': category,
         'image': image,
       };
@@ -38,6 +41,7 @@ class ProductUploadModel {
         pid: json['id'],
         name: json['name'],
         price: json['price'],
+        stock: json['stock'],
         category: json['category'],
         image: json['image'],
       );

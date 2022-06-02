@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/model/local_product.dart';
 import 'package:youmart_mobitech/model/product_download.dart';
 import 'package:youmart_mobitech/model/product_upload.dart';
 
@@ -102,15 +101,4 @@ class _DeleteItemState extends State<DeleteItem> {
           }
         },
       );
-
-  deleteAccount() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    ProductUploadModel productUploadModel = ProductUploadModel();
-
-    Fluttertoast.showToast(msg: "Product Deleted");
-  }
 }
