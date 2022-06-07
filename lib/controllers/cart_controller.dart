@@ -2,10 +2,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:youmart_mobitech/model/local_product.dart';
 
-import '../model/product_download.dart';
-
 class CartController extends GetxController {
-  var _products = {}.obs;
+  final _products = {}.obs;
 
   void addProduct(LocalProduct product) {
     if (_products.containsKey(product)) {
