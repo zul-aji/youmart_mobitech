@@ -36,7 +36,7 @@ class _UpdateItemState extends State<UpdateItem> {
   Widget buildList(BuildContext context) =>
       FirestoreQueryBuilder<ProductDownloadModel>(
         query: queryProductDownloadModel,
-        pageSize: 2,
+        pageSize: 10,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
             return const Center(child: CircularProgressIndicator());
@@ -94,7 +94,7 @@ class _UpdateItemState extends State<UpdateItem> {
                                     ItemDetails(productData.pid)));
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: colorPrimaryDark,
+                        primary: colorPrimary,
                         onPrimary: colorBase,
                       ),
                       child: const Text('Update Item'),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 import '../../constants.dart';
 import '../../model/user_model.dart';
@@ -67,11 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         return IconButton(
           icon: const Icon(Icons.shopping_cart_rounded, color: colorAccent),
-          onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CartScreen(),
-              )),
+          onPressed: () => Get.to(() => CartScreen()),
         );
       }
     });
@@ -94,33 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     });
-
-    final headingTitle = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-      child: LayoutBuilder(builder: (context, constraints) {
-        if (loggedInUser.role == 'Admin') {
-          return const Text(
-            "Manage Items",
-            style: TextStyle(
-              fontSize: 30,
-              color: colorPrimaryDark,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          );
-        } else {
-          return const Text(
-            "Shop Items",
-            style: TextStyle(
-              fontSize: 30,
-              color: colorPrimaryDark,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          );
-        }
-      }),
-    );
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,

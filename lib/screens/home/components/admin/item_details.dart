@@ -194,10 +194,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                               fit: BoxFit.contain,
                             )),
                         const SizedBox(height: 3),
-                        Text(
+                        const Text(
                           'loggedInUser.email',
-                          style: const TextStyle(
-                              fontSize: 18, color: colorPrimary),
+                          style: TextStyle(fontSize: 18, color: colorPrimary),
                         ),
                         const SizedBox(height: 20),
                         firstNameField,
