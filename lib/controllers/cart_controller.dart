@@ -1,27 +1,28 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
-import '../model/product_download.dart';
+import 'package:youmart_mobitech/model/local_product.dart';
 
 class CartController extends GetxController {
-  var _products = {}.obs;
+  final _products = {}.obs;
 
-  void addProduct(ProductDownloadModel product) {
+  void addProduct(LocalProduct product) {
     if (_products.containsKey(product)) {
       _products[product] += 1;
     } else {
       _products[product] = 1;
     }
 
-    Fluttertoast.showToast(msg: "${product.name} added to Cart");
+    Fluttertoast.showToast(msg: "${product.title} added to Cart");
   }
 
-  void removeProduct(ProductDownloadModel product) {
+  void removeProduct(LocalProduct product) {
     if (_products.containsKey(product) && _products[product] == 1) {
       _products.removeWhere((key, value) => key == product);
     } else {
       _products[product] -= 1;
     }
+
+    Fluttertoast.showToast(msg: "${product.title} removed from Cart");
   }
 
   get products => _products;

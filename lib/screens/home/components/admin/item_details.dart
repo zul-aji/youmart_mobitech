@@ -10,10 +10,10 @@ final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
     .orderBy('name')
     .withConverter<ProductDownloadModel>(
-  fromFirestore: (snapshot, _) =>
-      ProductDownloadModel.fromJson(snapshot.data()!),
-  toFirestore: (user, _) => user.toJson(),
-);
+      fromFirestore: (snapshot, _) =>
+          ProductDownloadModel.fromJson(snapshot.data()!),
+      toFirestore: (user, _) => user.toJson(),
+    );
 
 class ItemDetails extends StatefulWidget {
   ItemDetails(String pid, {Key? key}) : super(key: key);
@@ -178,43 +178,43 @@ class _ItemDetailsState extends State<ItemDetails> {
           ),
           body: Center(
               child: SingleChildScrollView(
-                child: Container(
-                    color: const Color(0xFFFFFFFF),
-                    child: Padding(
-                      padding: const EdgeInsets.all(36.0),
-                      child: Form(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                                height: 100,
-                                child: Image.asset(
-                                  "images/Logo/Profile.png",
-                                  fit: BoxFit.contain,
-                                )),
-                            const SizedBox(height: 3),
-                            Text(
-                              'loggedInUser.email',
-                              style: const TextStyle(
-                                  fontSize: 18, color: colorPrimary),
-                            ),
-                            const SizedBox(height: 20),
-                            firstNameField,
-                            const SizedBox(height: 20),
-                            secondNameField,
-                            const SizedBox(height: 15),
-                            updateButton,
-                            const SizedBox(height: 15),
-                            signOutButton,
-                            const SizedBox(height: 15),
-                            deleteButton,
-                            const SizedBox(height: 45),
-                          ],
+            child: Container(
+                color: const Color(0xFFFFFFFF),
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                            height: 100,
+                            child: Image.asset(
+                              "images/Logo/Profile.png",
+                              fit: BoxFit.contain,
+                            )),
+                        const SizedBox(height: 3),
+                        Text(
+                          'loggedInUser.email',
+                          style: const TextStyle(
+                              fontSize: 18, color: colorPrimary),
                         ),
-                      ),
-                    )),
-              )),
+                        const SizedBox(height: 20),
+                        firstNameField,
+                        const SizedBox(height: 20),
+                        secondNameField,
+                        const SizedBox(height: 15),
+                        updateButton,
+                        const SizedBox(height: 15),
+                        signOutButton,
+                        const SizedBox(height: 15),
+                        deleteButton,
+                        const SizedBox(height: 45),
+                      ],
+                    ),
+                  ),
+                )),
+          )),
         ));
   }
 }

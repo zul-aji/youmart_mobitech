@@ -37,7 +37,7 @@ class _DeleteItemState extends State<DeleteItem> {
   Widget buildList(BuildContext context) =>
       FirestoreQueryBuilder<ProductDownloadModel>(
         query: queryProductDownloadModel,
-        pageSize: 2,
+        pageSize: 10,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
             return const Center(child: CircularProgressIndicator());
@@ -73,7 +73,6 @@ class _DeleteItemState extends State<DeleteItem> {
                       onPressed: () {
                         FirebaseFirestore firebaseFirestore =
                             FirebaseFirestore.instance;
-
                         firebaseFirestore
                             .collection("product")
                             .doc(productData.pid)
