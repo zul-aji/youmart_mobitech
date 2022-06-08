@@ -10,10 +10,10 @@ final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
     .orderBy('name')
     .withConverter<ProductDownloadModel>(
-      fromFirestore: (snapshot, _) =>
-          ProductDownloadModel.fromJson(snapshot.data()!),
-      toFirestore: (user, _) => user.toJson(),
-    );
+  fromFirestore: (snapshot, _) =>
+      ProductDownloadModel.fromJson(snapshot.data()!),
+  toFirestore: (user, _) => user.toJson(),
+);
 
 class UpdateItem extends StatefulWidget {
   const UpdateItem({Key? key}) : super(key: key);
@@ -107,3 +107,56 @@ class _UpdateItemState extends State<UpdateItem> {
         },
       );
 }
+
+
+// import 'dart:async';
+//
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:youmart_mobitech/model/product_download.dart';
+//
+// import 'item_details.dart';
+//
+//
+// class UpdateItem extends StatefulWidget {
+//   @override
+//   _UpdateItemState createState() => _UpdateItemState();
+// }
+//
+//
+// class _UpdateItemState extends State<UpdateItem> {
+//   Future getPosts() async {
+//     var firestore = FirebaseFirestore.instance;
+//     QuerySnapshot response = await firestore.collection("product").get();
+//     return response.docs;
+//   }
+//
+//   navigateToDetail(DocumentSnapshot post) {
+//     Navigator.push(context, MaterialPageRoute(builder: (context) => ItemDetails(post: post,)));
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: FutureBuilder(
+//         future: getPosts(),
+//       builder: (_, AsyncSnapshot snapshot){
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//               return Center(
+//                 child: Text("Loading..."),
+//               );
+//         } else {
+//             return ListView.builder(
+//               itemCount: snapshot.data.length,
+//               itemBuilder: (_, index){
+//                 return ListTile(
+//                   title: Text(snapshot.data[index].data["price"]),
+//                   onTap: () => navigateToDetail(snapshot.data[index]),
+//                 );
+//               });
+//         }
+//     }
+//     ));
+//   }
+// }

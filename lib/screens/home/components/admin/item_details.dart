@@ -10,10 +10,10 @@ final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
     .orderBy('name')
     .withConverter<ProductDownloadModel>(
-      fromFirestore: (snapshot, _) =>
-          ProductDownloadModel.fromJson(snapshot.data()!),
-      toFirestore: (user, _) => user.toJson(),
-    );
+  fromFirestore: (snapshot, _) =>
+      ProductDownloadModel.fromJson(snapshot.data()!),
+  toFirestore: (user, _) => user.toJson(),
+);
 
 class ItemDetails extends StatefulWidget {
   ItemDetails(String pid, {Key? key}) : super(key: key);
@@ -178,43 +178,107 @@ class _ItemDetailsState extends State<ItemDetails> {
           ),
           body: Center(
               child: SingleChildScrollView(
-            child: Container(
-                color: const Color(0xFFFFFFFF),
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Form(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                            height: 100,
-                            child: Image.asset(
-                              "images/Logo/Profile.png",
-                              fit: BoxFit.contain,
-                            )),
-                        const SizedBox(height: 3),
-                        Text(
-                          'loggedInUser.email',
-                          style: const TextStyle(
-                              fontSize: 18, color: colorPrimary),
+                child: Container(
+                    color: const Color(0xFFFFFFFF),
+                    child: Padding(
+                      padding: const EdgeInsets.all(36.0),
+                      child: Form(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                                height: 100,
+                                child: Image.asset(
+                                  "images/Logo/Profile.png",
+                                  fit: BoxFit.contain,
+                                )),
+                            const SizedBox(height: 3),
+                            Text(
+                              'loggedInUser.email',
+                              style: const TextStyle(
+                                  fontSize: 18, color: colorPrimary),
+                            ),
+                            const SizedBox(height: 20),
+                            firstNameField,
+                            const SizedBox(height: 20),
+                            secondNameField,
+                            const SizedBox(height: 15),
+                            updateButton,
+                            const SizedBox(height: 15),
+                            signOutButton,
+                            const SizedBox(height: 15),
+                            deleteButton,
+                            const SizedBox(height: 45),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        firstNameField,
-                        const SizedBox(height: 20),
-                        secondNameField,
-                        const SizedBox(height: 15),
-                        updateButton,
-                        const SizedBox(height: 15),
-                        signOutButton,
-                        const SizedBox(height: 15),
-                        deleteButton,
-                        const SizedBox(height: 45),
-                      ],
-                    ),
-                  ),
-                )),
-          )),
+                      ),
+                    )),
+              )),
         ));
   }
 }
+
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
+//
+// import '../../../../constants.dart';
+// import '../../../../model/product_download.dart';
+// import '../../../../model/product_upload.dart';
+//
+// class ItemDetails extends StatefulWidget {
+//   // ProductUploadModel detailItem = ProductUploadModel();
+//   final DocumentSnapshot post;
+//   ItemDetails({required this.post});
+//
+//   @override
+//   State<ItemDetails> createState() => _ItemDetailsState();
+// }
+//
+// class _ItemDetailsState extends State<ItemDetails> {
+//   //Controllers
+//   // final firstNameEditingController = TextEditingController();
+//   // final secondNameEditingController = TextEditingController();
+//
+//   @override
+//   void initState() {
+//     // super.initState();
+//     // FirebaseFirestore.instance
+//     //     .collection("product")
+//     //     .doc(ItemDetails.pid)
+//     //     .get()
+//     //     .then((value) {
+//     //   this.detailItem = ProductUploadModel.fromMap(value.data());
+//     //   setState(() {});
+//     // });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//           appBar: AppBar(
+//             backgroundColor: const Color(0xFFFFFFFF),
+//             elevation: 0,
+//             leading: IconButton(
+//               icon: const Icon(Icons.arrow_back, color: colorAccent),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ),
+//     body: Container(
+//       child: Card(
+//         child: ListTile(
+//           title: Text(widget.post.data["name"]),
+//           subtitle: Text(widget.post.data["price"]),
+//       )
+//     )
+//     )
+//   );
+//
+//   }
+// }
