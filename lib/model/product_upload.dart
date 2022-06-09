@@ -13,6 +13,7 @@ class ProductUploadModel {
         stock: map['stock'],
         category: map['category'],
         image: map['image']);
+
   }
 
   // sending data to our server

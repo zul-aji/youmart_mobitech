@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
+import '../../../../model/order_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
 import 'package:youmart_mobitech/controllers/cart_controller.dart';
 import 'package:youmart_mobitech/model/local_product.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/cart_total.dart';
 
 import '../../../../constants.dart';
 
 class CartScreen extends StatelessWidget {
-  final CartController controller = Get.find();
+  final CartController controller = Get.put(CartController());
 
   CartScreen({Key? key}) : super(key: key);
 
@@ -67,7 +72,10 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.postOrderToFirestore(
+                        controller.products.keys.toList()[CartProductCard]);
+                  },
                   style: ElevatedButton.styleFrom(
                       primary: colorPrimary,
                       onPrimary: colorBase,
