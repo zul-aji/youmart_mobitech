@@ -43,7 +43,42 @@ class CartScreen extends StatelessWidget {
                 index: index,
               );
             }),
-        bottomNavigationBar: CartTotal(),
+        bottomNavigationBar: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (controller.total == '0')
+                  const Text(
+                    '0 RM',
+                    style: TextStyle(
+                      color: colorPrimaryDark,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                else
+                  Text(
+                    '${controller.total} RM',
+                    style: const TextStyle(
+                      color: colorPrimaryDark,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      primary: colorPrimary,
+                      onPrimary: colorBase,
+                      textStyle: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600)),
+                  child: const Text('Order Item'),
+                ),
+              ],
+            )),
       ),
     );
   }
