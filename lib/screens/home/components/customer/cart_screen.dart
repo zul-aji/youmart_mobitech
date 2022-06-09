@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
+import '../../../../model/order_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
 import 'package:youmart_mobitech/controllers/cart_controller.dart';
 import 'package:youmart_mobitech/model/local_product.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/cart_total.dart';
 
 import '../../../../constants.dart';
 
 class CartScreen extends StatelessWidget {
-  final CartController controller = Get.find();
+  final CartController controller = Get.put(CartController());
 
   CartScreen({Key? key}) : super(key: key);
 
@@ -43,10 +48,48 @@ class CartScreen extends StatelessWidget {
                 index: index,
               );
             }),
-        bottomNavigationBar: CartTotal(),
+        bottomNavigationBar: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (controller.total == '0')
+                  const Text(
+                    '0 RM',
+                    style: TextStyle(
+                      color: colorPrimaryDark,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                else
+                  Text(
+                    '${controller.total} RM',
+                    style: const TextStyle(
+                      color: colorPrimaryDark,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.postOrderToFirestore(controller.products.keys.toList()[CartProductCard.index]);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: colorPrimary,
+                      onPrimary: colorBase,
+                      textStyle: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600)),
+                  child: const Text('Order Item'),
+                ),
+              ],
+            )),
       ),
     );
   }
+
 }
 
 class CartProductCard extends StatelessWidget {
