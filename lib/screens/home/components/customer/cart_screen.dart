@@ -73,8 +73,8 @@ class CartScreen extends StatelessWidget {
                   ),
                 ElevatedButton(
                   onPressed: () {
-                    controller.postOrderToFirestore(
-                        controller.products.keys.toList()[CartProductCard]);
+                    // controller.postOrderToFirestore(
+                    //     controller.products.keys.toList()[CartProductCard]);
                   },
                   style: ElevatedButton.styleFrom(
                       primary: colorPrimary,

@@ -8,7 +8,7 @@ import '../../../../constants.dart';
 import '../../../../model/product_download.dart';
 
 class DetailsUpdate extends StatefulWidget {
-  final String pid, image, name, price, category, stock;
+  final String pid, image, name, price, stock;
 
   const DetailsUpdate(
       {Key? key,
@@ -16,7 +16,6 @@ class DetailsUpdate extends StatefulWidget {
       required this.image,
       required this.name,
       required this.price,
-      required this.category,
       required this.stock})
       : super(key: key);
 
@@ -29,15 +28,8 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
   final nameController = TextEditingController();
   final priceController = TextEditingController();
   final stockController = TextEditingController();
-  final categoryController = TextEditingController();
 
-  String currentItem = '';
-
-  @override
-  void initState() {
-    currentItem = customerCategories[0];
-    super.initState();
-  }
+  ProductUploadModel productUploadModel = ProductUploadModel();
 
   @override
   Widget build(BuildContext context) {
@@ -132,29 +124,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       ),
     );
 
-    // category list
-    final categoryList = DropdownButtonFormField(
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: colorPrimaryDark, width: 3),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          filled: true,
-        ),
-        validator: (value) => value == null ? 'Choose category' : null,
-        dropdownColor: colorBase,
-        value: currentItem,
-        onChanged: (String? newValue) {
-          setState(() {
-            currentItem = newValue!;
-          });
-        },
-        items: dropdownItems);
-
     //update button
     final updateButton = Material(
       elevation: 5,
@@ -163,7 +132,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: updateProduct(),
+        onPressed: updateProduct,
         child: const Text(
           "Update Item",
           textAlign: TextAlign.center,
@@ -211,8 +180,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
                       priceField,
                       const SizedBox(height: 15),
                       stockField,
-                      const SizedBox(height: 15),
-                      categoryList,
                       const SizedBox(height: 20),
                       updateButton,
                       const SizedBox(height: 45),
@@ -231,20 +198,14 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     // calling our firestore
     // calling our user model
     // sending these values
-    ProductUploadModel productUploadModel = ProductUploadModel();
 
     // writing all the values
     productUploadModel.pid = widget.pid;
-    productUploadModel.name = nameController.text;
-    productUploadModel.price = priceController.text;
-    productUploadModel.stock = stockController.text;
-    productUploadModel.category = currentItem;
 
     FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
       'name': nameController.text,
       'price': priceController.text,
       'stock': stockController.text,
-      'category': currentItem,
     });
 
     Fluttertoast.showToast(msg: "Product Updated");

@@ -95,7 +95,6 @@ class _UpdateItemState extends State<UpdateItem> {
                               image: productData.image,
                               name: productData.name,
                               price: productData.price,
-                              category: productData.category,
                               stock: productData.stock,
                             ),
                           ),

@@ -49,9 +49,9 @@ class CartController extends GetxController {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     OrderModel orderModel = OrderModel();
     var uuid = Uuid();
-    List<String> itemlist= [];
+    List<String> itemlist = [];
 
-    itemlist.add(product);
+    // itemlist.add(product);
 
     // writing all the values
     orderModel.oid = uuid.v1();
