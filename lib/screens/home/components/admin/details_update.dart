@@ -54,7 +54,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: widget.name,
+        hintText: "Item Name: ${widget.name}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -83,7 +83,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: widget.price,
+        hintText: "Item Price: ${widget.price}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -112,7 +112,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: widget.stock,
+        hintText: "Item Stock: ${widget.stock}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
