@@ -15,26 +15,27 @@ class ItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio: 0.68,
-          ),
-          itemCount: LocalProduct.products.length,
-          itemBuilder: (BuildContext context, int index) {
-            return CatalogProductCard(index: index);
-          }),
+    return Obx(
+      () => Flexible(
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio: 0.68,
+            ),
+            itemCount: productController.products.length,
+            itemBuilder: (BuildContext context, int index) {
+              return CatalogProductCard(index: index);
+            }),
+      ),
     );
   }
 }
 
-final cartController = Get.put(CartController());
-final ProductController productController = Get.find();
-
 class CatalogProductCard extends StatelessWidget {
+  final cartController = Get.put(CartController());
+  final ProductController productController = Get.find();
   final int index;
 
   CatalogProductCard({
@@ -44,7 +45,7 @@ class CatalogProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var productData = LocalProduct.products[index];
+    final productData = productController.products[index];
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: Column(
@@ -60,8 +61,8 @@ class CatalogProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Hero(
-                tag: productData.id,
-                child: Image.asset(productData.image),
+                tag: productData.pid,
+                child: Image.network(productController.products[index].image),
               ),
             ),
           ),
@@ -73,14 +74,14 @@ class CatalogProductCard extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 8),
                 Text(
-                  productData.title,
+                  productData.name,
                   style: const TextStyle(
                     color: colorPrimaryDark,
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  "${productData.price} RM",
+                  "${productController.products[index].price} RM",
                   style: const TextStyle(
                     color: colorPrimaryDark,
                     fontWeight: FontWeight.w700,
@@ -88,7 +89,25 @@ class CatalogProductCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                stockCheck(productData),
+                Material(
+                  borderRadius: BorderRadius.circular(15),
+                  color: colorPrimaryDark,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    onPressed: () {
+                      cartController
+                          .addProduct(productController.products[index]);
+                    },
+                    child: const Text(
+                      "Add to Cart",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: colorBase,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -98,33 +117,33 @@ class CatalogProductCard extends StatelessWidget {
   }
 }
 
-stockCheck(productData) {
-  int stock = productData.stock;
-  if (stock == 0) {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 14, top: 5),
-      child: Text(
-        "No Stock",
-        style: TextStyle(
-            fontSize: 20, color: colorAccent, fontWeight: FontWeight.bold),
-      ),
-    );
-  } else {
-    return Material(
-      borderRadius: BorderRadius.circular(15),
-      color: colorPrimaryDark,
-      child: MaterialButton(
-        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: () {
-          cartController.addProduct(productData);
-        },
-        child: const Text(
-          "Add to Cart",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
+// stockCheck(productData) {
+//   int stock = productData.stock;
+//   if (stock == 0) {
+//     return const Padding(
+//       padding: EdgeInsets.only(bottom: 14, top: 5),
+//       child: Text(
+//         "No Stock",
+//         style: TextStyle(
+//             fontSize: 20, color: colorAccent, fontWeight: FontWeight.bold),
+//       ),
+//     );
+//   } else {
+//     return Material(
+//       borderRadius: BorderRadius.circular(15),
+//       color: colorPrimaryDark,
+//       child: MaterialButton(
+//         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+//         onPressed: () {
+//           cartController.addProduct(productData);
+//         },
+//         child: const Text(
+//           "Add to Cart",
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//               fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductDownloadModel {
-  final String pid, name, category, price, image, stock;
+  final String pid, name, category, image, stock;
+  // final double price;
+  final String price;
 
   const ProductDownloadModel({
     required this.pid,
@@ -33,7 +35,7 @@ class ProductDownloadModel {
 
   static ProductDownloadModel fromSnapshot(DocumentSnapshot snap) {
     ProductDownloadModel product = ProductDownloadModel(
-      pid: snap['[pid]'],
+      pid: snap['pid'],
       name: snap['name'],
       category: snap['category'],
       price: snap['price'],
