@@ -24,7 +24,7 @@ class ItemList extends StatelessWidget {
   Widget build(BuildContext context) =>
       FirestoreQueryBuilder<ProductDownloadModel>(
         query: queryProductDownloadModel,
-        pageSize: 2,
+        pageSize: 10,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
             return const Center(child: CircularProgressIndicator());

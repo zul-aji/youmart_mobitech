@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({Key? key}) : super(key: key);
-
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -34,21 +32,47 @@ class _CartScreenState extends State<CartScreen> {
               },
             ),
           ),
-          body: Center(
-              child: SingleChildScrollView(
-            child: Container(
-                color: const Color(0xFFFFFFFF),
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Form(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[Text('Cart will be shown here')],
-                    ),
-                  ),
-                )),
-          )),
+          body: Column(
+            children: [
+              // ListView.builder(
+              //     itemCount: _cart.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       var item = _cart[index];
+              //       return Padding(
+              //         padding: const EdgeInsets.symmetric(
+              //           horizontal: 20.0,
+              //           vertical: 10,
+              //         ),
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Image.network(item.image),
+              //             SizedBox(
+              //               width: 20,
+              //             ),
+              //             Expanded(
+              //               child: Text(item.name),
+              //             ),
+              //             IconButton(
+              //               onPressed: () {
+              //                 // if (item.quantity > 1)
+              //                 // item.quantity--;
+              //               },
+              //               icon: Icon(Icons.remove_circle),
+              //             ),
+              //             Text('${item.quantity}'),
+              //             IconButton(
+              //               onPressed: () {
+              //                 // item.quantity++;
+              //               },
+              //               icon: Icon(Icons.add_circle),
+              //             ),
+              //           ],
+              //         ),
+              //       );
+              //     }),
+            ],
+          ),
         ));
   }
 }
