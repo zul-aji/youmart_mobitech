@@ -4,7 +4,7 @@ import 'package:flutterfire_ui/firestore.dart';
 
 import '../../../../constants.dart';
 import '../../../../model/product_download.dart';
-import 'item_details.dart';
+import 'details_update.dart';
 
 final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
@@ -36,7 +36,7 @@ class _UpdateItemState extends State<UpdateItem> {
   Widget buildList(BuildContext context) =>
       FirestoreQueryBuilder<ProductDownloadModel>(
         query: queryProductDownloadModel,
-        pageSize: 2,
+        pageSize: 10,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
             return const Center(child: CircularProgressIndicator());
@@ -88,13 +88,20 @@ class _UpdateItemState extends State<UpdateItem> {
                     trailing: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ItemDetails(productData.pid)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailsUpdate(
+                              pid: productData.pid,
+                              image: productData.image,
+                              name: productData.name,
+                              price: productData.price,
+                              stock: productData.stock,
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: colorPrimaryDark,
+                        primary: colorPrimary,
                         onPrimary: colorBase,
                       ),
                       child: const Text('Update Item'),
