@@ -34,11 +34,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
   String? oid;
-  String? totalprice;
+  int? totalprice;
+  List<String>? prices;
   List<String>? itemlist;
 
   OrderModel({
     this.oid,
+    this.prices,
     this.totalprice,
     this.itemlist,
   });
@@ -53,14 +55,18 @@ class OrderModel {
       totalprice: data?['totalprice'],
       itemlist:
       data?['itemlist'] is Iterable ? List.from(data?['itemlist']) : null,
+      prices:
+      data?['prices'] is Iterable ? List.from(data?['prices']) : null,
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       if (oid != null) "oid": oid,
+      if (itemlist != null) "itemlist": itemlist,
+      if (prices != null) "prices": prices,
       if (totalprice != null) "totalprice": totalprice,
-      if (itemlist != null) "regions": itemlist,
+
     };
   }
 }

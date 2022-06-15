@@ -56,7 +56,7 @@ class CartController extends GetxController {
     // writing all the values
     orderModel.oid = uuid.v1();
     orderModel.itemlist = itemlist;
-    orderModel.totalprice = total;
+    // orderModel.prices = total;
 
     firebaseFirestore
         .collection("order")

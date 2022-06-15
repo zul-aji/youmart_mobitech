@@ -25,6 +25,7 @@ class _OrdersState extends State<Orders> {
   String currentItem = 'test';
 
   List<String> itemlist= [];
+  List<String> items= [];
 
   //Controllers
   final totalPriceController = TextEditingController();
@@ -151,6 +152,7 @@ class _OrdersState extends State<Orders> {
                             const SizedBox(height: 20),
                             addOrderButton,
                             const SizedBox(height: 15),
+                            Text("total price: ${getTotal()}")
                           ],
                         ),
                       ),
@@ -181,14 +183,21 @@ class _OrdersState extends State<Orders> {
   // }
 
   addItem() async{
+    String number = '10';
     itemlist.add(currentItem);
+    items.add(number);
   }
+
+  int getTotal()=> items.fold(0,(total, item) {
+    int? price = int.tryParse(item);
+    if(price!=null) return total+price;
+    else return total;
+  });
 
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
     // sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     OrderModel orderModel = OrderModel();
     var uuid = Uuid();
@@ -196,7 +205,8 @@ class _OrdersState extends State<Orders> {
     // writing all the values
     orderModel.oid = uuid.v1();
     orderModel.itemlist = itemlist;
-    orderModel.totalprice = secondNameEditingController.text;
+    orderModel.prices = items;
+    orderModel.totalprice = getTotal();
 
     await firebaseFirestore
         .collection("order")
