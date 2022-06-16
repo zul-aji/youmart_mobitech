@@ -99,8 +99,8 @@ class _CartTotalState extends State<CartTotal> {
         .doc(orderModel.oid)
         .set(orderModel.toFirestore());
 
+    controller.clearProducts();
     Navigator.of(context).pop();
-
     Fluttertoast.showToast(msg: "Order Placed");
   }
 }

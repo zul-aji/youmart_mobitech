@@ -28,6 +28,10 @@ class CartController extends GetxController {
 
   get products => _products;
 
+  void clearProducts() {
+    _products.clear();
+  }
+
   get total => _products.entries
       .map((product) => double.parse(product.key.price) * product.value)
       .toList()
