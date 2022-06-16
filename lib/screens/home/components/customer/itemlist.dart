@@ -3,6 +3,8 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:youmart_mobitech/model/local_product.dart';
+import 'package:youmart_mobitech/model/product_download.dart';
+import 'package:youmart_mobitech/model/product_download_getx.dart';
 
 import '../../../../constants.dart';
 import '../../../../controllers/cart_controller.dart';
@@ -24,7 +26,7 @@ class ItemList extends StatelessWidget {
               crossAxisSpacing: 20,
               childAspectRatio: 0.68,
             ),
-            itemCount: productController.products.length,
+            itemCount: productController.product.length,
             itemBuilder: (BuildContext context, int index) {
               return CatalogProductCard(index: index);
             }),
@@ -35,7 +37,7 @@ class ItemList extends StatelessWidget {
 
 class CatalogProductCard extends StatelessWidget {
   final cartController = Get.put(CartController());
-  final ProductController productController = Get.find();
+  final productController = Get.put(ProductController());
   final int index;
 
   CatalogProductCard({
@@ -45,7 +47,7 @@ class CatalogProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productData = productController.products[index];
+    final productData = productController.product[index];
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: Column(
@@ -62,7 +64,7 @@ class CatalogProductCard extends StatelessWidget {
               ),
               child: Hero(
                 tag: productData.pid,
-                child: Image.network(productController.products[index].image),
+                child: Image.network(productData.image),
               ),
             ),
           ),
@@ -81,7 +83,7 @@ class CatalogProductCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${productController.products[index].price} RM",
+                  "${productData.price} RM",
                   style: const TextStyle(
                     color: colorPrimaryDark,
                     fontWeight: FontWeight.w700,
@@ -95,8 +97,7 @@ class CatalogProductCard extends StatelessWidget {
                   child: MaterialButton(
                     padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                     onPressed: () {
-                      cartController
-                          .addProduct(productController.products[index]);
+                      cartController.addProduct(productData);
                     },
                     child: const Text(
                       "Add to Cart",

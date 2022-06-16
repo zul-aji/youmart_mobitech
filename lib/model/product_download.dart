@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductDownloadModel {
-  final String pid, name, category, image, stock;
-  // final double price;
-  final String price;
+  final String pid, name, category, price, image, stock;
 
   const ProductDownloadModel({
     required this.pid,

@@ -1,11 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:youmart_mobitech/model/local_product.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
-import 'package:youmart_mobitech/model/product_download.dart';
-import '../../../../model/order_model.dart';
+import '../model/product_download.dart';
 
 class CartController extends GetxController {
   final _products = {}.obs;
@@ -37,8 +33,8 @@ class CartController extends GetxController {
       .toList();
 
   get total => _products.entries
-      .map((product) => product.key.price * product.value)
+      .map((product) => double.parse(product.key.price) * product.value)
       .toList()
       .reduce((value, element) => value + element)
-      .toStringAsFixed();
+      .toStringAsFixed(2);
 }
