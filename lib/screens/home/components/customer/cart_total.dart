@@ -1,11 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:youmart_mobitech/constants.dart';
+import 'package:uuid/uuid.dart';
 import 'package:youmart_mobitech/controllers/cart_controller.dart';
 
-class CartTotal extends StatelessWidget {
-  final CartController controller = Get.put(CartController());
+import '../../../../constants.dart';
+import '../../../../model/order_model.dart';
+import '../../../../model/user_model.dart';
+
+final CartController controller = Get.put(CartController());
+
+class CartTotal extends StatefulWidget {
   CartTotal({Key? key}) : super(key: key);
+
+  @override
+  State<CartTotal> createState() => _CartTotalState();
+}
+
+class _CartTotalState extends State<CartTotal> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +64,7 @@ class CartTotal extends StatelessWidget {
               ),
             ElevatedButton(
               onPressed: () {
-                // controller.postOrderToFirestore(
-                //     controller.products.keys.toList()[CartProductCard]);
+                placeOrderToDB();
               },
               style: ElevatedButton.styleFrom(
                   primary: colorPrimary,
@@ -45,11 +73,34 @@ class CartTotal extends StatelessWidget {
                       fontFamily: 'Poppins',
                       fontSize: 20,
                       fontWeight: FontWeight.w600)),
-              child: const Text('Order Item'),
+              child: const Text("Checkout"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  placeOrderToDB() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    OrderModel orderModel = OrderModel();
+    var uuid = const Uuid();
+
+    // writing all the values
+    orderModel.oid = uuid.v1();
+    orderModel.uid = loggedInUser.uid;
+    orderModel.totalprice = controller.total;
+    orderModel.nameList = controller.nameList;
+    orderModel.imageList = controller.imageList;
+    orderModel.quantityList = controller.quantityList;
+
+    await firebaseFirestore
+        .collection("order")
+        .doc(orderModel.oid)
+        .set(orderModel.toFirestore());
+
+    Navigator.of(context).pop();
+
+    Fluttertoast.showToast(msg: "Order Placed");
   }
 }

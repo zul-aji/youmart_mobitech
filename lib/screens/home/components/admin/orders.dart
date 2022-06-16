@@ -19,12 +19,13 @@ class _OrdersState extends State<Orders> {
     currentItem = customerCategories[0];
     super.initState();
   }
+
   // Form Key
   final _formKey = GlobalKey<FormState>();
 
   String currentItem = 'test';
 
-  List<String> itemlist= [];
+  List<String> itemlist = [];
 
   //Controllers
   final totalPriceController = TextEditingController();
@@ -35,7 +36,6 @@ class _OrdersState extends State<Orders> {
 
   @override
   Widget build(BuildContext context) {
-
     final totalPriceField = TextFormField(
       autofocus: false,
       controller: totalPriceController,
@@ -76,7 +76,7 @@ class _OrdersState extends State<Orders> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: postDetailsToFirestore,
+        onPressed: () {},
         child: const Text(
           "Add Order",
           textAlign: TextAlign.center,
@@ -132,30 +132,30 @@ class _OrdersState extends State<Orders> {
           backgroundColor: const Color(0xFFFFFFFF),
           body: Center(
               child: SingleChildScrollView(
-                child: Container(
-                    color: const Color(0xFFFFFFFF),
-                    child: Padding(
-                      padding: const EdgeInsets.all(36.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const SizedBox(height: 10),
-                            itemCategoryList,
-                            const SizedBox(height: 20),
-                            addItemButton,
-                            const SizedBox(height: 20),
-                            totalPriceField,
-                            const SizedBox(height: 20),
-                            addOrderButton,
-                            const SizedBox(height: 15),
-                          ],
-                        ),
-                      ),
-                    )),
-              )),
+            child: Container(
+                color: const Color(0xFFFFFFFF),
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const SizedBox(height: 10),
+                        itemCategoryList,
+                        const SizedBox(height: 20),
+                        addItemButton,
+                        const SizedBox(height: 20),
+                        totalPriceField,
+                        const SizedBox(height: 20),
+                        addOrderButton,
+                        const SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                )),
+          )),
         ));
   }
 
@@ -180,28 +180,7 @@ class _OrdersState extends State<Orders> {
   //   );
   // }
 
-  addItem() async{
+  addItem() async {
     itemlist.add(currentItem);
-  }
-
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    OrderModel orderModel = OrderModel();
-    var uuid = Uuid();
-
-    // writing all the values
-    orderModel.oid = uuid.v1();
-    orderModel.itemlist = itemlist;
-    orderModel.totalprice = secondNameEditingController.text;
-
-    await firebaseFirestore
-        .collection("order")
-        .doc(orderModel.oid)
-        .set(orderModel.toFirestore());
-    Fluttertoast.showToast(msg: "Item added successfully");
   }
 }

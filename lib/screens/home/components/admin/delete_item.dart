@@ -16,6 +16,8 @@ final queryProductDownloadModel = FirebaseFirestore.instance
       toFirestore: (user, _) => user.toJson(),
     );
 
+FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
 class DeleteItem extends StatefulWidget {
   DeleteItem({Key? key}) : super(key: key);
 
@@ -71,8 +73,6 @@ class _DeleteItemState extends State<DeleteItem> {
                     leading: Image.network(productData.image),
                     trailing: ElevatedButton(
                       onPressed: () {
-                        FirebaseFirestore firebaseFirestore =
-                            FirebaseFirestore.instance;
                         firebaseFirestore
                             .collection("product")
                             .doc(productData.pid)
