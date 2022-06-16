@@ -151,9 +151,51 @@ class _UserProfileState extends State<UserProfile> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          deleteAccount();
-        },
+        onPressed: () => showDialog<String>(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text(
+              'Delete Item',
+              style: TextStyle(
+                fontSize: 25,
+                color: colorAccent,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            content: const Text(
+              'Are you sure you want to delete account?',
+              style: TextStyle(
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: colorUnpicked,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  deleteAccount();
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: colorAccent,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+            backgroundColor: colorBase,
+          ),
+        ),
         child: const Text(
           "Delete Account",
           textAlign: TextAlign.center,

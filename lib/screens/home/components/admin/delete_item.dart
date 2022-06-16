@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:youmart_mobitech/model/product_download.dart';
-import 'package:youmart_mobitech/model/product_upload.dart';
 
 import '../../../../constants.dart';
 
@@ -72,13 +71,55 @@ class _DeleteItemState extends State<DeleteItem> {
                   child: ListTile(
                     leading: Image.network(productData.image),
                     trailing: ElevatedButton(
-                      onPressed: () {
-                        firebaseFirestore
-                            .collection("product")
-                            .doc(productData.pid)
-                            .delete();
-                        Fluttertoast.showToast(msg: "Product Deleted");
-                      },
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text(
+                            'Delete Item',
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: colorAccent,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete ${productData.name} from database?',
+                            style: const TextStyle(
+                              color: colorPrimaryDark,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: colorUnpicked,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                firebaseFirestore
+                                    .collection("product")
+                                    .doc(productData.pid)
+                                    .delete();
+                                Fluttertoast.showToast(msg: "Product Deleted");
+                              },
+                              child: const Text(
+                                'Delete',
+                                style: TextStyle(
+                                  color: colorAccent,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                          backgroundColor: colorBase,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
                         primary: colorAccent,
                         onPrimary: colorBase,
