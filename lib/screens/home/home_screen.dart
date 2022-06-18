@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-            backgroundColor: colorBase,
+            backgroundColor: colorWhite,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

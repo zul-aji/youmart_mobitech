@@ -69,6 +69,7 @@ class _DeleteItemState extends State<DeleteItem> {
                 final productData = snapshot.docs[index].data();
                 return Card(
                   child: ListTile(
+                    tileColor: colorBase,
                     leading: Image.network(productData.image),
                     trailing: ElevatedButton(
                       onPressed: () => showDialog<String>(
@@ -96,7 +97,7 @@ class _DeleteItemState extends State<DeleteItem> {
                               child: const Text(
                                 'Cancel',
                                 style: TextStyle(
-                                  color: colorUnpicked,
+                                  color: colorPrimary,
                                 ),
                               ),
                             ),

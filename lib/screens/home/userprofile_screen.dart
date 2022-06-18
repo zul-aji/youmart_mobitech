@@ -176,7 +176,7 @@ class _UserProfileState extends State<UserProfile> {
                 child: const Text(
                   'Cancel',
                   style: TextStyle(
-                    color: colorUnpicked,
+                    color: colorPrimary,
                   ),
                 ),
               ),
@@ -230,7 +230,7 @@ class _UserProfileState extends State<UserProfile> {
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFFFFFFFF),
+            backgroundColor: colorWhite,
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: colorAccent),
@@ -242,7 +242,7 @@ class _UserProfileState extends State<UserProfile> {
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: const Color(0xFFFFFFFF),
+                color: colorWhite,
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(

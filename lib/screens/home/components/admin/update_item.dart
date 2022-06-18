@@ -68,6 +68,7 @@ class _UpdateItemState extends State<UpdateItem> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
+                    tileColor: colorBase,
                     leading: Image.network(productData.image),
                     title: Text(
                       productData.name,
