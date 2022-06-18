@@ -2,17 +2,15 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youmart_mobitech/model/local_product.dart';
-import 'package:youmart_mobitech/model/product_download.dart';
 
 import '../../../../constants.dart';
 import '../../../../controllers/cart_controller.dart';
 import '../../../../controllers/product_controller.dart';
 
-class ItemList extends StatelessWidget {
+class SnackList extends StatelessWidget {
   final productController = Get.put(ProductController());
 
-  ItemList({Key? key}) : super(key: key);
+  SnackList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class ItemList extends StatelessWidget {
               crossAxisSpacing: 20,
               childAspectRatio: 0.68,
             ),
-            itemCount: productController.product.length,
+            itemCount: productController.snackProduct.length,
             itemBuilder: (BuildContext context, int index) {
               return CatalogProductCard(index: index);
             }),
@@ -47,7 +45,7 @@ class CatalogProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productData = productController.product[index];
+    final productData = productController.snackProduct[index];
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: Column(
@@ -55,8 +53,7 @@ class CatalogProductCard extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(12),
-              height: 180,
+              padding: const EdgeInsets.all(13),
               width: 160,
               decoration: BoxDecoration(
                 color: colorPrimaryLight,
@@ -113,19 +110,22 @@ stockCheck(productData) {
       ),
     );
   } else {
-    return Material(
-      borderRadius: BorderRadius.circular(15),
-      color: colorPrimaryDark,
-      child: MaterialButton(
-        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: () {
-          cartController.addProduct(productData);
-        },
-        child: const Text(
-          "Add to Cart",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        borderRadius: BorderRadius.circular(15),
+        color: colorPrimaryDark,
+        child: MaterialButton(
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          onPressed: () {
+            cartController.addProduct(productData);
+          },
+          child: const Text(
+            "Add to Cart",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

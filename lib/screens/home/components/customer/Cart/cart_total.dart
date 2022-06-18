@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'package:youmart_mobitech/controllers/cart_controller.dart';
 
-import '../../../../constants.dart';
-import '../../../../model/order_model.dart';
-import '../../../../model/user_model.dart';
+import '../../../../../constants.dart';
+import '../../../../../model/order_model.dart';
+import '../../../../../model/user_model.dart';
 
 final CartController controller = Get.put(CartController());
 

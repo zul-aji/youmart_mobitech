@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/beverage_list.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/instant_list.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/personalc_list.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/snack_list.dart';
 
 import '../../../../model/user_model.dart';
 import '../../../constants.dart';
@@ -8,7 +12,6 @@ import 'admin/add_item.dart';
 import 'admin/delete_item.dart';
 import 'admin/orders.dart';
 import 'admin/update_item.dart';
-import 'customer/itemlist.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -126,7 +129,7 @@ class _HomeBodyState extends State<HomeBody> {
     } else {
       return Expanded(
         child: Padding(
-            padding: const EdgeInsets.only(left: 24.0, right: 10.0, top: 20),
+            padding: const EdgeInsets.only(left: 18.0, right: 4.0, top: 20),
             child: customerBody()),
       );
     }
@@ -145,7 +148,15 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   customerBody() {
-    return ItemList();
+    if (selectedIndex == 0) {
+      return SnackList();
+    } else if (selectedIndex == 1) {
+      return InstantList();
+    } else if (selectedIndex == 2) {
+      return BeverageList();
+    } else if (selectedIndex == 3) {
+      return PersonalCList();
+    }
   }
 
   categoryShown(index) {

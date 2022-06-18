@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../constants.dart';
 import '../../model/user_model.dart';
-import 'components/customer/cart_screen.dart';
+import 'components/customer/Cart/cart_screen.dart';
 import 'components/home_body.dart';
 import 'userprofile_screen.dart';
 
