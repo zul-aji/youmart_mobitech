@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constants.dart';
+import '../../../../model/order_model.dart';
 import '../../../../model/product_upload.dart';
 
 class OrdersDetailsUpdate extends StatefulWidget {
-  final String pid, image, name, stock;
-  // final double price;
-  final String price;
+  final String firstName, secondName, oid, uid, totalprice;  // final double price;
+  final List<dynamic>? nameList, imageList, quantityList;
 
   const OrdersDetailsUpdate(
       {Key? key,
-        required this.pid,
-        required this.image,
-        required this.name,
-        required this.price,
-        required this.stock})
+        required this.firstName,
+        required this.secondName,
+        required this.oid,
+        required this.uid,
+        required this.totalprice,
+        required this.nameList,
+        required this.imageList,
+        required this.quantityList,})
       : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
   final priceController = TextEditingController();
   final stockController = TextEditingController();
 
-  ProductUploadModel productUploadModel = ProductUploadModel();
+  OrderModel orderModel = OrderModel();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Item Name: ${widget.name}",
+        hintText: "Item Name: ${widget.nameList}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -83,7 +86,7 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Item Price: ${widget.price}",
+        hintText: "Quantity: ${widget.quantityList}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -112,7 +115,7 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Item Stock: ${widget.stock}",
+        hintText: "Item Stock: ${widget.nameList}",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -171,7 +174,7 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
                       SizedBox(
                           height: 200,
                           child: Image.network(
-                            widget.image,
+                            widget.imageList?[1],
                             fit: BoxFit.contain,
                           )),
                       const SizedBox(height: 10),
@@ -196,9 +199,9 @@ class _OrdersDetailsUpdateState extends State<OrdersDetailsUpdate> {
 
   updateProduct() {
     // writing all the values
-    productUploadModel.pid = widget.pid;
+    orderModel.oid = widget.oid;
 
-    FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
       'name': nameController.text,
       'price': priceController.text,
       'stock': stockController.text,
