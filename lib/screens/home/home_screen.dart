@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: const Icon(Icons.search_outlined, color: colorAccent),
+          icon: const Icon(Icons.list_alt_rounded, color: colorAccent),
           onPressed: () {},
         );
       }

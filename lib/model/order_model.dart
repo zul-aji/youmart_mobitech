@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   String? oid;
   String? uid;
+  String? firstName;
+  String? secondName;
   String? totalprice;
   List<dynamic>? nameList;
   List<dynamic>? imageList;
@@ -11,6 +13,8 @@ class OrderModel {
   OrderModel({
     this.oid,
     this.uid,
+    this.firstName,
+    this.secondName,
     this.totalprice,
     this.nameList,
     this.imageList,
@@ -25,6 +29,8 @@ class OrderModel {
     return OrderModel(
       oid: data?['oid'],
       uid: data?['uid'],
+      firstName: data?['firstName'],
+      secondName: data?['secondName'],
       totalprice: data?['totalprice'],
       nameList:
           data?['nameList'] is Iterable ? List.from(data?['nameList']) : null,
@@ -40,6 +46,8 @@ class OrderModel {
     return {
       if (oid != null) "oid": oid,
       if (uid != null) "uid": uid,
+      if (firstName != null) "firstName": firstName,
+      if (secondName != null) "secondName": secondName,
       if (totalprice != null) "totalprice": totalprice,
       if (nameList != null) "nameList": nameList,
       if (imageList != null) "imageList": imageList,

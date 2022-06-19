@@ -10,7 +10,7 @@ import '../../../../../controllers/cart_controller.dart';
 import '../../../../../model/order_model.dart';
 import '../../../../../model/user_model.dart';
 
-final CartController controller = Get.put(CartController());
+final CartController cartController = Get.put(CartController());
 
 class CartTotal extends StatefulWidget {
   const CartTotal({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _CartTotalState extends State<CartTotal> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (controller.total == '0')
+            if (cartController.total == '0')
               const Text(
                 '0 RM',
                 style: TextStyle(
@@ -55,7 +55,7 @@ class _CartTotalState extends State<CartTotal> {
               )
             else
               Text(
-                '${controller.total} RM',
+                '${cartController.total} RM',
                 style: const TextStyle(
                   color: colorPrimaryDark,
                   fontSize: 24,
@@ -89,17 +89,19 @@ class _CartTotalState extends State<CartTotal> {
     // writing all the values
     orderModel.oid = uuid.v1();
     orderModel.uid = loggedInUser.uid;
-    orderModel.totalprice = controller.total;
-    orderModel.nameList = controller.nameList;
-    orderModel.imageList = controller.imageList;
-    orderModel.quantityList = controller.quantityList;
+    orderModel.firstName = loggedInUser.firstName;
+    orderModel.secondName = loggedInUser.secondName;
+    orderModel.totalprice = cartController.total;
+    orderModel.nameList = cartController.nameList;
+    orderModel.imageList = cartController.imageList;
+    orderModel.quantityList = cartController.quantityList;
 
     firebaseFirestore
         .collection("order")
         .doc(orderModel.oid)
         .set(orderModel.toFirestore());
 
-    controller.clearProducts();
+    cartController.clearProducts();
     Navigator.of(context).pop();
     Fluttertoast.showToast(msg: "Order Placed");
   }

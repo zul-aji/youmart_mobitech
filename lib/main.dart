@@ -38,7 +38,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasData) {
             return const HomeScreen();
           } else {
-            return AuthPage();
+            return const AuthPage();
           }
         },
       ),
