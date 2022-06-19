@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 
 import '../../../../constants.dart';
-import '../../../../model/order_download_model.dart';
+import '../../../../model/order_admin.dart';
 
 
 final queryOrderModel = FirebaseFirestore.instance
     .collection('order')
     .orderBy('totalprice')
-    .withConverter<OrderDownloadModel>(
+    .withConverter<OrderAdmin>(
   fromFirestore: (snapshot, _) =>
-      OrderDownloadModel.fromJson(snapshot.data()!),
+      OrderAdmin.fromJson(snapshot.data()!),
   toFirestore: (user, _) => user.toJson(),
 );
 
@@ -34,7 +34,7 @@ class _OrdersState extends State<Orders> {
   }
 
   Widget buildList(BuildContext context) =>
-      FirestoreQueryBuilder<OrderDownloadModel>(
+      FirestoreQueryBuilder<OrderAdmin>(
         query: queryOrderModel,
         pageSize: 10,
         builder: (context, snapshot, _) {

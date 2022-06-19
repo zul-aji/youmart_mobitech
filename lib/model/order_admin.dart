@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OrderDownloadModel {
+class OrderAdmin {
 
   final String firstName, secondName, oid, uid, totalprice;
   final List<dynamic>? nameList, imageList, quantityList;
 
-  const OrderDownloadModel({
+  const OrderAdmin({
     required this.oid,
     required this.firstName,
     required this.secondName,
@@ -17,12 +17,12 @@ class OrderDownloadModel {
   });
 
 
-  factory OrderDownloadModel.fromFirestore(
+  factory OrderAdmin.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options,
       ) {
     final data = snapshot.data();
-    return OrderDownloadModel(
+    return OrderAdmin(
       oid: data?['oid'],
       uid: data?['uid'],
       secondName: data?['secondName'],
@@ -37,7 +37,7 @@ class OrderDownloadModel {
     );
   }
 
-  OrderDownloadModel.fromJson(Map<String, Object?> json)
+  OrderAdmin.fromJson(Map<String, Object?> json)
       : this(
         oid: json['name']! as String,
         uid: json['category']! as String,
@@ -60,8 +60,8 @@ class OrderDownloadModel {
     'quantityList': quantityList,
   };
 
-  static OrderDownloadModel fromSnapshot(DocumentSnapshot snap) {
-    OrderDownloadModel order = OrderDownloadModel(
+  static OrderAdmin fromSnapshot(DocumentSnapshot snap) {
+    OrderAdmin order = OrderAdmin(
       oid: snap['oid'],
       uid: snap['uid'],
       secondName: snap['secondName'],
