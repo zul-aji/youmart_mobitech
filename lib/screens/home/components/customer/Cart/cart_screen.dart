@@ -29,7 +29,7 @@ class CartScreen extends StatelessWidget {
         ),
       ),
       body: CartList(),
-      bottomNavigationBar: CartTotal(),
+      bottomNavigationBar: const CartTotal(),
     );
   }
 }

@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/model/product_upload.dart';
 
 import '../../../../constants.dart';
-import '../../../../model/product_download.dart';
+import '../../../../model/product_upload.dart';
 
 class DetailsUpdate extends StatefulWidget {
   final String pid, image, name, stock;
@@ -197,10 +195,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
   }
 
   updateProduct() {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
     // writing all the values
     productUploadModel.pid = widget.pid;
 

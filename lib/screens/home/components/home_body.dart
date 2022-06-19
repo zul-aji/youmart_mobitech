@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/beverage_list.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/instant_list.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/personalc_list.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/snack_list.dart';
 
 import '../../../../model/user_model.dart';
 import '../../../constants.dart';
@@ -12,6 +8,10 @@ import 'admin/add_item.dart';
 import 'admin/delete_item.dart';
 import 'admin/orders.dart';
 import 'admin/update_item.dart';
+import 'customer/beverage_list.dart';
+import 'customer/instant_list.dart';
+import 'customer/personalc_list.dart';
+import 'customer/snack_list.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);

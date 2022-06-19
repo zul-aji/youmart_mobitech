@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/model/product_download.dart';
 
 import '../../../../constants.dart';
+import '../../../../model/product_download.dart';
 
 final queryProductDownloadModel = FirebaseFirestore.instance
     .collection('product')
@@ -18,7 +18,7 @@ final queryProductDownloadModel = FirebaseFirestore.instance
 FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 class DeleteItem extends StatefulWidget {
-  DeleteItem({Key? key}) : super(key: key);
+  const DeleteItem({Key? key}) : super(key: key);
 
   @override
   State<DeleteItem> createState() => _DeleteItemState();

@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         return IconButton(
           icon: const Icon(Icons.shopping_cart_rounded, color: colorAccent),
-          onPressed: () => Get.to(() => CartScreen()),
+          onPressed: () => Get.to(() => const CartScreen()),
         );
       }
     });
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: const Icon(Icons.person, color: colorAccent),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserProfile()));
+                MaterialPageRoute(builder: (context) => const UserProfile()));
           },
         );
       }

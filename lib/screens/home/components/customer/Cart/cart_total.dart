@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import 'package:youmart_mobitech/controllers/cart_controller.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../controllers/cart_controller.dart';
 import '../../../../../model/order_model.dart';
 import '../../../../../model/user_model.dart';
 
 final CartController controller = Get.put(CartController());
 
 class CartTotal extends StatefulWidget {
-  CartTotal({Key? key}) : super(key: key);
+  const CartTotal({Key? key}) : super(key: key);
 
   @override
   State<CartTotal> createState() => _CartTotalState();
@@ -81,7 +81,7 @@ class _CartTotalState extends State<CartTotal> {
     );
   }
 
-  placeOrderToDB() async {
+  placeOrderToDB() {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     OrderModel orderModel = OrderModel();
     var uuid = const Uuid();
@@ -94,7 +94,7 @@ class _CartTotalState extends State<CartTotal> {
     orderModel.imageList = controller.imageList;
     orderModel.quantityList = controller.quantityList;
 
-    await firebaseFirestore
+    firebaseFirestore
         .collection("order")
         .doc(orderModel.oid)
         .set(orderModel.toFirestore());

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youmart_mobitech/constants.dart';
-import 'package:youmart_mobitech/controllers/cart_controller.dart';
-import 'package:youmart_mobitech/model/product_download.dart';
+
+import '../../../../../constants.dart';
+import '../../../../../controllers/cart_controller.dart';
+import '../../../../../model/product_download.dart';
 
 class CartList extends StatelessWidget {
   final CartController controller = Get.put(CartController());
