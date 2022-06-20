@@ -7,6 +7,7 @@ import '../../../constants.dart';
 import 'admin/add_item.dart';
 import 'admin/delete_item.dart';
 import 'admin/orders.dart';
+import 'admin/shop_status.dart';
 import 'admin/update_item.dart';
 import 'customer/beverage_list.dart';
 import 'customer/instant_list.dart';
@@ -137,12 +138,14 @@ class _HomeBodyState extends State<HomeBody> {
 
   adminBody() {
     if (selectedIndex == 0) {
-      return const AddItem();
+      return ShopStatus();
     } else if (selectedIndex == 1) {
-      return const UpdateItem();
+      return const AddItem();
     } else if (selectedIndex == 2) {
-      return const DeleteItem();
+      return const UpdateItem();
     } else if (selectedIndex == 3) {
+      return const DeleteItem();
+    } else if (selectedIndex == 4) {
       return const Orders();
     }
   }
