@@ -141,9 +141,9 @@ class _HomeBodyState extends State<HomeBody> {
     } else if (selectedIndex == 1) {
       return const UpdateItem();
     } else if (selectedIndex == 2) {
-      return DeleteItem();
+      return const DeleteItem();
     } else if (selectedIndex == 3) {
-      return Orders();
+      return const Orders();
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/order/order_screen.dart';
 
 import '../../constants.dart';
 import '../../model/user_model.dart';
@@ -57,7 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         return IconButton(
           icon: const Icon(Icons.list_alt_rounded, color: colorAccent),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => OrderScreen()));
+          },
         );
       }
     });
