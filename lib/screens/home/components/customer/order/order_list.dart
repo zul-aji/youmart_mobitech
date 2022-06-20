@@ -49,72 +49,74 @@ class _OrderListState extends State<OrderList> {
         } else if (snapshot.hasData == false) {
           return const Text('No item available');
         } else {
-          return ListView.builder(
-            itemCount: snapshot.docs.length + 1,
-            itemBuilder: (context, index) {
-              final hasEndReached = snapshot.hasMore &&
-                  index == snapshot.docs.length &&
-                  !snapshot.isFetchingMore;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: ListView.builder(
+              itemCount: snapshot.docs.length + 1,
+              itemBuilder: (context, index) {
+                final hasEndReached = snapshot.hasMore &&
+                    index == snapshot.docs.length &&
+                    !snapshot.isFetchingMore;
 
-              if (hasEndReached) {
-                snapshot.fetchMore();
-              }
+                if (hasEndReached) {
+                  snapshot.fetchMore();
+                }
 
-              if (index == snapshot.docs.length) {
-                return Center(
-                  child: snapshot.isFetchingMore
-                      ? const CircularProgressIndicator()
-                      : Container(),
-                );
-              }
+                if (index == snapshot.docs.length) {
+                  return Center(
+                    child: snapshot.isFetchingMore
+                        ? const CircularProgressIndicator()
+                        : Container(),
+                  );
+                }
 
-              final orderData = snapshot.docs[index].data();
-              return Card(
-                elevation: 3.0,
-                child: ListTile(
-                  tileColor: colorBase,
-                  title: Text(
-                    "Order #${index + 1}",
-                    style: const TextStyle(
-                      color: colorPrimaryDark,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                final orderData = snapshot.docs[index].data();
+                return Card(
+                  elevation: 3.0,
+                  child: ListTile(
+                    tileColor: colorBase,
+                    title: Text(
+                      "Order #${index + 1}",
+                      style: const TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    orderData.oid,
-                    style: const TextStyle(
-                      color: colorUnpicked,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13,
+                    subtitle: Text(
+                      orderData.oid,
+                      style: const TextStyle(
+                        color: colorUnpicked,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                  trailing: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrderCDetails(
-                            oid: orderData.oid,
-                            firstName: orderData.firstName,
-                            secondName: orderData.secondName,
-                            totalprice: orderData.totalprice,
-                            nameList: orderData.nameList,
-                            imageList: orderData.imageList,
-                            quantityList: orderData.quantityList,
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderCDetails(
+                              oid: orderData.oid,
+                              index: index,
+                              totalprice: orderData.totalprice,
+                              nameList: orderData.nameList,
+                              imageList: orderData.imageList,
+                              quantityList: orderData.quantityList,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: colorPrimary,
-                      onPrimary: colorBase,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: colorPrimary,
+                        onPrimary: colorBase,
+                      ),
+                      child: const Text('Order Details'),
                     ),
-                    child: const Text('Order Details'),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         }
       },

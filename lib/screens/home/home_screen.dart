@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextButton(
                   onPressed: () {
                     deleteAccount();
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     'Sign Out',

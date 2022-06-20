@@ -44,24 +44,14 @@ class _CartTotalState extends State<CartTotal> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (cartController.total == '0')
-              const Text(
-                '0 RM',
-                style: TextStyle(
-                  color: colorPrimaryDark,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            else
-              Text(
-                '${cartController.total} RM',
-                style: const TextStyle(
-                  color: colorPrimaryDark,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              '${cartController.total} RM',
+              style: const TextStyle(
+                color: colorPrimaryDark,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
+            ),
             ElevatedButton(
               onPressed: () {
                 placeOrderToDB();
