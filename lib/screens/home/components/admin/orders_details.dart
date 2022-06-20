@@ -27,6 +27,7 @@ class OrdersDetails extends StatefulWidget {
 }
 
 class _OrdersDetailsState extends State<OrdersDetails> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
           onPressed: () {
             Navigator.of(context).pop();
             print(widget.nameList);
-            print(widget.nameList.length);
+            // print(widget.nameList?.length);
           },
         ),
       ),
@@ -84,7 +85,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                 height: 539,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: widget.nameList.length,
+                    itemCount: widget.nameList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -101,7 +102,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                             ),
                             Expanded(
                               child: Text(
-                                widget.nameList[index],
+                                widget.nameList?[index],
                                 style: const TextStyle(
                                   fontSize: 20,
                                   color: colorPrimaryDark,
@@ -110,7 +111,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                               ),
                             ),
                             Text(
-                              "x${widget.quantityList[index]}",
+                              "x${widget.quantityList?[index]}",
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: colorPrimaryDark,
