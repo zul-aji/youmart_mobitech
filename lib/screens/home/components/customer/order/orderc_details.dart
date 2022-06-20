@@ -76,8 +76,9 @@ class _OrderCDetailsState extends State<OrderCDetails> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-                height: 70,
+                height: 539,
                 child: ListView.builder(
+                    scrollDirection: Axis.vertical,
                     itemCount: widget.nameList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
