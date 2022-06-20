@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 
 import '../../../../constants.dart';
-import '../../../../model/order_admin.dart';
 import '../../../../model/order_customer.dart';
 import 'orders_details.dart';
-
 
 final queryOrderModel = FirebaseFirestore.instance
     .collection('order')
     .orderBy('totalprice')
     .withConverter<OrderCustomer>(
-  fromFirestore: (snapshot, _) =>
-      OrderCustomer.fromJson(snapshot.data()!),
-  toFirestore: (user, _) => user.toJson(),
-);
+      fromFirestore: (snapshot, _) => OrderCustomer.fromJson(snapshot.data()!),
+      toFirestore: (user, _) => user.toJson(),
+    );
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -32,7 +29,6 @@ class _OrdersState extends State<Orders> {
 
   // final firebaseDoc = await FirebaseFirestore.instance.collection('order').get();
   // List<String> imagesList = firebaseDoc.data()['images'];
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +82,7 @@ class _OrdersState extends State<Orders> {
                       ),
                     ),
                     subtitle: Text(
-                      "Order id: ${orders.oid}",
+                      orders.oid,
                       style: const TextStyle(
                         color: colorUnpicked,
                         fontWeight: FontWeight.w500,
