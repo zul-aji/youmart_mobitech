@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:youmart_mobitech/model/order_customer.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/order/orderc_details.dart';
 
 import '../../../../../constants.dart';
 
 class OrderList extends StatefulWidget {
   final String uid;
-  OrderList({
+  const OrderList({
     Key? key,
     required this.uid,
   }) : super(key: key);
@@ -90,18 +91,20 @@ class _OrderListState extends State<OrderList> {
                   ),
                   trailing: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => DetailsUpdate(
-                      //       pid: productData.pid,
-                      //       image: productData.image,
-                      //       name: productData.name,
-                      //       price: productData.price,
-                      //       stock: productData.stock,
-                      //     ),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrderCDetails(
+                            oid: orderData.oid,
+                            firstName: orderData.firstName,
+                            secondName: orderData.secondName,
+                            totalprice: orderData.totalprice,
+                            nameList: orderData.nameList,
+                            imageList: orderData.imageList,
+                            quantityList: orderData.quantityList,
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       primary: colorPrimary,

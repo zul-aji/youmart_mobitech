@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: const Icon(Icons.list_alt_rounded, color: colorAccent),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => OrderScreen()));
+                MaterialPageRoute(builder: (context) => const OrderScreen()));
           },
         );
       }
@@ -81,9 +81,51 @@ class _HomeScreenState extends State<HomeScreen> {
       if (loggedInUser.role == 'Guest') {
         return IconButton(
           icon: const Icon(Icons.logout_outlined, color: colorAccent),
-          onPressed: () {
-            deleteAccount();
-          },
+          onPressed: () => showDialog<String>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text(
+                'Guest Sign out',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: colorAccent,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              content: const Text(
+                "If you sign out, you won't be able to see your order details anymore",
+                style: TextStyle(
+                  color: colorPrimaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: colorPrimary,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    deleteAccount();
+                  },
+                  child: const Text(
+                    'Sign Out',
+                    style: TextStyle(
+                      color: colorAccent,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+              backgroundColor: colorBase,
+            ),
+          ),
         );
       } else {
         return IconButton(

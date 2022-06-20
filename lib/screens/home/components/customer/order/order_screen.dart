@@ -7,7 +7,7 @@ import '../../../../../constants.dart';
 import '../../../../../model/user_model.dart';
 
 class OrderScreen extends StatefulWidget {
-  OrderScreen({Key? key}) : super(key: key);
+  const OrderScreen({Key? key}) : super(key: key);
 
   @override
   State<OrderScreen> createState() => _OrderScreenState();

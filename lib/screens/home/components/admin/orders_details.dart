@@ -4,23 +4,26 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constants.dart';
 import '../../../../model/order_model.dart';
-import '../../../../model/product_upload.dart';
 
 class OrdersDetailsUpdate extends StatefulWidget {
-  final String firstName, secondName, oid, uid, totalprice;  // final double price;
+  final String firstName,
+      secondName,
+      oid,
+      uid,
+      totalprice; // final double price;
   final List<dynamic>? nameList, imageList, quantityList;
 
-  const OrdersDetailsUpdate(
-      {Key? key,
-        required this.firstName,
-        required this.secondName,
-        required this.oid,
-        required this.uid,
-        required this.totalprice,
-        required this.nameList,
-        required this.imageList,
-        required this.quantityList,})
-      : super(key: key);
+  const OrdersDetailsUpdate({
+    Key? key,
+    required this.firstName,
+    required this.secondName,
+    required this.oid,
+    required this.uid,
+    required this.totalprice,
+    required this.nameList,
+    required this.imageList,
+    required this.quantityList,
+  }) : super(key: key);
 
   @override
   State<OrdersDetailsUpdate> createState() => _OrdersDetailsUpdateState();

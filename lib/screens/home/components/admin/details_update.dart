@@ -6,9 +6,7 @@ import '../../../../constants.dart';
 import '../../../../model/product_upload.dart';
 
 class DetailsUpdate extends StatefulWidget {
-  final String pid, image, name, stock;
-  // final double price;
-  final String price;
+  final String pid, price, image, name, stock;
 
   const DetailsUpdate(
       {Key? key,
