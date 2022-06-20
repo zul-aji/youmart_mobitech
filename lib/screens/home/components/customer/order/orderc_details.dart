@@ -27,11 +27,12 @@ class OrderCDetails extends StatefulWidget {
 }
 
 class _OrderCDetailsState extends State<OrderCDetails> {
-
   @override
   Widget build(BuildContext context) {
-    DateTime time = DateTime.fromMicrosecondsSinceEpoch(widget.timestamp.microsecondsSinceEpoch);
-    String convertedDateTime = "${time.year.toString()}-${time.month.toString().padLeft(2,'0')}-${time.day.toString().padLeft(2,'0')} ${time.hour.toString().padLeft(2,'0')}-${time.minute.toString().padLeft(2,'0')}";
+    DateTime time = DateTime.fromMicrosecondsSinceEpoch(
+        widget.timestamp.microsecondsSinceEpoch);
+    String convertedDateTime =
+        "${time.year.toString()}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')} ${time.hour.toString().padLeft(2, '0')}-${time.minute.toString().padLeft(2, '0')}";
 
     return Scaffold(
       appBar: AppBar(
@@ -99,7 +100,7 @@ class _OrderCDetailsState extends State<OrderCDetails> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-                height: 539,
+                height: 500,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: widget.nameList.length,
@@ -151,19 +152,17 @@ class _OrderCDetailsState extends State<OrderCDetails> {
               'Total Price: ${widget.totalprice} RM',
               style: const TextStyle(
                 color: colorPrimaryDark,
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Expanded(
-             child: Text(
+            Text(
               'Status: ${widget.status}',
               style: const TextStyle(
                 color: colorPrimaryDark,
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
             ),
           ],
         ),
