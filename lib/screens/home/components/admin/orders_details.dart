@@ -82,7 +82,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-                height: 539,
+                height: 517,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: widget.nameList?.length,

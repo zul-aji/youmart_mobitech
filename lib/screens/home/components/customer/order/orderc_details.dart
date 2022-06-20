@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../constants.dart';
 
 class OrderCDetails extends StatefulWidget {
-  final String oid, totalprice;
+  final String oid, totalprice, status;
+  final Timestamp timestamp;
   final int index;
   final List<dynamic> nameList, imageList, quantityList;
 
@@ -11,7 +14,9 @@ class OrderCDetails extends StatefulWidget {
     Key? key,
     required this.oid,
     required this.index,
+    required this.timestamp,
     required this.totalprice,
+    required this.status,
     required this.nameList,
     required this.imageList,
     required this.quantityList,
@@ -22,8 +27,12 @@ class OrderCDetails extends StatefulWidget {
 }
 
 class _OrderCDetailsState extends State<OrderCDetails> {
+
   @override
   Widget build(BuildContext context) {
+    DateTime time = DateTime.fromMicrosecondsSinceEpoch(widget.timestamp.microsecondsSinceEpoch);
+    String convertedDateTime = "${time.year.toString()}-${time.month.toString().padLeft(2,'0')}-${time.day.toString().padLeft(2,'0')} ${time.hour.toString().padLeft(2,'0')}-${time.minute.toString().padLeft(2,'0')}";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,6 +75,20 @@ class _OrderCDetailsState extends State<OrderCDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 23),
             child: Text(
               widget.oid,
+              style: const TextStyle(
+                fontSize: 17,
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 23),
+            child: Text(
+              "Order Date: ${convertedDateTime}",
               style: const TextStyle(
                 fontSize: 17,
                 color: colorPrimaryDark,
@@ -131,6 +154,16 @@ class _OrderCDetailsState extends State<OrderCDetails> {
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            Expanded(
+             child: Text(
+              'Status: ${widget.status}',
+              style: const TextStyle(
+                color: colorPrimaryDark,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             ),
           ],
         ),

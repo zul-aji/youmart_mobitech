@@ -100,6 +100,8 @@ class _OrderListState extends State<OrderList> {
                               oid: orderData.oid,
                               index: index,
                               totalprice: orderData.totalprice,
+                              timestamp: orderData.timestamp,
+                              status: orderData.status,
                               nameList: orderData.nameList,
                               imageList: orderData.imageList,
                               quantityList: orderData.quantityList,
