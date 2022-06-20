@@ -85,6 +85,8 @@ class _CartTotalState extends State<CartTotal> {
     orderModel.nameList = cartController.nameList;
     orderModel.imageList = cartController.imageList;
     orderModel.quantityList = cartController.quantityList;
+    orderModel.timestamp= Timestamp.now();
+    orderModel.status= "Pending";
 
     firebaseFirestore
         .collection("order")

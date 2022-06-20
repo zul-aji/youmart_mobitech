@@ -6,6 +6,8 @@ class OrderModel {
   String? firstName;
   String? secondName;
   String? totalprice;
+  String? status;
+  Timestamp? timestamp;
   List<dynamic>? nameList;
   List<dynamic>? imageList;
   List<dynamic>? quantityList;
@@ -16,7 +18,9 @@ class OrderModel {
     this.firstName,
     this.secondName,
     this.totalprice,
+    this.status,
     this.nameList,
+    this.timestamp,
     this.imageList,
     this.quantityList,
   });
@@ -32,6 +36,8 @@ class OrderModel {
       firstName: data?['firstName'],
       secondName: data?['secondName'],
       totalprice: data?['totalprice'],
+      timestamp: data?['timestamp'],
+      status: data?['status'],
       nameList:
           data?['nameList'] is Iterable ? List.from(data?['nameList']) : null,
       imageList:
@@ -52,6 +58,8 @@ class OrderModel {
       if (nameList != null) "nameList": nameList,
       if (imageList != null) "imageList": imageList,
       if (quantityList != null) "quantityList": quantityList,
+      if (timestamp != null) "timestamp": timestamp,
+      if (status != null) "status": status,
     };
   }
 }
