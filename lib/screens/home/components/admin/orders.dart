@@ -97,7 +97,7 @@ class _OrdersState extends State<Orders> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrdersDetailsUpdate(
+                            builder: (context) => OrdersDetails(
                               uid: orders.uid,
                               imageList: orders.imageList,
                               nameList: orders.nameList,

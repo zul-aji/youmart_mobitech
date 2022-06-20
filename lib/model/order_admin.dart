@@ -44,9 +44,9 @@ class OrderAdmin {
         secondName: json['secondName']! as String,
         firstName: json['firstName']! as String,
         totalprice: json['totalprice']! as String,
-        nameList: json['quantityList']! as List,
-        imageList: json['nameList']! as List,
-        quantityList: json['imageList']! as List,
+        nameList: json['quantityList']! as List<dynamic>,
+        imageList: json['nameList']! as List<dynamic>,
+        quantityList: json['imageList']! as List<dynamic>,
   );
 
   Map<String, Object?> toJson() => {
