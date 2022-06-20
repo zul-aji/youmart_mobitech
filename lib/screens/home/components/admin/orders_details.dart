@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../constants.dart';
+import '../../../../model/order_model.dart';
 
 class OrdersDetails extends StatefulWidget {
   final String firstName, secondName, oid, uid, totalprice;
@@ -23,6 +26,8 @@ class OrdersDetails extends StatefulWidget {
 }
 
 class _OrdersDetailsState extends State<OrdersDetails> {
+  OrderModel orderModel = OrderModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +46,6 @@ class _OrdersDetailsState extends State<OrdersDetails> {
           icon: const Icon(Icons.arrow_back, color: colorAccent),
           onPressed: () {
             Navigator.of(context).pop();
-            print(widget.nameList);
-            // print(widget.nameList?.length);
           },
         ),
       ),
@@ -59,7 +62,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               style: TextStyle(
                 fontSize: 20,
                 color: colorPrimaryDark,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -68,14 +71,14 @@ class _OrdersDetailsState extends State<OrdersDetails> {
             child: Text(
               widget.oid,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 16,
                 color: colorPrimaryDark,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
               height: 500,
               child: ListView.builder(
@@ -133,26 +136,95 @@ class _OrdersDetailsState extends State<OrdersDetails> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_circle_outline_outlined,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 40,
+              child: ElevatedButton(
+                onPressed: acceptOrder,
+                style: ElevatedButton.styleFrom(
+                  primary: colorBase,
+                  onPrimary: colorBase,
+                ),
+                child: const Text(
+                  'Accept',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: colorPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
-            label: 'Accept',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.cancel_outlined,
+            SizedBox(
+              height: 40,
+              child: ElevatedButton(
+                onPressed: rejectOrder,
+                style: ElevatedButton.styleFrom(
+                  primary: colorAccent,
+                  onPrimary: colorAccent,
+                ),
+                child: const Text(
+                  'Reject',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: colorBase,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
-            label: "Reject",
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.check_circle_outline), label: "Complete"),
-        ],
-        // onTap:
+            SizedBox(
+              height: 40,
+              child: ElevatedButton(
+                onPressed: completeOrder,
+                style: ElevatedButton.styleFrom(
+                  primary: colorPrimary,
+                  onPrimary: colorPrimary,
+                ),
+                child: const Text(
+                  'Completed',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: colorWhite,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  acceptOrder() {
+    // writing all the values
+    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
+      'status': 'Preparing',
+    });
+
+    Fluttertoast.showToast(msg: "Product status Updated");
+  }
+
+  rejectOrder() {
+    // writing all the values
+    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
+      'status': 'Rejected',
+    });
+
+    Fluttertoast.showToast(msg: "Product status Updated");
+  }
+
+  completeOrder() {
+    // writing all the values
+    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
+      'status': 'Completed',
+    });
+
+    Fluttertoast.showToast(msg: "Product status Updated");
   }
 }

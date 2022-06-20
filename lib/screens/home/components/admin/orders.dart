@@ -8,7 +8,7 @@ import 'orders_details.dart';
 
 final queryOrderModel = FirebaseFirestore.instance
     .collection('order')
-    .orderBy('totalprice')
+    .orderBy('timestamp', descending: true)
     .withConverter<OrderCustomer>(
       fromFirestore: (snapshot, _) => OrderCustomer.fromJson(snapshot.data()!),
       toFirestore: (user, _) => user.toJson(),
@@ -82,11 +82,11 @@ class _OrdersState extends State<Orders> {
                       ),
                     ),
                     subtitle: Text(
-                      orders.oid,
+                      orders.status,
                       style: const TextStyle(
                         color: colorUnpicked,
                         fontWeight: FontWeight.w500,
-                        fontSize: 13,
+                        fontSize: 12.7,
                       ),
                     ),
                     trailing: ElevatedButton(
@@ -111,7 +111,7 @@ class _OrdersState extends State<Orders> {
                         primary: colorPrimary,
                         onPrimary: colorBase,
                       ),
-                      child: const Text('View Order Detail'),
+                      child: const Text('Order Details'),
                     ),
                   ),
                 );

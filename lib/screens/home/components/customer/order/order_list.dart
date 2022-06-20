@@ -5,6 +5,7 @@ import 'package:youmart_mobitech/model/order_customer.dart';
 import 'package:youmart_mobitech/screens/home/components/customer/order/orderc_details.dart';
 
 import '../../../../../constants.dart';
+import '../../admin/delete_item.dart';
 
 class OrderList extends StatefulWidget {
   final String uid;
@@ -71,27 +72,32 @@ class _OrderListState extends State<OrderList> {
                 }
 
                 final orderData = snapshot.docs[index].data();
-                return Card(
-                  elevation: 3.0,
-                  child: ListTile(
-                    tileColor: colorBase,
-                    title: Text(
-                      "Order #${index + 1}",
-                      style: const TextStyle(
+
+                checkStatus() {
+                  if (orderData.status == "Rejected") {
+                    return ElevatedButton(
+                      onPressed: () {
+                        firebaseFirestore
+                            .collection("order")
+                            .doc(orderData.oid)
+                            .delete();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: colorAccent,
+                      ),
+                      child: const Text('Delete Order'),
+                    );
+                  } else if (orderData.status == "Completed") {
+                    return const Text(
+                      'Order is ready!',
+                      style: TextStyle(
                         color: colorPrimaryDark,
                         fontWeight: FontWeight.w700,
                         fontSize: 18,
                       ),
-                    ),
-                    subtitle: Text(
-                      orderData.oid,
-                      style: const TextStyle(
-                        color: colorUnpicked,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                      ),
-                    ),
-                    trailing: ElevatedButton(
+                    );
+                  } else {
+                    return ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -111,11 +117,33 @@ class _OrderListState extends State<OrderList> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: colorPrimary,
-                        onPrimary: colorBase,
                       ),
                       child: const Text('Order Details'),
-                    ),
-                  ),
+                    );
+                  }
+                }
+
+                return Card(
+                  elevation: 3.0,
+                  child: ListTile(
+                      tileColor: colorBase,
+                      title: Text(
+                        "Order #${index + 1}",
+                        style: const TextStyle(
+                          color: colorPrimaryDark,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "Status: ${orderData.status}",
+                        style: const TextStyle(
+                          color: colorUnpicked,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
+                      ),
+                      trailing: checkStatus()),
                 );
               },
             ),
