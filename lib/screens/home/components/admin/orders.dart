@@ -4,6 +4,7 @@ import 'package:flutterfire_ui/firestore.dart';
 
 import '../../../../constants.dart';
 import '../../../../model/order_admin.dart';
+import 'orders_details.dart';
 
 
 final queryOrderModel = FirebaseFirestore.instance
@@ -27,6 +28,10 @@ class _OrdersState extends State<Orders> {
   void initState() {
     super.initState();
   }
+
+  // final firebaseDoc = await FirebaseFirestore.instance.collection('order').get();
+  // List<String> imagesList = firebaseDoc.data()['images'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +74,10 @@ class _OrdersState extends State<Orders> {
                   elevation: 3.0,
                   child: ListTile(
                     tileColor: colorBase,
-                    leading: Image.network(orders.imageList?[1]),
+                    // leading:
+                    // SizedBox(height: 50, width: 50, child: Image.network(orders.imageList[index])),
                     title: Text(
-                      orders.nameList?[1],
+                      "${orders.firstName}'s order",
                       style: const TextStyle(
                         color: colorPrimaryDark,
                         fontWeight: FontWeight.w700,
@@ -79,7 +85,7 @@ class _OrdersState extends State<Orders> {
                       ),
                     ),
                     subtitle: Text(
-                      orders.totalprice,
+                      "Order id: ${orders.oid}",
                       style: const TextStyle(
                         color: colorUnpicked,
                         fontWeight: FontWeight.w500,
@@ -88,18 +94,21 @@ class _OrdersState extends State<Orders> {
                     ),
                     trailing: ElevatedButton(
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DetailsUpdate(
-                        //       pid: orders.pid,
-                        //       image: orders.image,
-                        //       name: orders.name,
-                        //       price: orders.price,
-                        //       oid: orders.oid,
-                        //     ),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrdersDetailsUpdate(
+                              uid: orders.uid,
+                              imageList: orders.imageList,
+                              nameList: orders.nameList,
+                              quantityList: orders.quantityList,
+                              firstName: orders.firstName,
+                              secondName: orders.secondName,
+                              totalprice: orders.totalprice,
+                              oid: orders.oid,
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         primary: colorPrimary,
