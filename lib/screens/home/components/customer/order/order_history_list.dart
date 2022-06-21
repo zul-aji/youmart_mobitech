@@ -1,24 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:youmart_mobitech/model/order_customer.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/orderc_details.dart';
 
 import '../../../../../constants.dart';
-import '../../admin/delete_item.dart';
+import '../../../../../model/complete_order_customer.dart';
+import 'orderh_details.dart';
 
-class OrderList extends StatefulWidget {
+class OrderHistoryList extends StatefulWidget {
   final String uid;
-  const OrderList({
+  OrderHistoryList({
     Key? key,
     required this.uid,
   }) : super(key: key);
 
   @override
-  State<OrderList> createState() => _OrderListState();
+  State<OrderHistoryList> createState() => _OrderHistoryListState();
 }
 
-class _OrderListState extends State<OrderList> {
+class _OrderHistoryListState extends State<OrderHistoryList> {
   @override
   void initState() {
     super.initState();
@@ -30,17 +29,18 @@ class _OrderListState extends State<OrderList> {
   }
 
   Widget buildList(BuildContext context) {
-    final queryOrderList = FirebaseFirestore.instance
-        .collection('order')
+    final queryOrderHistoryList = FirebaseFirestore.instance
+        .collection('complete_order')
         .where("uid", isEqualTo: widget.uid)
-        .withConverter<OrderCustomer>(
+        // .orderBy('timestamp', descending: true)
+        .withConverter<CompleteOrderCustomer>(
           fromFirestore: (snapshot, _) =>
-              OrderCustomer.fromJson(snapshot.data()!),
+              CompleteOrderCustomer.fromJson(snapshot.data()!),
           toFirestore: (user, _) => user.toJson(),
         );
 
-    return FirestoreQueryBuilder<OrderCustomer>(
-      query: queryOrderList,
+    return FirestoreQueryBuilder<CompleteOrderCustomer>(
+      query: queryOrderHistoryList,
       pageSize: 10,
       builder: (context, snapshot, _) {
         if (snapshot.isFetching) {
@@ -72,42 +72,40 @@ class _OrderListState extends State<OrderList> {
                 }
 
                 final orderData = snapshot.docs[index].data();
-
-                checkStatus() {
-                  if (orderData.status == "Rejected") {
-                    return ElevatedButton(
-                      onPressed: () {
-                        firebaseFirestore
-                            .collection("order")
-                            .doc(orderData.oid)
-                            .delete();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: colorAccent,
-                      ),
-                      child: const Text('Delete Order'),
-                    );
-                  } else if (orderData.status == "Ready") {
-                    return const Text(
-                      'Order is ready!',
-                      style: TextStyle(
+                DateTime time = DateTime.fromMicrosecondsSinceEpoch(
+                    orderData.timestamp.microsecondsSinceEpoch);
+                String convertedDateTime =
+                    "${time.year.toString()}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')}, ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
+                return Card(
+                  elevation: 3.0,
+                  child: ListTile(
+                    tileColor: colorBase,
+                    title: Text(
+                      convertedDateTime,
+                      style: const TextStyle(
                         color: colorPrimaryDark,
                         fontWeight: FontWeight.w700,
                         fontSize: 18,
                       ),
-                    );
-                  } else {
-                    return ElevatedButton(
+                    ),
+                    subtitle: Text(
+                      orderData.coid,
+                      style: const TextStyle(
+                        color: colorUnpicked,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 11,
+                      ),
+                    ),
+                    trailing: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrderCDetails(
-                              oid: orderData.oid,
+                            builder: (context) => OrderHDetails(
+                              coid: orderData.coid,
                               index: index,
                               totalprice: orderData.totalprice,
                               timestamp: orderData.timestamp,
-                              status: orderData.status,
                               nameList: orderData.nameList,
                               imageList: orderData.imageList,
                               quantityList: orderData.quantityList,
@@ -119,31 +117,8 @@ class _OrderListState extends State<OrderList> {
                         primary: colorPrimary,
                       ),
                       child: const Text('Order Details'),
-                    );
-                  }
-                }
-
-                return Card(
-                  elevation: 3.0,
-                  child: ListTile(
-                      tileColor: colorBase,
-                      title: Text(
-                        "Order #${index + 1}",
-                        style: const TextStyle(
-                          color: colorPrimaryDark,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                        ),
-                      ),
-                      subtitle: Text(
-                        "Status: ${orderData.status}",
-                        style: const TextStyle(
-                          color: colorUnpicked,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
-                      ),
-                      trailing: checkStatus()),
+                    ),
+                  ),
                 );
               },
             ),

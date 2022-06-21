@@ -1,21 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/order_history.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/order_list.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/order/order_history_list.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../model/user_model.dart';
 
-class OrderScreen extends StatefulWidget {
-  const OrderScreen({Key? key}) : super(key: key);
+class OrderHistory extends StatefulWidget {
+  OrderHistory({Key? key}) : super(key: key);
 
   @override
-  State<OrderScreen> createState() => _OrderScreenState();
+  State<OrderHistory> createState() => _OrderHistoryState();
 }
 
-class _OrderScreenState extends State<OrderScreen> {
+class _OrderHistoryState extends State<OrderHistory> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel(email: '');
   @override
@@ -36,7 +34,7 @@ class _OrderScreenState extends State<OrderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Your Orders",
+          "Order History",
           style: TextStyle(
             fontSize: 25,
             color: colorPrimaryDark,
@@ -51,17 +49,8 @@ class _OrderScreenState extends State<OrderScreen> {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: const Icon(Icons.history, color: colorAccent),
-              onPressed: () => Get.to(() => OrderHistory()),
-            ),
-          ),
-        ],
       ),
-      body: OrderList(uid: loggedInUser.uid ?? " "),
+      body: OrderHistoryList(uid: loggedInUser.uid ?? " "),
     );
   }
 }

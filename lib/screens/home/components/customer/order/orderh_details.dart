@@ -1,34 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../constants.dart';
 
-class OrderCDetails extends StatefulWidget {
-  final String oid, totalprice, status;
+class OrderHDetails extends StatefulWidget {
+  final String coid, totalprice;
   final Timestamp timestamp;
   final int index;
   final List<dynamic> nameList, imageList, quantityList;
 
-  OrderCDetails({
+  OrderHDetails({
     Key? key,
-    required this.oid,
+    required this.coid,
     required this.index,
     required this.timestamp,
     required this.totalprice,
-    required this.status,
     required this.nameList,
     required this.imageList,
     required this.quantityList,
   }) : super(key: key);
 
   @override
-  State<OrderCDetails> createState() => _OrderCDetailsState();
+  State<OrderHDetails> createState() => _OrderHDetailsState();
 }
 
-class _OrderCDetailsState extends State<OrderCDetails> {
+class _OrderHDetailsState extends State<OrderHDetails> {
   @override
   Widget build(BuildContext context) {
+    DateTime time = DateTime.fromMicrosecondsSinceEpoch(
+        widget.timestamp.microsecondsSinceEpoch);
+    String convertedDateTime =
+        "${time.year.toString()}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')}, ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -57,7 +60,7 @@ class _OrderCDetailsState extends State<OrderCDetails> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 23),
             child: Text(
-              "Order ID:",
+              "ID:",
               style: TextStyle(
                 fontSize: 20,
                 color: colorPrimaryDark,
@@ -68,7 +71,32 @@ class _OrderCDetailsState extends State<OrderCDetails> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 23),
             child: Text(
-              widget.oid,
+              widget.coid,
+              style: const TextStyle(
+                fontSize: 17,
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 23),
+            child: Text(
+              "Date:",
+              style: TextStyle(
+                fontSize: 20,
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 23),
+            child: Text(
+              convertedDateTime,
               style: const TextStyle(
                 fontSize: 17,
                 color: colorPrimaryDark,
@@ -79,7 +107,7 @@ class _OrderCDetailsState extends State<OrderCDetails> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-                height: 500,
+                height: 480,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: widget.nameList.length,
@@ -104,7 +132,7 @@ class _OrderCDetailsState extends State<OrderCDetails> {
                                   widget.nameList[index],
                                   style: const TextStyle(
                                     fontSize: 20,
-                                    color: colorPrimaryDark,
+                                    color: colorPrimary,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),

@@ -99,6 +99,7 @@ class _OrdersState extends State<Orders> {
                               imageList: orders.imageList,
                               nameList: orders.nameList,
                               quantityList: orders.quantityList,
+                              timestamp: orders.timestamp,
                               firstName: orders.firstName,
                               secondName: orders.secondName,
                               totalprice: orders.totalprice,

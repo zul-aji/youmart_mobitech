@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uuid/uuid.dart';
+import 'package:youmart_mobitech/screens/home/components/admin/delete_item.dart';
 
 import '../../../../constants.dart';
+import '../../../../model/complete_order_model.dart';
 import '../../../../model/order_model.dart';
 
 class OrdersDetails extends StatefulWidget {
   final String firstName, secondName, oid, uid, totalprice;
+  final Timestamp timestamp;
   final List<dynamic>? nameList, imageList, quantityList;
 
   OrdersDetails({
@@ -15,6 +19,7 @@ class OrdersDetails extends StatefulWidget {
     required this.secondName,
     required this.oid,
     required this.uid,
+    required this.timestamp,
     required this.totalprice,
     required this.nameList,
     required this.imageList,
@@ -30,6 +35,11 @@ class _OrdersDetailsState extends State<OrdersDetails> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime time = DateTime.fromMicrosecondsSinceEpoch(
+        widget.timestamp.microsecondsSinceEpoch);
+    String convertedDateTime =
+        "${time.year.toString()}-${time.month.toString().padLeft(2, '0')}-${time.day.toString().padLeft(2, '0')}, ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -77,17 +87,31 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 2,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 23),
+            child: Text(
+              "Date: $convertedDateTime",
+              style: const TextStyle(
+                fontSize: 17,
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: SizedBox(
-              height: 500,
+              height: 470,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: widget.nameList?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
+                      horizontal: 24.0,
                       vertical: 10,
                     ),
                     child: Row(
@@ -99,12 +123,15 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                           width: 70,
                         ),
                         Expanded(
-                          child: Text(
-                            widget.nameList?[index],
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: colorPrimaryDark,
-                              fontWeight: FontWeight.w500,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              widget.nameList?[index],
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: colorPrimaryDark,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
@@ -144,24 +171,6 @@ class _OrdersDetailsState extends State<OrdersDetails> {
             SizedBox(
               height: 40,
               child: ElevatedButton(
-                onPressed: acceptOrder,
-                style: ElevatedButton.styleFrom(
-                  primary: colorBase,
-                  onPrimary: colorBase,
-                ),
-                child: const Text(
-                  'Accept',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: colorPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              child: ElevatedButton(
                 onPressed: rejectOrder,
                 style: ElevatedButton.styleFrom(
                   primary: colorAccent,
@@ -172,6 +181,24 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                   style: TextStyle(
                     fontSize: 15,
                     color: colorBase,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+              child: ElevatedButton(
+                onPressed: acceptOrder,
+                style: ElevatedButton.styleFrom(
+                  primary: colorBase,
+                  onPrimary: colorBase,
+                ),
+                child: const Text(
+                  'Ready',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: colorPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -204,10 +231,10 @@ class _OrdersDetailsState extends State<OrdersDetails> {
   acceptOrder() {
     // writing all the values
     FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
-      'status': 'Preparing',
+      'status': 'Ready',
     });
 
-    Fluttertoast.showToast(msg: "Product status Updated");
+    Fluttertoast.showToast(msg: "Order status Updated");
   }
 
   rejectOrder() {
@@ -216,15 +243,32 @@ class _OrdersDetailsState extends State<OrdersDetails> {
       'status': 'Rejected',
     });
 
-    Fluttertoast.showToast(msg: "Product status Updated");
+    Fluttertoast.showToast(msg: "Order status Updated");
   }
 
   completeOrder() {
-    // writing all the values
-    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
-      'status': 'Completed',
-    });
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    CompleteOrderModel completeOrderModel = CompleteOrderModel();
+    var uuid = const Uuid();
 
-    Fluttertoast.showToast(msg: "Product status Updated");
+    // writing all the values
+    completeOrderModel.coid = uuid.v1();
+    completeOrderModel.uid = widget.uid;
+    completeOrderModel.firstName = widget.firstName;
+    completeOrderModel.secondName = widget.secondName;
+    completeOrderModel.totalprice = widget.totalprice;
+    completeOrderModel.nameList = widget.nameList;
+    completeOrderModel.imageList = widget.imageList;
+    completeOrderModel.quantityList = widget.quantityList;
+    completeOrderModel.timestamp = Timestamp.now();
+
+    firebaseFirestore
+        .collection("complete_order")
+        .doc(completeOrderModel.coid)
+        .set(completeOrderModel.toFirestore());
+
+    firebaseFirestore.collection("order").doc(widget.oid).delete();
+
+    Fluttertoast.showToast(msg: "Order Completed");
   }
 }
