@@ -31,7 +31,6 @@ class _HomeBodyState extends State<HomeBody> {
   ShopStatusModel shopStatus = ShopStatusModel();
   // ShopStatusModel shopStatusD = ShopStatusModelDownload(status: status);
 
-
   // string for displaying the error Message
   String? errorMessage;
 
@@ -56,15 +55,12 @@ class _HomeBodyState extends State<HomeBody> {
     );
   }
 
-
   // By default our first item will be selected
   int selectedIndex = 0;
   int categoryLength = 0;
-  // bool state = true;
 
   @override
   Widget build(BuildContext context) {
-
     final headingTitle = Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: LayoutBuilder(builder: (context, constraints) {
@@ -90,7 +86,6 @@ class _HomeBodyState extends State<HomeBody> {
         Row(
           children: [
             headingTitle,
-            // opencloseButton(),
           ],
         ),
         const SizedBox(height: 18),
@@ -175,80 +170,18 @@ class _HomeBodyState extends State<HomeBody> {
     }
   }
 
-  // opencloseButton() {
-  //
-  //   final ref = FirebaseFirestore.instance.collection('shop_status');
-  //
-  //   if (loggedInUser.role == 'Admin') {
-  //     return Row(
-  //       children: [
-  //         const SizedBox(width: 20),
-  //         Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           crossAxisAlignment: CrossAxisAlignment.end,
-  //           children: [
-  //             const SizedBox(height: 4),
-  //             CupertinoSwitch(
-  //               value: state,
-  //               onChanged: (value) {
-  //                 state = value;
-  //                 if (state == true) {
-  //                   openShop();
-  //                 } else {
-  //                   closeShop();
-  //                 }
-  //                 setState(
-  //                   () {},
-  //                 );
-  //               },
-  //               thumbColor: colorBase,
-  //               activeColor: colorPrimary,
-  //               trackColor: colorAccent,
-  //             ),
-  //             Text(
-  //               state == true ? "Shop Open" : "Shop Closed",
-  //               style: TextStyle(
-  //                   fontSize: 10,
-  //                   fontWeight: FontWeight.w700,
-  //                   color: state == true ? colorPrimary : colorAccent),
-  //             )
-  //           ],
-  //         ),
-  //       ],
-  //     );
-  //   } else {
-  //     return const Text(" ");
-  //   }
-  // }
-
-  openShop() {
-    FirebaseFirestore.instance
-        .collection("shop_status")
-        .doc("statID")
-        .update({'status': true});
-
-    Fluttertoast.showToast(msg: "Shop Open");
-  }
-
-  closeShop() {
-    FirebaseFirestore.instance
-        .collection("shop_status")
-        .doc("statID")
-        .update({'status': false});
-
-    Fluttertoast.showToast(msg: "Shop Close");
-  }
-
   adminBody() {
     if (selectedIndex == 0) {
       return ShopStatus();
     } else if (selectedIndex == 1) {
-      return const UpdateItem();
+      return const AddItem();
     } else if (selectedIndex == 2) {
-      return const DeleteItem();
+      return const UpdateItem();
     } else if (selectedIndex == 3) {
-      return const Orders();
+      return const DeleteItem();
     } else if (selectedIndex == 4) {
+      return const Orders();
+    } else if (selectedIndex == 5) {
       return const AdmminOrderHistory();
     }
   }
