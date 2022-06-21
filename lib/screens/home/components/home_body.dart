@@ -25,8 +25,6 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  bool state = false;
-
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   ShopStatusModel shopStatus = ShopStatusModel();
@@ -54,6 +52,8 @@ class _HomeBodyState extends State<HomeBody> {
       },
     );
   }
+
+  bool state = false;
 
   // By default our first item will be selected
   int selectedIndex = 0;

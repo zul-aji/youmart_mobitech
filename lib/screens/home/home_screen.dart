@@ -158,10 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   deleteAccount() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 

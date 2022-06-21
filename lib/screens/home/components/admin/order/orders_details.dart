@@ -267,7 +267,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
         .set(completeOrderModel.toFirestore());
 
     firebaseFirestore.collection("order").doc(widget.oid).delete();
-
     Fluttertoast.showToast(msg: "Order Completed");
+    Navigator.of(context).pop();
   }
 }

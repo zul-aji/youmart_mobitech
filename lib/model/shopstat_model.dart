@@ -1,5 +1,5 @@
 class ShopStatusModel {
-  String? status;
+  bool? status;
 
   ShopStatusModel({this.status});
 
