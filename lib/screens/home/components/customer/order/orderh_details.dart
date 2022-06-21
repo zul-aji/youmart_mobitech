@@ -34,9 +34,9 @@ class _OrderHDetailsState extends State<OrderHDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Order #${widget.index + 1}",
-          style: const TextStyle(
+        title: const Text(
+          "Order Details",
+          style: TextStyle(
             fontSize: 25,
             color: colorPrimaryDark,
             fontWeight: FontWeight.w700,

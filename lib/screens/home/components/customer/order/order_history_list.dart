@@ -32,7 +32,6 @@ class _OrderHistoryListState extends State<OrderHistoryList> {
     final queryOrderHistoryList = FirebaseFirestore.instance
         .collection('complete_order')
         .where("uid", isEqualTo: widget.uid)
-        // .orderBy('timestamp', descending: true)
         .withConverter<CompleteOrderCustomer>(
           fromFirestore: (snapshot, _) =>
               CompleteOrderCustomer.fromJson(snapshot.data()!),

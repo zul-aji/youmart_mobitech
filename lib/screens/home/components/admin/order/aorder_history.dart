@@ -2,26 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 
-import '../../../../constants.dart';
-import '../../../../model/order_customer.dart';
-import 'orders_details.dart';
+import '../../../../../constants.dart';
+import '../../../../../model/complete_order_customer.dart';
+import 'history_details.dart';
 
-final queryOrderModel = FirebaseFirestore.instance
-    .collection('order')
+final queryHistoryOrderModel = FirebaseFirestore.instance
+    .collection('complete_order')
     .orderBy('timestamp', descending: true)
-    .withConverter<OrderCustomer>(
-      fromFirestore: (snapshot, _) => OrderCustomer.fromJson(snapshot.data()!),
+    .withConverter<CompleteOrderCustomer>(
+      fromFirestore: (snapshot, _) =>
+          CompleteOrderCustomer.fromJson(snapshot.data()!),
       toFirestore: (user, _) => user.toJson(),
     );
 
-class Orders extends StatefulWidget {
-  const Orders({Key? key}) : super(key: key);
+class AdmminOrderHistory extends StatefulWidget {
+  const AdmminOrderHistory({Key? key}) : super(key: key);
 
   @override
-  State<Orders> createState() => _OrdersState();
+  State<AdmminOrderHistory> createState() => _AdmminOrderHistoryState();
 }
 
-class _OrdersState extends State<Orders> {
+class _AdmminOrderHistoryState extends State<AdmminOrderHistory> {
   @override
   void initState() {
     super.initState();
@@ -36,8 +37,8 @@ class _OrdersState extends State<Orders> {
   }
 
   Widget buildList(BuildContext context) =>
-      FirestoreQueryBuilder<OrderCustomer>(
-        query: queryOrderModel,
+      FirestoreQueryBuilder<CompleteOrderCustomer>(
+        query: queryHistoryOrderModel,
         pageSize: 10,
         builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
@@ -71,8 +72,6 @@ class _OrdersState extends State<Orders> {
                   elevation: 3.0,
                   child: ListTile(
                     tileColor: colorBase,
-                    // leading:
-                    // SizedBox(height: 50, width: 50, child: Image.network(orders.imageList[index])),
                     title: Text(
                       "${orders.firstName}'s order",
                       style: const TextStyle(
@@ -82,11 +81,11 @@ class _OrdersState extends State<Orders> {
                       ),
                     ),
                     subtitle: Text(
-                      orders.status,
+                      orders.coid,
                       style: const TextStyle(
                         color: colorUnpicked,
                         fontWeight: FontWeight.w500,
-                        fontSize: 12.7,
+                        fontSize: 13,
                       ),
                     ),
                     trailing: ElevatedButton(
@@ -94,7 +93,7 @@ class _OrdersState extends State<Orders> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrdersDetails(
+                            builder: (context) => OrderHistoryDetails(
                               uid: orders.uid,
                               imageList: orders.imageList,
                               nameList: orders.nameList,
@@ -103,7 +102,7 @@ class _OrdersState extends State<Orders> {
                               firstName: orders.firstName,
                               secondName: orders.secondName,
                               totalprice: orders.totalprice,
-                              oid: orders.oid,
+                              coid: orders.coid,
                             ),
                           ),
                         );

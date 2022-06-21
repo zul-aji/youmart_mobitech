@@ -16,11 +16,11 @@ List<String> customerCategories = [
 ];
 
 List<String> adminCategories = [
-  "Shop Status",
   "Add Item",
   "Update Item",
   "Delete Item",
   "Orders",
+  "Order History",
 ];
 
 List<DropdownMenuItem<String>> get dropdownItems {
