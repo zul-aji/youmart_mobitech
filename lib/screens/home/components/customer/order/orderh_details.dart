@@ -50,6 +50,14 @@ class _OrderHDetailsState extends State<OrderHDetails> {
             Navigator.of(context).pop();
           },
         ),
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 8.0),
+        //     child: IconButton(
+        //         icon: const Icon(Icons.download_rounded, color: colorAccent),
+        //         onPressed: () {}),
+        //   ),
+        // ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -43,7 +43,19 @@ class _CartTotalState extends State<CartTotal> {
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [ifTotalEmpty(), ifCheckoutEmpty()],
+          children: [
+            ifTotalEmpty(),
+            ElevatedButton(
+              onPressed: () {
+                placeOrderToDB();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: colorPrimary,
+                  textStyle: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600)),
+              child: const Text("Checkout"),
+            ),
+          ],
         ),
       ),
     );
