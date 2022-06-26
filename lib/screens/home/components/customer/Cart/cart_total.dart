@@ -43,32 +43,58 @@ class _CartTotalState extends State<CartTotal> {
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '${cartController.total} RM',
-              style: const TextStyle(
-                color: colorPrimaryDark,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                placeOrderToDB();
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: colorPrimary,
-                  onPrimary: colorBase,
-                  textStyle: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600)),
-              child: const Text("Checkout"),
-            ),
-          ],
+          children: [ifTotalEmpty(), ifCheckoutEmpty()],
         ),
       ),
     );
+  }
+
+  ifTotalEmpty() {
+    if (cartController.products.length < 1) {
+      return const Text(
+        '0 RM',
+        style: TextStyle(
+          color: colorPrimaryDark,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    } else {
+      return Text(
+        '${cartController.total} RM',
+        style: const TextStyle(
+          color: colorPrimaryDark,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+  }
+
+  ifCheckoutEmpty() {
+    if (cartController.products.length < 1) {
+      return ElevatedButton(
+        onPressed: () {
+          Fluttertoast.showToast(msg: "There is no product in cart");
+        },
+        style: ElevatedButton.styleFrom(
+            primary: colorUnpicked,
+            textStyle:
+                const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+        child: const Text("Checkout"),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: () {
+          placeOrderToDB();
+        },
+        style: ElevatedButton.styleFrom(
+            primary: colorPrimary,
+            textStyle:
+                const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+        child: const Text("Checkout"),
+      );
+    }
   }
 
   placeOrderToDB() {
@@ -81,12 +107,12 @@ class _CartTotalState extends State<CartTotal> {
     orderModel.uid = loggedInUser.uid;
     orderModel.firstName = loggedInUser.firstName;
     orderModel.secondName = loggedInUser.secondName;
-    orderModel.totalprice = cartController.total;
+    orderModel.totalprice = cartController.total as String?;
     orderModel.nameList = cartController.nameList;
     orderModel.imageList = cartController.imageList;
     orderModel.quantityList = cartController.quantityList;
-    orderModel.timestamp= Timestamp.now();
-    orderModel.status= "Pending";
+    orderModel.timestamp = Timestamp.now();
+    orderModel.status = "Pending";
 
     firebaseFirestore
         .collection("order")

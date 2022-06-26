@@ -1,11 +1,7 @@
 class ShopStatusModel {
   bool? status;
 
-  ShopStatusModel(
-      {
-        this.status
-      }
-      );
+  ShopStatusModel({this.status});
 
   // receiving data from server
   factory ShopStatusModel.fromMap(map) {
