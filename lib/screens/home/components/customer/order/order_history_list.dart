@@ -113,7 +113,7 @@ class _OrderHistoryListState extends State<OrderHistoryList> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: colorPrimary,
+                        backgroundColor: colorPrimary,
                       ),
                       child: const Text('Order Details'),
                     ),

@@ -99,6 +99,7 @@ class _OrdersState extends State<Orders> {
                               imageList: orders.imageList,
                               nameList: orders.nameList,
                               quantityList: orders.quantityList,
+                              pidList: orders.pidList,
                               timestamp: orders.timestamp,
                               firstName: orders.firstName,
                               secondName: orders.secondName,
@@ -109,8 +110,8 @@ class _OrdersState extends State<Orders> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: colorPrimary,
-                        onPrimary: colorBase,
+                        foregroundColor: colorBase,
+                        backgroundColor: colorPrimary,
                       ),
                       child: const Text('Order Details'),
                     ),

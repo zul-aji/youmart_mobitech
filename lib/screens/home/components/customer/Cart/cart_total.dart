@@ -45,16 +45,7 @@ class _CartTotalState extends State<CartTotal> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ifTotalEmpty(),
-            ElevatedButton(
-              onPressed: () {
-                placeOrderToDB();
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: colorPrimary,
-                  textStyle: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w600)),
-              child: const Text("Checkout"),
-            ),
+            ifCheckoutEmpty(),
           ],
         ),
       ),
@@ -90,20 +81,25 @@ class _CartTotalState extends State<CartTotal> {
           Fluttertoast.showToast(msg: "There is no product in cart");
         },
         style: ElevatedButton.styleFrom(
-            primary: colorUnpicked,
-            textStyle:
-                const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+            backgroundColor: colorUnpicked,
+            textStyle: const TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 20,
+                fontWeight: FontWeight.w600)),
         child: const Text("Checkout"),
       );
     } else {
       return ElevatedButton(
         onPressed: () {
           placeOrderToDB();
+          cartController.clearProducts();
         },
         style: ElevatedButton.styleFrom(
-            primary: colorPrimary,
-            textStyle:
-                const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+            backgroundColor: colorPrimary,
+            textStyle: const TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 20,
+                fontWeight: FontWeight.w600)),
         child: const Text("Checkout"),
       );
     }
@@ -123,6 +119,7 @@ class _CartTotalState extends State<CartTotal> {
     orderModel.nameList = cartController.nameList;
     orderModel.imageList = cartController.imageList;
     orderModel.quantityList = cartController.quantityList;
+    orderModel.pidList = cartController.pidList;
     orderModel.timestamp = Timestamp.now();
     orderModel.status = "Pending";
 
@@ -131,7 +128,6 @@ class _CartTotalState extends State<CartTotal> {
         .doc(orderModel.oid)
         .set(orderModel.toFirestore());
 
-    cartController.clearProducts();
     Navigator.of(context).pop();
     Fluttertoast.showToast(msg: "Order Placed");
   }

@@ -45,4 +45,6 @@ class CartController extends GetxController {
 
   get quantityList =>
       _products.entries.map((product) => product.value).toList();
+
+  get pidList => _products.entries.map((product) => product.key.pid).toList();
 }

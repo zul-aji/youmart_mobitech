@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteOrderCustomer {
   final String coid, uid, firstName, secondName, totalprice;
-  final List<dynamic> nameList, imageList, quantityList;
+  final List<dynamic> nameList, imageList, quantityList, pidList;
   final Timestamp timestamp;
 
   const CompleteOrderCustomer({
@@ -15,6 +15,7 @@ class CompleteOrderCustomer {
     required this.nameList,
     required this.imageList,
     required this.quantityList,
+    required this.pidList,
   });
 
   CompleteOrderCustomer.fromJson(Map<String, Object?> json)
@@ -28,6 +29,7 @@ class CompleteOrderCustomer {
           nameList: json['nameList']! as List<dynamic>,
           imageList: json['imageList']! as List<dynamic>,
           quantityList: json['quantityList']! as List<dynamic>,
+          pidList: json['pidList']! as List<dynamic>,
         );
 
   Map<String, Object?> toJson() => {
@@ -40,6 +42,7 @@ class CompleteOrderCustomer {
         'nameList': nameList,
         'imageList': imageList,
         'quantityList': quantityList,
+        'pidList': pidList,
       };
 
   static CompleteOrderCustomer fromSnapshot(DocumentSnapshot snap) {
@@ -53,6 +56,7 @@ class CompleteOrderCustomer {
       nameList: snap['nameList'],
       imageList: snap['imageList'],
       quantityList: snap['quantityList'],
+      pidList: snap['pidList'],
     );
     return completeOrderC;
   }

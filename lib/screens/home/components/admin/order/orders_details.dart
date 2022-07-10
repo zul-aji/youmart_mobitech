@@ -10,7 +10,7 @@ import '../../../../../model/order_model.dart';
 class OrdersDetails extends StatefulWidget {
   final String firstName, secondName, oid, uid, totalprice;
   final Timestamp timestamp;
-  final List<dynamic>? nameList, imageList, quantityList;
+  final List<dynamic>? nameList, imageList, quantityList, pidList;
 
   OrdersDetails({
     Key? key,
@@ -23,6 +23,7 @@ class OrdersDetails extends StatefulWidget {
     required this.nameList,
     required this.imageList,
     required this.quantityList,
+    required this.pidList,
   }) : super(key: key);
 
   @override
@@ -172,8 +173,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: rejectOrder,
                 style: ElevatedButton.styleFrom(
-                  primary: colorAccent,
-                  onPrimary: colorAccent,
+                  foregroundColor: colorAccent,
+                  backgroundColor: colorAccent,
                 ),
                 child: const Text(
                   'Reject',
@@ -190,8 +191,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: acceptOrder,
                 style: ElevatedButton.styleFrom(
-                  primary: colorBase,
-                  onPrimary: colorBase,
+                  foregroundColor: colorBase,
+                  backgroundColor: colorBase,
                 ),
                 child: const Text(
                   'Ready',
@@ -208,8 +209,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: completeOrder,
                 style: ElevatedButton.styleFrom(
-                  primary: colorPrimary,
-                  onPrimary: colorPrimary,
+                  foregroundColor: colorPrimary,
+                  backgroundColor: colorPrimary,
                 ),
                 child: const Text(
                   'Completed',
@@ -259,6 +260,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
     completeOrderModel.nameList = widget.nameList;
     completeOrderModel.imageList = widget.imageList;
     completeOrderModel.quantityList = widget.quantityList;
+    completeOrderModel.pidList = widget.pidList;
     completeOrderModel.timestamp = Timestamp.now();
 
     firebaseFirestore
@@ -270,4 +272,26 @@ class _OrdersDetailsState extends State<OrdersDetails> {
     Fluttertoast.showToast(msg: "Order Completed");
     Navigator.of(context).pop();
   }
+
+  // updateStock() {
+  //   String stock = '';
+  //   for (int i = 0; i < widget.quantityList!.length; i++) {
+  //     var stockQuantity = int.parse(widget.quantityList![i]);
+  //     String stockName = widget.nameList![i];
+  //     CollectionReference collectionReference =
+  //         FirebaseFirestore.instance.collection('users');
+
+  //     collectionReferenceToOrderacWeb.doc('user1').get().then((value) {
+  //       //'value' is the instance of 'DocumentSnapshot'
+  //       //'value.data()' contains all the data inside a document in the form of 'dictionary'
+  //       var fields = value.data();
+
+  //       //Using 'setState' to update the user's data inside the app
+  //       //firstName, lastName and title are 'initialised variables'
+  //       setState(() {
+  //         stock = fields['firstName'];
+  //       });
+  //     });
+  //   }
+  // }
 }

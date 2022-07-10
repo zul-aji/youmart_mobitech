@@ -108,8 +108,8 @@ class _AdmminOrderHistoryState extends State<AdmminOrderHistory> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: colorPrimary,
-                        onPrimary: colorBase,
+                        foregroundColor: colorBase,
+                        backgroundColor: colorPrimary,
                       ),
                       child: const Text('Order Details'),
                     ),

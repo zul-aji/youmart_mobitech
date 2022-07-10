@@ -11,6 +11,7 @@ class OrderModel {
   List<dynamic>? nameList;
   List<dynamic>? imageList;
   List<dynamic>? quantityList;
+  List<dynamic>? pidList;
 
   OrderModel({
     this.oid,
@@ -23,6 +24,7 @@ class OrderModel {
     this.timestamp,
     this.imageList,
     this.quantityList,
+    this.pidList,
   });
 
   factory OrderModel.fromFirestore(
@@ -45,6 +47,8 @@ class OrderModel {
       quantityList: data?['quantityList'] is Iterable
           ? List.from(data?['quantityList'])
           : null,
+      pidList:
+          data?['pidList'] is Iterable ? List.from(data?['pidList']) : null,
     );
   }
 
@@ -58,6 +62,7 @@ class OrderModel {
       if (nameList != null) "nameList": nameList,
       if (imageList != null) "imageList": imageList,
       if (quantityList != null) "quantityList": quantityList,
+      if (pidList != null) "pidList": pidList,
       if (timestamp != null) "timestamp": timestamp,
       if (status != null) "status": status,
     };
