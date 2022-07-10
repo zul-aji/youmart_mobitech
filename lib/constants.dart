@@ -6,6 +6,7 @@ const colorPrimaryLight = Color(0xFFA8DADC);
 const colorBase = Color(0xFFF1FAEE);
 const colorAccent = Color(0xFFE63946);
 const colorUnpicked = Color(0xFFACACAC);
+const colorWhite = Color(0xFFFFFFFF);
 
 List<String> customerCategories = [
   "Snacks",
@@ -15,10 +16,12 @@ List<String> customerCategories = [
 ];
 
 List<String> adminCategories = [
+  "Shop Status",
   "Add Item",
   "Update Item",
   "Delete Item",
   "Orders",
+  "Order History",
 ];
 
 List<DropdownMenuItem<String>> get dropdownItems {

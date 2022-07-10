@@ -4,6 +4,8 @@ import '../screens/login/login_screen.dart';
 import '../screens/login/registration_screen.dart';
 
 class AuthPage extends StatefulWidget {
+  const AuthPage({Key? key}) : super(key: key);
+
   @override
   _AuthPageState createState() => _AuthPageState();
 }

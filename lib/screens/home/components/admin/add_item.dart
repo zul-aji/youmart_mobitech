@@ -272,11 +272,6 @@ class _AddItemState extends State<AddItem> {
     setState(() {});
 
     if (task == null) return;
-
-    final snapshot = await task!.whenComplete(() {});
-    final urlDownload = await snapshot.ref.getDownloadURL();
-
-    print('Download-Link: $urlDownload');
   }
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
@@ -298,14 +293,10 @@ class _AddItemState extends State<AddItem> {
       );
 
   postItemDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-    var uuid = Uuid();
+    var uuid = const Uuid();
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     ProductUploadModel productUploadModel = ProductUploadModel();
 
     // writing all the values
@@ -322,5 +313,12 @@ class _AddItemState extends State<AddItem> {
         .set(productUploadModel.toJson());
 
     Fluttertoast.showToast(msg: "Product created successfully");
+
+    setState(() {
+      itemNameController.text = "";
+      itemPriceController.text = "";
+      itemStockController.text = "";
+      currentItem = "";
+    });
   }
 }

@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 
 import '../../../../model/user_model.dart';
 import '../../../constants.dart';
+import '../../../model/shopstat_model.dart';
 import 'admin/add_item.dart';
 import 'admin/delete_item.dart';
-import 'admin/orders.dart';
+import 'admin/order/aorder_history.dart';
+import 'admin/order/orders.dart';
+import 'admin/shop_status.dart';
 import 'admin/update_item.dart';
-import 'customer/itemlist.dart';
+import 'customer/beverage_list.dart';
+import 'customer/instant_list.dart';
+import 'customer/personalc_list.dart';
+import 'customer/snack_list.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -20,6 +26,8 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ShopStatusModel shopStatus = ShopStatusModel();
+  // ShopStatusModel shopStatusD = ShopStatusModelDownload(status: status);
 
   // string for displaying the error Message
   String? errorMessage;
@@ -27,14 +35,22 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     super.initState();
+    FirebaseFirestore.instance.collection("users").doc(user!.uid).get().then(
+      (value) {
+        loggedInUser = UserModel.fromMap(value.data());
+        setState(() {});
+      },
+    );
     FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
+        .collection("shop_status")
+        .doc("statID")
         .get()
-        .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
+        .then(
+      (value) {
+        shopStatus = ShopStatusModel.fromMap(value.data());
+        setState(() {});
+      },
+    );
   }
 
   // By default our first item will be selected
@@ -57,23 +73,19 @@ class _HomeBodyState extends State<HomeBody> {
             ),
           );
         } else {
-          return const Text(
-            "Shop Items",
-            style: TextStyle(
-              fontSize: 35,
-              color: colorPrimaryDark,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          );
+          return custOpenClose();
         }
       }),
     );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
-        headingTitle,
+        Row(
+          children: [
+            headingTitle,
+          ],
+        ),
         const SizedBox(height: 18),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 0),
@@ -126,26 +138,62 @@ class _HomeBodyState extends State<HomeBody> {
     } else {
       return Expanded(
         child: Padding(
-            padding: const EdgeInsets.only(left: 24.0, right: 10.0, top: 20),
+            padding: const EdgeInsets.only(left: 18.0, right: 4.0, top: 20),
             child: customerBody()),
+      );
+    }
+  }
+
+  custOpenClose() {
+    if (shopStatus.status == true) {
+      return const Text(
+        "Shop is open!",
+        style: TextStyle(
+          fontSize: 35,
+          color: colorPrimaryDark,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w700,
+        ),
+      );
+    } else {
+      return const Text(
+        "Shop closed",
+        style: TextStyle(
+          fontSize: 35,
+          color: colorAccent,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w700,
+        ),
       );
     }
   }
 
   adminBody() {
     if (selectedIndex == 0) {
-      return AddItem();
+      return ShopStatus();
     } else if (selectedIndex == 1) {
-      return UpdateItem();
+      return const AddItem();
     } else if (selectedIndex == 2) {
-      return DeleteItem();
+      return const UpdateItem();
     } else if (selectedIndex == 3) {
-      return Orders();
+      return const DeleteItem();
+    } else if (selectedIndex == 4) {
+      return const Orders();
+    } else if (selectedIndex == 5) {
+      return const AdmminOrderHistory();
     }
   }
 
   customerBody() {
-    return ItemList();
+    if (selectedIndex == 0) {
+      return SnackList();
+    } else if (selectedIndex == 1) {
+      return InstantList();
+    } else if (selectedIndex == 2) {
+      return BeverageList();
+    } else if (selectedIndex == 3) {
+      return PersonalCList();
+    }
   }
 
   categoryShown(index) {

@@ -7,7 +7,7 @@ import '../../constants.dart';
 import '../../model/user_model.dart';
 
 class UserProfile extends StatefulWidget {
-  UserProfile({Key? key}) : super(key: key);
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -32,7 +32,7 @@ class _UserProfileState extends State<UserProfile> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -151,9 +151,51 @@ class _UserProfileState extends State<UserProfile> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          deleteAccount();
-        },
+        onPressed: () => showDialog<String>(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text(
+              'Delete Item',
+              style: TextStyle(
+                fontSize: 25,
+                color: colorAccent,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            content: const Text(
+              'Are you sure you want to delete account?',
+              style: TextStyle(
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: colorPrimary,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  deleteAccount();
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: colorAccent,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+            backgroundColor: colorBase,
+          ),
+        ),
         child: const Text(
           "Delete Account",
           textAlign: TextAlign.center,
@@ -188,7 +230,7 @@ class _UserProfileState extends State<UserProfile> {
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color(0xFFFFFFFF),
+            backgroundColor: colorWhite,
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: colorAccent),
@@ -200,7 +242,7 @@ class _UserProfileState extends State<UserProfile> {
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: const Color(0xFFFFFFFF),
+                color: colorWhite,
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(

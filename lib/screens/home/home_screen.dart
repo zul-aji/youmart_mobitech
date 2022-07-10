@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:youmart_mobitech/screens/home/components/customer/order/order_screen.dart';
 
 import '../../constants.dart';
 import '../../model/user_model.dart';
-import 'components/customer/cart_screen.dart';
+import 'components/customer/Cart/cart_screen.dart';
 import 'components/home_body.dart';
 import 'userprofile_screen.dart';
 
@@ -55,8 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: const Icon(Icons.search_outlined, color: colorAccent),
-          onPressed: () {},
+          icon: const Icon(Icons.list_alt_rounded, color: colorAccent),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const OrderScreen()));
+          },
         );
       }
     });
@@ -67,11 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         return IconButton(
           icon: const Icon(Icons.shopping_cart_rounded, color: colorAccent),
-          onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CartScreen(),
-              )),
+          onPressed: () => Get.to(() => const CartScreen()),
         );
       }
     });
@@ -80,53 +81,69 @@ class _HomeScreenState extends State<HomeScreen> {
       if (loggedInUser.role == 'Guest') {
         return IconButton(
           icon: const Icon(Icons.logout_outlined, color: colorAccent),
-          onPressed: () {
-            deleteAccount();
-          },
+          onPressed: () => showDialog<String>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text(
+                'Guest Sign out',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: colorAccent,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              content: const Text(
+                "If you sign out, you won't be able to see your order details anymore",
+                style: TextStyle(
+                  color: colorPrimaryDark,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: colorPrimary,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    deleteAccount();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Sign Out',
+                    style: TextStyle(
+                      color: colorAccent,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+              backgroundColor: colorBase,
+            ),
+          ),
         );
       } else {
         return IconButton(
           icon: const Icon(Icons.person, color: colorAccent),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserProfile()));
+                MaterialPageRoute(builder: (context) => const UserProfile()));
           },
         );
       }
     });
 
-    final headingTitle = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-      child: LayoutBuilder(builder: (context, constraints) {
-        if (loggedInUser.role == 'Admin') {
-          return const Text(
-            "Manage Items",
-            style: TextStyle(
-              fontSize: 30,
-              color: colorPrimaryDark,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          );
-        } else {
-          return const Text(
-            "Shop Items",
-            style: TextStyle(
-              fontSize: 30,
-              color: colorPrimaryDark,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          );
-        }
-      }),
-    );
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-            backgroundColor: colorBase,
+            backgroundColor: colorWhite,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -141,10 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   deleteAccount() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 

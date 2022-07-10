@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../model/product_download.dart';
 
 class CartController extends GetxController {
-  var _products = {}.obs;
+  final _products = {}.obs;
 
   void addProduct(ProductDownloadModel product) {
     if (_products.containsKey(product)) {
@@ -22,17 +22,29 @@ class CartController extends GetxController {
     } else {
       _products[product] -= 1;
     }
+
+    Fluttertoast.showToast(msg: "${product.name} removed from Cart");
   }
 
   get products => _products;
 
-  get productSubtotal => _products.entries
-      .map((product) => product.key.price * product.value)
-      .toList();
+  void clearProducts() {
+    _products.clear();
+  }
 
   get total => _products.entries
-      .map((product) => product.key.price * product.value)
+      .map((product) => double.parse(product.key.price) * product.value)
       .toList()
       .reduce((value, element) => value + element)
       .toStringAsFixed(2);
+
+  get nameList => _products.entries.map((product) => product.key.name).toList();
+
+  get imageList =>
+      _products.entries.map((product) => product.key.image).toList();
+
+  get quantityList =>
+      _products.entries.map((product) => product.value).toList();
+
+  get pidList => _products.entries.map((product) => product.key.pid).toList();
 }

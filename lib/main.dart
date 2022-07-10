@@ -11,7 +11,7 @@ import 'utils.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MainPage());
+  runApp(const MainPage());
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -19,6 +19,8 @@ final navigatorKey = GlobalKey<NavigatorState>();
 UserModel loggedInUser = UserModel();
 
 class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -36,7 +38,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasData) {
             return const HomeScreen();
           } else {
-            return AuthPage();
+            return const AuthPage();
           }
         },
       ),

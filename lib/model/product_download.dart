@@ -33,7 +33,7 @@ class ProductDownloadModel {
 
   static ProductDownloadModel fromSnapshot(DocumentSnapshot snap) {
     ProductDownloadModel product = ProductDownloadModel(
-      pid: snap['[pid]'],
+      pid: snap['pid'],
       name: snap['name'],
       category: snap['category'],
       price: snap['price'],
