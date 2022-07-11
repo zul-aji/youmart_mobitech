@@ -6,7 +6,6 @@ import '../../../../model/user_model.dart';
 import '../../../constants.dart';
 import '../../../model/shopstat_model.dart';
 import 'admin/add_item.dart';
-import 'admin/delete_item.dart';
 import 'admin/order/aorder_history.dart';
 import 'admin/order/orders.dart';
 import 'admin/shop_status.dart';
@@ -176,10 +175,8 @@ class _HomeBodyState extends State<HomeBody> {
     } else if (selectedIndex == 2) {
       return const UpdateItem();
     } else if (selectedIndex == 3) {
-      return const DeleteItem();
-    } else if (selectedIndex == 4) {
       return const Orders();
-    } else if (selectedIndex == 5) {
+    } else if (selectedIndex == 4) {
       return const AdmminOrderHistory();
     }
   }

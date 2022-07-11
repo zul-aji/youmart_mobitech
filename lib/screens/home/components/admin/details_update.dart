@@ -140,6 +140,69 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       ),
     );
 
+    //delete button
+    final deleteButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: colorAccent,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () => showDialog<String>(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text(
+              'Delete Item',
+              style: TextStyle(
+                fontSize: 25,
+                color: colorAccent,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            content: Text(
+              'Are you sure you want to delete ${widget.name} from database?',
+              style: const TextStyle(
+                color: colorPrimaryDark,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: colorPrimary,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'Delete');
+                  deleteProduct();
+                },
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: colorAccent,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+            backgroundColor: colorBase,
+          ),
+        ),
+        child: const Text(
+          "Delete Item",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
@@ -180,6 +243,8 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
                       stockField,
                       const SizedBox(height: 20),
                       updateButton,
+                      const SizedBox(height: 10),
+                      deleteButton,
                       const SizedBox(height: 45),
                     ],
                   ),
@@ -203,6 +268,13 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     });
 
     Fluttertoast.showToast(msg: "Product Updated");
+    Navigator.of(context).pop();
+  }
+
+  deleteProduct() {
+    FirebaseFirestore.instance.collection("product").doc(widget.pid).delete();
+
+    Fluttertoast.showToast(msg: "Product Deleted");
     Navigator.of(context).pop();
   }
 }

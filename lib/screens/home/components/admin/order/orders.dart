@@ -27,9 +27,6 @@ class _OrdersState extends State<Orders> {
     super.initState();
   }
 
-  // final firebaseDoc = await FirebaseFirestore.instance.collection('order').get();
-  // List<String> imagesList = firebaseDoc.data()['images'];
-
   @override
   Widget build(BuildContext context) {
     return Container(child: buildList(context));

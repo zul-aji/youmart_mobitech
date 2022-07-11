@@ -18,8 +18,7 @@ List<String> customerCategories = [
 List<String> adminCategories = [
   "Shop Status",
   "Add Item",
-  "Update Item",
-  "Delete Item",
+  "Edit Item",
   "Orders",
   "Order History",
 ];

@@ -5,7 +5,6 @@ import 'package:youmart_mobitech/model/order_customer.dart';
 import 'package:youmart_mobitech/screens/home/components/customer/order/orderc_details.dart';
 
 import '../../../../../constants.dart';
-import '../../admin/delete_item.dart';
 
 class OrderList extends StatefulWidget {
   final String uid;
@@ -77,7 +76,7 @@ class _OrderListState extends State<OrderList> {
                   if (orderData.status == "Rejected") {
                     return ElevatedButton(
                       onPressed: () {
-                        firebaseFirestore
+                        FirebaseFirestore.instance
                             .collection("order")
                             .doc(orderData.oid)
                             .delete();

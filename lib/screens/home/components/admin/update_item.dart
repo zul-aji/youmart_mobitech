@@ -105,7 +105,7 @@ class _UpdateItemState extends State<UpdateItem> {
                         foregroundColor: colorBase,
                         backgroundColor: colorPrimary,
                       ),
-                      child: const Text('Update Item'),
+                      child: const Text('Edit Item'),
                     ),
                   ),
                 );
