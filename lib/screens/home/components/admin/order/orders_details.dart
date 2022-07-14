@@ -13,7 +13,7 @@ class OrdersDetails extends StatefulWidget {
   final Timestamp timestamp;
   final List<dynamic>? nameList, imageList, quantityList, pidList;
 
-  OrdersDetails({
+  const OrdersDetails({
     Key? key,
     required this.firstName,
     required this.secondName,
@@ -32,26 +32,23 @@ class OrdersDetails extends StatefulWidget {
 }
 
 class _OrdersDetailsState extends State<OrdersDetails> {
-  OrderModel orderModel = OrderModel();
-
   List<String> initialStock = [];
 
   @override
   void initState() {
-    for (int i = 0; i < widget.quantityList!.length; i++) {
+    super.initState();
+    for (int i = 0; i < widget.pidList!.length; i++) {
       FirebaseFirestore.instance
           .collection('product')
           .doc(widget.pidList![i])
           .get()
           .then((value) {
         var fields = value.data();
-
         setState(() {
-          initialStock.add(fields!['stock']);
+          initialStock.insert(i, fields!['stock']);
         });
       });
     }
-    super.initState();
   }
 
   @override
@@ -228,7 +225,11 @@ class _OrdersDetailsState extends State<OrdersDetails> {
             SizedBox(
               height: 40,
               child: ElevatedButton(
-                onPressed: completeOrder,
+                onPressed: () {
+                  updateStock();
+                  initialStock.clear();
+                  completeOrder();
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: colorPrimary,
                   backgroundColor: colorPrimary,
@@ -258,12 +259,11 @@ class _OrdersDetailsState extends State<OrdersDetails> {
   }
 
   rejectOrder() {
-    // FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
-    //   'status': 'Rejected',
-    // });
+    FirebaseFirestore.instance.collection("order").doc(widget.oid).update({
+      'status': 'Rejected',
+    });
 
-    // Fluttertoast.showToast(msg: "Order status Updated");
-    updateStock();
+    Fluttertoast.showToast(msg: "Order status Updated");
   }
 
   completeOrder() {
@@ -288,7 +288,6 @@ class _OrdersDetailsState extends State<OrdersDetails> {
         .doc(completeOrderModel.coid)
         .set(completeOrderModel.toFirestore());
 
-    // updateStock();
     firebaseFirestore.collection("order").doc(widget.oid).delete();
     Fluttertoast.showToast(msg: "Order Completed");
     Navigator.of(context).pop();
@@ -298,19 +297,15 @@ class _OrdersDetailsState extends State<OrdersDetails> {
     for (int i = 0; i < widget.quantityList!.length; i++) {
       var stockBefore = int.parse(initialStock[i]);
       var stockTaken = widget.quantityList![i];
-      print(widget.nameList![i]);
-      // print(widget.pidList![i]);
-      print(initialStock);
-      // print(stockTaken);
-      String newStock = (stockBefore - stockTaken).toString();
-      // print(newStock);
 
-      // FirebaseFirestore.instance
-      //     .collection("product")
-      //     .doc(widget.pidList![i])
-      //     .update({
-      //   'stock': newStock,
-      // });
+      String newStock = (stockBefore - stockTaken).toString();
+
+      FirebaseFirestore.instance
+          .collection("product")
+          .doc(widget.pidList![i])
+          .update({
+        'stock': newStock,
+      });
     }
   }
 }
