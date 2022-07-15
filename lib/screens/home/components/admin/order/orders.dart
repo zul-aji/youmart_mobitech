@@ -107,8 +107,8 @@ class _OrdersState extends State<Orders> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: colorBase,
-                        backgroundColor: colorPrimary,
+                        onPrimary: colorBase,
+                        primary: colorPrimary,
                       ),
                       child: const Text('Order Details'),
                     ),

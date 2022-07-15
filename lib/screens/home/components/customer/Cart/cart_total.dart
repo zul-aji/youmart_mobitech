@@ -81,7 +81,7 @@ class _CartTotalState extends State<CartTotal> {
           Fluttertoast.showToast(msg: "There is no product in cart");
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: colorUnpicked,
+            primary: colorUnpicked,
             textStyle: const TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 20,
@@ -95,7 +95,7 @@ class _CartTotalState extends State<CartTotal> {
           cartController.clearProducts();
         },
         style: ElevatedButton.styleFrom(
-            backgroundColor: colorPrimary,
+            primary: colorPrimary,
             textStyle: const TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 20,

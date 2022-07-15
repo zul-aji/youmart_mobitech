@@ -189,8 +189,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: rejectOrder,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: colorAccent,
-                  backgroundColor: colorAccent,
+                  onPrimary: colorAccent,
+                  primary: colorAccent,
                 ),
                 child: const Text(
                   'Reject',
@@ -207,8 +207,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: acceptOrder,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: colorBase,
-                  backgroundColor: colorBase,
+                  onPrimary: colorBase,
+                  primary: colorBase,
                 ),
                 child: const Text(
                   'Ready',
@@ -229,8 +229,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                   completeOrder();
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: colorPrimary,
-                  backgroundColor: colorPrimary,
+                  onPrimary: colorPrimary,
+                  primary: colorPrimary,
                 ),
                 child: const Text(
                   'Completed',

@@ -102,8 +102,8 @@ class _UpdateItemState extends State<UpdateItem> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: colorBase,
-                        backgroundColor: colorPrimary,
+                        onPrimary: colorBase,
+                        primary: colorPrimary,
                       ),
                       child: const Text('Edit Item'),
                     ),
