@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../../constants.dart';
-import '../../../../../model/complete_order_model.dart';
 import '../../../../../model/order_model.dart';
 
 class OrderHistoryDetails extends StatefulWidget {
@@ -12,7 +9,7 @@ class OrderHistoryDetails extends StatefulWidget {
   final Timestamp timestamp;
   final List<dynamic>? nameList, imageList, quantityList;
 
-  OrderHistoryDetails({
+  const OrderHistoryDetails({
     Key? key,
     required this.firstName,
     required this.secondName,
@@ -49,7 +46,7 @@ class _OrderHistoryDetailsState extends State<OrderHistoryDetails> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),

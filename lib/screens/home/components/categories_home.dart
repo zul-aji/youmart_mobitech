@@ -93,6 +93,7 @@ class _CategoriesState extends State<Categories> {
     }
   }
 
+  //Show category for admin or customer
   categoryCount() {
     if (loggedInUser.role == 'Admin') {
       return categoryLength = adminCategories.length;

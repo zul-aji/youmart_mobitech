@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Color constants
 const colorPrimaryDark = Color(0xFF1D3557);
 const colorPrimary = Color(0xFF457B9D);
 const colorPrimaryLight = Color(0xFFA8DADC);
@@ -8,6 +9,7 @@ const colorAccent = Color(0xFFE63946);
 const colorUnpicked = Color(0xFFACACAC);
 const colorWhite = Color(0xFFFFFFFF);
 
+//Categories for the customers
 List<String> customerCategories = [
   "Snacks",
   "Instant Food",
@@ -15,6 +17,7 @@ List<String> customerCategories = [
   "Personal Care",
 ];
 
+//Categories for admins
 List<String> adminCategories = [
   "Shop Status",
   "Add Item",
@@ -23,6 +26,7 @@ List<String> adminCategories = [
   "Order History",
 ];
 
+//Categories for the dropdown menu
 List<DropdownMenuItem<String>> get dropdownItems {
   List<DropdownMenuItem<String>> categoryItems = [
     const DropdownMenuItem(value: "Snacks", child: Text("Snacks")),

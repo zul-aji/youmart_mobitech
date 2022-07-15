@@ -152,11 +152,11 @@ class _LoginScreenState extends State<LoginScreen> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
       home: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         body: Center(
             child: SingleChildScrollView(
           child: Container(
-              color: const Color(0xFFFFFFFF),
+              color: colorWhite,
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Form(
@@ -267,10 +267,8 @@ class _LoginScreenState extends State<LoginScreen> {
           errorMessage = "An undefined Error happened.";
       }
       Utils.showSnackBar(errorMessage);
-      print(error.code);
     }
 
-    // Navigator.of(context) not working!
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
@@ -305,9 +303,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance
           .signInAnonymously()
           .then((value) => {postDetailsToFirestore()});
-    } on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException {
       Utils.showSnackBar(errorMessage);
-      print(error.code);
 
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }

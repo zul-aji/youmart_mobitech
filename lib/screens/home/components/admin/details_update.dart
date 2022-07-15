@@ -207,9 +207,9 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
       home: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         appBar: AppBar(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: colorWhite,
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: colorAccent),
@@ -221,7 +221,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              color: const Color(0xFFFFFFFF),
+              color: colorWhite,
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Form(

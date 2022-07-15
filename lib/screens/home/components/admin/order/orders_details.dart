@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
-import 'package:youmart_mobitech/model/product_upload.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../model/complete_order_model.dart';
-import '../../../../../model/order_model.dart';
 
 class OrdersDetails extends StatefulWidget {
   final String firstName, secondName, oid, uid, totalprice;
@@ -68,7 +66,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),

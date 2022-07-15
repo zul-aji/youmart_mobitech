@@ -169,7 +169,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   adminBody() {
     if (selectedIndex == 0) {
-      return ShopStatus();
+      return const ShopStatus();
     } else if (selectedIndex == 1) {
       return const AddItem();
     } else if (selectedIndex == 2) {

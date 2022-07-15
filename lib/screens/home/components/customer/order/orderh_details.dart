@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../../../../constants.dart';
 
+//Order History Details
 class OrderHDetails extends StatefulWidget {
   final String coid, totalprice;
   final Timestamp timestamp;
   final int index;
   final List<dynamic> nameList, imageList, quantityList;
 
-  OrderHDetails({
+  const OrderHDetails({
     Key? key,
     required this.coid,
     required this.index,
@@ -42,7 +43,7 @@ class _OrderHDetailsState extends State<OrderHDetails> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),

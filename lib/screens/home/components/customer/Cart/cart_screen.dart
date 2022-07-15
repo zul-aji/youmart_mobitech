@@ -19,7 +19,7 @@ class CartScreen extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),

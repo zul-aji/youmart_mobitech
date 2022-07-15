@@ -7,6 +7,7 @@ class FirestoreDB {
   final CollectionReference fireCollection =
       FirebaseFirestore.instance.collection('product');
 
+  //Queries for showing the Admin Categories
   final Query snackMap = FirebaseFirestore.instance
       .collection('product')
       .where("category", isEqualTo: "Snacks");
@@ -20,6 +21,7 @@ class FirestoreDB {
       .collection('product')
       .where("category", isEqualTo: "Personal Care");
 
+  //Streams for the categories
   Stream<List<ProductDownloadModel>> getAllProducts() {
     return fireCollection.snapshots().map((snapshot) {
       return snapshot.docs

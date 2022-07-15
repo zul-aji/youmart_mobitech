@@ -8,7 +8,7 @@ import 'orderh_details.dart';
 
 class OrderHistoryList extends StatefulWidget {
   final String uid;
-  OrderHistoryList({
+  const OrderHistoryList({
     Key? key,
     required this.uid,
   }) : super(key: key);

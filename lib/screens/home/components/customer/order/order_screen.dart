@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/order_history.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/order_list.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../model/user_model.dart';
+import 'order_history.dart';
+import 'order_list.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
@@ -43,7 +43,7 @@ class _OrderScreenState extends State<OrderScreen> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),
@@ -56,7 +56,7 @@ class _OrderScreenState extends State<OrderScreen> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
               icon: const Icon(Icons.history, color: colorAccent),
-              onPressed: () => Get.to(() => OrderHistory()),
+              onPressed: () => Get.to(() => const OrderHistory()),
             ),
           ),
         ],

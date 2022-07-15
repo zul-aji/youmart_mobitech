@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../constants.dart';
 
+//Order Customer Details
 class OrderCDetails extends StatefulWidget {
   final String oid, totalprice, status;
   final Timestamp timestamp;
   final int index;
   final List<dynamic> nameList, imageList, quantityList;
 
-  OrderCDetails({
+  const OrderCDetails({
     Key? key,
     required this.oid,
     required this.index,
@@ -39,7 +39,7 @@ class _OrderCDetailsState extends State<OrderCDetails> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: colorWhite,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: colorAccent),

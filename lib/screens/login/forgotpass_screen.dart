@@ -29,7 +29,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: colorWhite,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -69,7 +69,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: emailController,
-                    cursorColor: Colors.white,
+                    cursorColor: colorWhite,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       labelText: 'Email',
@@ -130,8 +130,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       Utils.showSnackBar('Password Reset Email Sent');
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      print(e);
-
       Utils.showSnackBar(e.message);
       Navigator.of(context).pop();
     }

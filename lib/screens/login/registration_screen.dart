@@ -209,11 +209,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: Scaffold(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: colorWhite,
           body: Center(
               child: SingleChildScrollView(
             child: Container(
-                color: const Color(0xFFFFFFFF),
+                color: colorWhite,
                 child: Padding(
                   padding: const EdgeInsets.all(36.0),
                   child: Form(
@@ -302,13 +302,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             password: passwordEditingController.text.trim(),
           )
           .then((value) => {postDetailsToFirestore()});
-    } on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException {
       Utils.showSnackBar(errorMessage);
-      // ignore: avoid_print
-      print(error.code);
     }
-
-    // Navigator.of(context) not working!
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
@@ -316,7 +312,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // calling our firestore
     // calling our user model
     // sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:youmart_mobitech/model/order_customer.dart';
-import 'package:youmart_mobitech/screens/home/components/customer/order/orderc_details.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../model/order_customer.dart';
+import 'orderc_details.dart';
 
 class OrderList extends StatefulWidget {
   final String uid;

@@ -205,6 +205,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
 
+    //Profile name field
     final profileName = LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Admin') {
         return Text(
