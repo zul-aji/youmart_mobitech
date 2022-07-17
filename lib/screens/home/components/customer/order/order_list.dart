@@ -82,7 +82,7 @@ class _OrderListState extends State<OrderList> {
                             .delete();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: colorAccent,
+                        primary: colorAccent,
                       ),
                       child: const Text('Delete Order'),
                     );
@@ -115,7 +115,7 @@ class _OrderListState extends State<OrderList> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: colorPrimary,
+                        primary: colorPrimary,
                       ),
                       child: const Text('Order Details'),
                     );

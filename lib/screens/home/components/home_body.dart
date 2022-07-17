@@ -6,6 +6,7 @@ import '../../../../model/user_model.dart';
 import '../../../constants.dart';
 import '../../../model/shopstat_model.dart';
 import 'admin/add_item.dart';
+import 'admin/notification_test.dart';
 import 'admin/order/aorder_history.dart';
 import 'admin/order/orders.dart';
 import 'admin/shop_status.dart';
@@ -178,6 +179,8 @@ class _HomeBodyState extends State<HomeBody> {
       return const Orders();
     } else if (selectedIndex == 4) {
       return const AdmminOrderHistory();
+    } else if (selectedIndex == 5) {
+      return NotificationTest();
     }
   }
 
