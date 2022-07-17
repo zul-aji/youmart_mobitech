@@ -47,7 +47,7 @@ class _UserProfileState extends State<UserProfile> {
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("First Name cannot be Empty");
+          return ("Field cannot be empty");
         }
         if (!regex.hasMatch(value)) {
           return ("Enter Valid name(Min. 3 Character)");
@@ -62,6 +62,106 @@ class _UserProfileState extends State<UserProfile> {
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.firstName,
+        suffixIcon: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
+              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            onPressed: () {
+              if (firstNameEditingController.text == '' ||
+                  firstNameEditingController.text == ' ') {
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Empty Field',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: colorPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    content: const Text(
+                      'Field cannot be empty',
+                      style: TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Close'),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(
+                            color: colorAccent,
+                          ),
+                        ),
+                      ),
+                    ],
+                    backgroundColor: colorBase,
+                  ),
+                );
+              } else {
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Update First Name',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: colorPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    content: Text(
+                      'Are you sure you want to change your First Name to ${firstNameEditingController.text}?',
+                      style: const TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            color: colorAccent,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          updateFirstName();
+                          Navigator.pop(context, 'Update');
+                        },
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(
+                            color: colorPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                    backgroundColor: colorBase,
+                  ),
+                );
+              }
+            },
+            child: const Text('Update'),
+          ),
+        ),
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -81,7 +181,7 @@ class _UserProfileState extends State<UserProfile> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Second Name cannot be Empty");
+          return ("Field cannot be empty");
         }
         return null;
       },
@@ -93,6 +193,106 @@ class _UserProfileState extends State<UserProfile> {
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: loggedInUser.secondName,
+        suffixIcon: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
+              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            onPressed: () {
+              if (secondNameEditingController.text == '' ||
+                  secondNameEditingController.text == ' ') {
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Empty Field',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: colorPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    content: const Text(
+                      'Field cannot be empty',
+                      style: TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Close'),
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(
+                            color: colorAccent,
+                          ),
+                        ),
+                      ),
+                    ],
+                    backgroundColor: colorBase,
+                  ),
+                );
+              } else {
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'Update Second Name',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: colorPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    content: Text(
+                      'Are you sure you want to change your Second Name to ${secondNameEditingController.text}?',
+                      style: const TextStyle(
+                        color: colorPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            color: colorAccent,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          updateSecondName();
+                          Navigator.pop(context, 'Update');
+                        },
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(
+                            color: colorPrimary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                    backgroundColor: colorBase,
+                  ),
+                );
+              }
+            },
+            child: const Text('Update'),
+          ),
+        ),
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -103,24 +303,6 @@ class _UserProfileState extends State<UserProfile> {
         ),
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
-    );
-
-    //update button
-    final updateButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: colorPrimaryDark,
-      child: MaterialButton(
-        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: updateProfile,
-        child: const Text(
-          "Update Profile",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
-        ),
-      ),
     );
 
     //sign out button
@@ -208,17 +390,17 @@ class _UserProfileState extends State<UserProfile> {
     //Profile name field
     final profileName = LayoutBuilder(builder: (context, constraints) {
       if (loggedInUser.role == 'Admin') {
-        return Text(
-          "Admin ${loggedInUser.firstName}'s Profile",
-          style: const TextStyle(
+        return const Text(
+          "Your Admin Profile",
+          style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
               color: colorPrimaryDark),
         );
       } else {
-        return Text(
-          "${loggedInUser.firstName}'s Profile",
-          style: const TextStyle(
+        return const Text(
+          "Your Profile",
+          style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
               color: colorPrimaryDark),
@@ -269,8 +451,6 @@ class _UserProfileState extends State<UserProfile> {
                         const SizedBox(height: 20),
                         secondNameField,
                         const SizedBox(height: 15),
-                        updateButton,
-                        const SizedBox(height: 15),
                         signOutButton,
                         const SizedBox(height: 15),
                         deleteButton,
@@ -283,11 +463,7 @@ class _UserProfileState extends State<UserProfile> {
         ));
   }
 
-  updateProfile() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
+  updateFirstName() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -299,16 +475,27 @@ class _UserProfileState extends State<UserProfile> {
 
     await firebaseFirestore.collection("users").doc(user.uid).update({
       'firstName': firstNameEditingController.text,
+    });
+    Fluttertoast.showToast(msg: "Profile Updated");
+  }
+
+  updateSecondName() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+
+    await firebaseFirestore.collection("users").doc(user.uid).update({
       'secondName': secondNameEditingController.text,
     });
     Fluttertoast.showToast(msg: "Profile Updated");
   }
 
   deleteAccount() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 
