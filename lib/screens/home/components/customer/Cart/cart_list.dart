@@ -16,23 +16,12 @@ class CartList extends StatelessWidget {
         child: ListView.builder(
             itemCount: controller.products.length,
             itemBuilder: (BuildContext context, int index) {
-              if (controller.products.length < 1) {
-                return const Text(
-                  '0 RM',
-                  style: TextStyle(
-                    color: colorPrimaryDark,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
-              } else {
-                return CartProductCard(
-                  controller: controller,
-                  product: controller.products.keys.toList()[index],
-                  quantity: controller.products.values.toList()[index],
-                  index: index,
-                );
-              }
+              return CartProductCard(
+                controller: controller,
+                product: controller.products.keys.toList()[index],
+                quantity: controller.products.values.toList()[index],
+                index: index,
+              );
             }),
       ),
     );

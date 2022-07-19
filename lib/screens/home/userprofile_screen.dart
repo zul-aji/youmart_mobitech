@@ -14,10 +14,6 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  //Controllers
-  final firstNameEditingController = TextEditingController();
-  final secondNameEditingController = TextEditingController();
-
   // string for displaying the error Message
   String? errorMessage;
 
@@ -39,10 +35,33 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    //Profile name field
+    final profileName = LayoutBuilder(builder: (context, constraints) {
+      if (loggedInUser.role == 'Admin') {
+        return const Text(
+          "Your Admin Profile",
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: colorPrimaryDark),
+        );
+      } else {
+        return const Text(
+          "Your Profile",
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: colorPrimaryDark),
+        );
+      }
+    });
+
     // first name field
-    final firstNameField = TextFormField(
-      autofocus: false,
+    TextEditingController firstNameEditingController =
+        TextEditingController(text: loggedInUser.firstName);
+    TextFormField firstNameField = TextFormField(
       controller: firstNameEditingController,
+      autofocus: false,
       keyboardType: TextInputType.name,
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
@@ -61,107 +80,7 @@ class _UserProfileState extends State<UserProfile> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: loggedInUser.firstName,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
-              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              if (firstNameEditingController.text == '' ||
-                  firstNameEditingController.text == ' ') {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Empty Field',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: const Text(
-                      'Field cannot be empty',
-                      style: TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Close'),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              } else {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Update First Name',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to change your First Name to ${firstNameEditingController.text}?',
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          updateFirstName();
-                          Navigator.pop(context, 'Update');
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: colorPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              }
-            },
-            child: const Text('Update'),
-          ),
-        ),
+        hintText: "Type in First name",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -175,7 +94,9 @@ class _UserProfileState extends State<UserProfile> {
     );
 
     // second name field
-    final secondNameField = TextFormField(
+    TextEditingController secondNameEditingController =
+        TextEditingController(text: loggedInUser.secondName);
+    TextFormField secondNameField = TextFormField(
       autofocus: false,
       controller: secondNameEditingController,
       keyboardType: TextInputType.name,
@@ -192,107 +113,7 @@ class _UserProfileState extends State<UserProfile> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: loggedInUser.secondName,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
-              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              if (secondNameEditingController.text == '' ||
-                  secondNameEditingController.text == ' ') {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Empty Field',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: const Text(
-                      'Field cannot be empty',
-                      style: TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Close'),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              } else {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Update Second Name',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to change your Second Name to ${secondNameEditingController.text}?',
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          updateSecondName();
-                          Navigator.pop(context, 'Update');
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: colorPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              }
-            },
-            child: const Text('Update'),
-          ),
-        ),
+        hintText: "Type in Second name",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -303,6 +124,28 @@ class _UserProfileState extends State<UserProfile> {
         ),
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
+    );
+
+    //Update button
+    final updateButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: colorPrimary,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          updateProfile(
+              firstNameEditingController, secondNameEditingController);
+          Navigator.of(context).pop();
+        },
+        child: const Text(
+          "Update Account",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
 
     //sign out button
@@ -338,7 +181,7 @@ class _UserProfileState extends State<UserProfile> {
           barrierDismissible: true,
           builder: (BuildContext context) => AlertDialog(
             title: const Text(
-              'Delete Item',
+              'Delete Account',
               style: TextStyle(
                 fontSize: 25,
                 color: colorAccent,
@@ -387,27 +230,6 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
 
-    //Profile name field
-    final profileName = LayoutBuilder(builder: (context, constraints) {
-      if (loggedInUser.role == 'Admin') {
-        return const Text(
-          "Your Admin Profile",
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: colorPrimaryDark),
-        );
-      } else {
-        return const Text(
-          "Your Profile",
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: colorPrimaryDark),
-        );
-      }
-    });
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
@@ -451,6 +273,8 @@ class _UserProfileState extends State<UserProfile> {
                         const SizedBox(height: 20),
                         secondNameField,
                         const SizedBox(height: 15),
+                        updateButton,
+                        const SizedBox(height: 15),
                         signOutButton,
                         const SizedBox(height: 15),
                         deleteButton,
@@ -463,7 +287,7 @@ class _UserProfileState extends State<UserProfile> {
         ));
   }
 
-  updateFirstName() async {
+  updateProfile(firstNameEditingController, secondNameEditingController) {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -473,29 +297,14 @@ class _UserProfileState extends State<UserProfile> {
     userModel.email = user!.email;
     userModel.uid = user.uid;
 
-    await firebaseFirestore.collection("users").doc(user.uid).update({
+    firebaseFirestore.collection("users").doc(user.uid).update({
       'firstName': firstNameEditingController.text,
-    });
-    Fluttertoast.showToast(msg: "Profile Updated");
-  }
-
-  updateSecondName() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = FirebaseAuth.instance.currentUser;
-
-    UserModel userModel = UserModel();
-
-    // writing all the values
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-
-    await firebaseFirestore.collection("users").doc(user.uid).update({
       'secondName': secondNameEditingController.text,
     });
     Fluttertoast.showToast(msg: "Profile Updated");
   }
 
-  deleteAccount() async {
+  deleteAccount() {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -505,7 +314,7 @@ class _UserProfileState extends State<UserProfile> {
     userModel.email = user!.email;
     userModel.uid = user.uid;
 
-    await firebaseFirestore.collection("users").doc(user.uid).delete();
+    firebaseFirestore.collection("users").doc(user.uid).delete();
     user.delete();
     Fluttertoast.showToast(msg: "Account Deleted");
 

@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: const Icon(Icons.list_alt_rounded, color: colorAccent),
+          icon: const Icon(Icons.list_alt_rounded, color: colorPrimaryDark),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const OrderScreen()));
@@ -73,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return const Text(" ");
       } else {
         return IconButton(
-          icon: const Icon(Icons.shopping_cart_rounded, color: colorAccent),
+          icon:
+              const Icon(Icons.shopping_cart_rounded, color: colorPrimaryDark),
           onPressed: () => Get.to(() => const CartScreen()),
         );
       }
@@ -133,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       } else {
         return IconButton(
-          icon: const Icon(Icons.person, color: colorAccent),
+          icon: const Icon(Icons.person, color: colorPrimaryDark),
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const UserProfile()));

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:youmart_mobitech/screens/home/components/admin/update_item.dart';
 
 import '../../../../constants.dart';
 import '../../../../model/product_upload.dart';
@@ -23,19 +22,16 @@ class DetailsUpdate extends StatefulWidget {
 }
 
 class _DetailsUpdateState extends State<DetailsUpdate> {
-  //Controllers
-  final nameController = TextEditingController();
-  final priceController = TextEditingController();
-  final stockController = TextEditingController();
-
   ProductUploadModel productUploadModel = ProductUploadModel();
 
   @override
   Widget build(BuildContext context) {
     // name field
-    final nameField = TextFormField(
-      autofocus: false,
+    TextEditingController nameController =
+        TextEditingController(text: widget.name);
+    TextFormField nameField = TextFormField(
       controller: nameController,
+      autofocus: false,
       keyboardType: TextInputType.name,
       validator: (value) {
         RegExp regex = RegExp(r'^.{5,}$');
@@ -54,106 +50,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.tag_rounded),
-        hintText: widget.name,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
-              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              if (nameController.text == '' || nameController.text == ' ') {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Empty Field',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: const Text(
-                      'Field cannot be empty',
-                      style: TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Close'),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              } else {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Update Item Name',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to change your Item Name to ${nameController.text}?',
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          updateName();
-                          Navigator.pop(context, 'Update');
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: colorPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              }
-            },
-            child: const Text('Update'),
-          ),
-        ),
+        hintText: "Input item name",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -166,9 +63,11 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     // price field
-    final priceField = TextFormField(
-      autofocus: false,
+    TextEditingController priceController =
+        TextEditingController(text: widget.price);
+    TextFormField priceField = TextFormField(
       controller: priceController,
+      autofocus: false,
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
@@ -183,106 +82,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.attach_money_rounded),
-        hintText: widget.price,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
-              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              if (priceController.text == '' || priceController.text == ' ') {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Empty Field',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: const Text(
-                      'Field cannot be empty',
-                      style: TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Close'),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              } else {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Update Item Price',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to change your Item Price to ${priceController.text}?',
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          updatePrice();
-                          Navigator.pop(context, 'Update');
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: colorPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              }
-            },
-            child: const Text('Update'),
-          ),
-        ),
+        hintText: "Input price",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -295,9 +95,11 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     //stock field
-    final stockField = TextFormField(
-      autofocus: false,
+    TextEditingController stockController =
+        TextEditingController(text: widget.stock);
+    TextFormField stockField = TextFormField(
       controller: stockController,
+      autofocus: false,
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
@@ -312,106 +114,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.inventory_2_outlined),
-        hintText: widget.stock,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 9.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(colorBase),
-              backgroundColor: MaterialStateProperty.all<Color>(colorPrimary),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            onPressed: () {
-              if (stockController.text == '' || stockController.text == ' ') {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Empty Field',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: const Text(
-                      'Field cannot be empty',
-                      style: TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Close'),
-                        child: const Text(
-                          'Close',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              } else {
-                showDialog<String>(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Update Item Stock',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: colorPrimary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to change your Item Stock to ${stockController.text}?',
-                      style: const TextStyle(
-                        color: colorPrimaryDark,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: colorAccent,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          updateStock();
-                          Navigator.pop(context, 'Update');
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: colorPrimary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                    backgroundColor: colorBase,
-                  ),
-                );
-              }
-            },
-            child: const Text('Update'),
-          ),
-        ),
+        hintText: "Input stock amount",
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -419,6 +122,27 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+    );
+
+    //update button
+    final updateButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: colorPrimary,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          updateItem(nameController, priceController, stockController);
+          Navigator.of(context).pop();
+        },
+        child: const Text(
+          "Update Account",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -561,6 +285,8 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
                       const SizedBox(height: 5),
                       stockField,
                       const SizedBox(height: 25),
+                      updateButton,
+                      const SizedBox(height: 15),
                       deleteButton,
                       const SizedBox(height: 45),
                     ],
@@ -574,39 +300,17 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
   }
 
-  updateName() {
+  updateItem(nameController, priceController, stockController) {
     // writing all the values
     productUploadModel.pid = widget.pid;
 
     FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
       'name': nameController.text,
-    });
-
-    Fluttertoast.showToast(msg: "Product Updated");
-    Navigator.of(context).pop();
-  }
-
-  updatePrice() {
-    // writing all the values
-    productUploadModel.pid = widget.pid;
-
-    FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
       'price': priceController.text,
-    });
-
-    Fluttertoast.showToast(msg: "Product Updated");
-    Navigator.of(context).pop();
-  }
-
-  updateStock() {
-    // writing all the values
-    productUploadModel.pid = widget.pid;
-
-    FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
       'stock': stockController.text,
     });
 
-    Fluttertoast.showToast(msg: "Product Updated");
+    Fluttertoast.showToast(msg: "Name Updated");
     Navigator.of(context).pop();
   }
 
