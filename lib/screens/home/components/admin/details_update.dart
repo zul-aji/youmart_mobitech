@@ -24,11 +24,15 @@ class DetailsUpdate extends StatefulWidget {
 class _DetailsUpdateState extends State<DetailsUpdate> {
   ProductUploadModel productUploadModel = ProductUploadModel();
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController stockController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // name field
-    TextEditingController nameController =
-        TextEditingController(text: widget.name);
+    // TextEditingController nameController =
+    //     TextEditingController(text: widget.name);
     TextFormField nameField = TextFormField(
       controller: nameController,
       autofocus: false,
@@ -50,7 +54,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.tag_rounded),
-        hintText: "Input item name",
+        hintText: widget.name,
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -63,8 +67,8 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     // price field
-    TextEditingController priceController =
-        TextEditingController(text: widget.price);
+    // TextEditingController priceController =
+    //     TextEditingController(text: widget.price);
     TextFormField priceField = TextFormField(
       controller: priceController,
       autofocus: false,
@@ -82,7 +86,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.attach_money_rounded),
-        hintText: "Input price",
+        hintText: widget.price,
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -95,8 +99,8 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     //stock field
-    TextEditingController stockController =
-        TextEditingController(text: widget.stock);
+    // TextEditingController stockController =
+    //     TextEditingController(text: widget.stock);
     TextFormField stockField = TextFormField(
       controller: stockController,
       autofocus: false,
@@ -114,7 +118,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         prefixIcon: const Icon(Icons.inventory_2_outlined),
-        hintText: "Input stock amount",
+        hintText: widget.stock,
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimaryDark),
           borderRadius: BorderRadius.circular(15),
@@ -136,7 +140,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           updateItem(nameController, priceController, stockController);
-          Navigator.of(context).pop();
         },
         child: const Text(
           "Update Account",
@@ -304,13 +307,37 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     // writing all the values
     productUploadModel.pid = widget.pid;
 
-    FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
-      'name': nameController.text,
-      'price': priceController.text,
-      'stock': stockController.text,
-    });
+    if (nameController.text == "" || nameController.text == " ") {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'name': widget.name,
+      });
+    } else {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'name': nameController.text,
+      });
+    }
 
-    Fluttertoast.showToast(msg: "Name Updated");
+    if (priceController.text == "" || priceController.text == " ") {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'price': widget.price,
+      });
+    } else {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'price': priceController.text,
+      });
+    }
+
+    if (stockController.text == "" || stockController.text == " ") {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'stock': widget.stock,
+      });
+    } else {
+      FirebaseFirestore.instance.collection("product").doc(widget.pid).update({
+        'stock': stockController.text,
+      });
+    }
+
+    Fluttertoast.showToast(msg: "Item Updated");
     Navigator.of(context).pop();
   }
 

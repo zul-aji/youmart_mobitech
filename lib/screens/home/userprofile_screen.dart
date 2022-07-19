@@ -17,6 +17,9 @@ class _UserProfileState extends State<UserProfile> {
   // string for displaying the error Message
   String? errorMessage;
 
+  TextEditingController firstNameEditingController = TextEditingController();
+  TextEditingController secondNameEditingController = TextEditingController();
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -57,8 +60,6 @@ class _UserProfileState extends State<UserProfile> {
     });
 
     // first name field
-    TextEditingController firstNameEditingController =
-        TextEditingController(text: loggedInUser.firstName);
     TextFormField firstNameField = TextFormField(
       controller: firstNameEditingController,
       autofocus: false,
@@ -80,7 +81,7 @@ class _UserProfileState extends State<UserProfile> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Type in First name",
+        hintText: loggedInUser.firstName,
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -94,8 +95,6 @@ class _UserProfileState extends State<UserProfile> {
     );
 
     // second name field
-    TextEditingController secondNameEditingController =
-        TextEditingController(text: loggedInUser.secondName);
     TextFormField secondNameField = TextFormField(
       autofocus: false,
       controller: secondNameEditingController,
@@ -113,7 +112,7 @@ class _UserProfileState extends State<UserProfile> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.person),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Type in Second name",
+        hintText: loggedInUser.secondName,
         border: OutlineInputBorder(
           borderSide: const BorderSide(width: 3, color: colorPrimary),
           borderRadius: BorderRadius.circular(15),
@@ -297,10 +296,27 @@ class _UserProfileState extends State<UserProfile> {
     userModel.email = user!.email;
     userModel.uid = user.uid;
 
-    firebaseFirestore.collection("users").doc(user.uid).update({
-      'firstName': firstNameEditingController.text,
-      'secondName': secondNameEditingController.text,
-    });
+    if (firstNameEditingController.text == "" ||
+        firstNameEditingController.text == " ") {
+      firebaseFirestore.collection("users").doc(user.uid).update({
+        'firstName': loggedInUser.firstName,
+      });
+    } else {
+      firebaseFirestore.collection("users").doc(user.uid).update({
+        'firstName': firstNameEditingController.text,
+      });
+    }
+
+    if (secondNameEditingController.text == "" ||
+        secondNameEditingController.text == " ") {
+      firebaseFirestore.collection("users").doc(user.uid).update({
+        'secondName': loggedInUser.secondName,
+      });
+    } else {
+      firebaseFirestore.collection("users").doc(user.uid).update({
+        'secondName': secondNameEditingController.text,
+      });
+    }
     Fluttertoast.showToast(msg: "Profile Updated");
   }
 
