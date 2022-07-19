@@ -31,8 +31,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
   @override
   Widget build(BuildContext context) {
     // name field
-    // TextEditingController nameController =
-    //     TextEditingController(text: widget.name);
     TextFormField nameField = TextFormField(
       controller: nameController,
       autofocus: false,
@@ -67,8 +65,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     // price field
-    // TextEditingController priceController =
-    //     TextEditingController(text: widget.price);
     TextFormField priceField = TextFormField(
       controller: priceController,
       autofocus: false,
@@ -99,8 +95,6 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
     );
 
     //stock field
-    // TextEditingController stockController =
-    //     TextEditingController(text: widget.stock);
     TextFormField stockField = TextFormField(
       controller: stockController,
       autofocus: false,
