@@ -139,7 +139,7 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
           "Update Account",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorWhite, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -195,14 +195,14 @@ class _DetailsUpdateState extends State<DetailsUpdate> {
                 ),
               ),
             ],
-            backgroundColor: colorBase,
+            backgroundColor: colorWhite,
           ),
         ),
         child: const Text(
           "Delete Item",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorWhite, fontWeight: FontWeight.bold),
         ),
       ),
     );

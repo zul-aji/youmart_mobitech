@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../model/complete_order_customer.dart';
-import 'orderh_details.dart';
+import '../../../../../model/user_model.dart';
+import 'order_history_details.dart';
 
 class OrderHistoryList extends StatefulWidget {
   final String uid;
@@ -18,9 +20,19 @@ class OrderHistoryList extends StatefulWidget {
 }
 
 class _OrderHistoryListState extends State<OrderHistoryList> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
   @override
   void initState() {
     super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
   }
 
   @override
@@ -78,7 +90,7 @@ class _OrderHistoryListState extends State<OrderHistoryList> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
-                    tileColor: colorBase,
+                    tileColor: colorWhite,
                     title: Text(
                       convertedDateTime,
                       style: const TextStyle(
@@ -101,6 +113,9 @@ class _OrderHistoryListState extends State<OrderHistoryList> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => OrderHDetails(
+                              uid: loggedInUser.uid ?? "",
+                              firstName: loggedInUser.firstName ?? "",
+                              secondName: loggedInUser.secondName ?? "",
                               coid: orderData.coid,
                               index: index,
                               totalprice: orderData.totalprice,
@@ -108,6 +123,7 @@ class _OrderHistoryListState extends State<OrderHistoryList> {
                               nameList: orderData.nameList,
                               imageList: orderData.imageList,
                               quantityList: orderData.quantityList,
+                              pidList: orderData.pidList,
                             ),
                           ),
                         );

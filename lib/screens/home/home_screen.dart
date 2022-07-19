@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
-              backgroundColor: colorBase,
+              backgroundColor: colorWhite,
             ),
           ),
         );

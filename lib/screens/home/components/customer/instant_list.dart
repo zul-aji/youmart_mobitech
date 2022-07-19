@@ -124,7 +124,7 @@ stockCheck(productData) {
             "Add to Cart",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 13, color: colorBase, fontWeight: FontWeight.bold),
+                fontSize: 13, color: colorWhite, fontWeight: FontWeight.bold),
           ),
         ),
       ),

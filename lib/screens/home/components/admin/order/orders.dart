@@ -67,7 +67,7 @@ class _OrdersState extends State<Orders> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
-                    tileColor: colorBase,
+                    tileColor: colorWhite,
                     // leading:
                     // SizedBox(height: 50, width: 50, child: Image.network(orders.imageList[index])),
                     title: Text(
@@ -107,7 +107,7 @@ class _OrdersState extends State<Orders> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        onPrimary: colorBase,
+                        onPrimary: colorWhite,
                         primary: colorPrimary,
                       ),
                       child: const Text('Order Details'),

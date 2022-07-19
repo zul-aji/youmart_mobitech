@@ -104,7 +104,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
-                            color: colorBase,
+                            color: colorWhite,
                             fontWeight: FontWeight.w600),
                       ),
                     ),

@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
-            color: colorBase,
+            color: colorWhite,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
           ),
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final guestLoginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: colorBase,
+      color: colorWhite,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,

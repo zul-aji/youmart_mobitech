@@ -37,7 +37,7 @@ class ShopStatus extends StatelessWidget {
                             closeShop();
                           }
                         },
-                        thumbColor: colorBase,
+                        thumbColor: colorWhite,
                         activeColor: colorPrimary,
                         trackColor: colorAccent,
                       ),

@@ -71,7 +71,7 @@ class _AdmminOrderHistoryState extends State<AdmminOrderHistory> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
-                    tileColor: colorBase,
+                    tileColor: colorWhite,
                     title: Text(
                       "${orders.firstName}'s order",
                       style: const TextStyle(
@@ -108,7 +108,7 @@ class _AdmminOrderHistoryState extends State<AdmminOrderHistory> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        onPrimary: colorBase,
+                        onPrimary: colorWhite,
                         primary: colorPrimary,
                       ),
                       child: const Text('Order Details'),

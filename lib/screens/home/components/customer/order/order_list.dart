@@ -125,7 +125,7 @@ class _OrderListState extends State<OrderList> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
-                      tileColor: colorBase,
+                      tileColor: colorWhite,
                       title: Text(
                         "Order #${index + 1}",
                         style: const TextStyle(

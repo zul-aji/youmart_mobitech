@@ -68,7 +68,7 @@ class _UpdateItemState extends State<UpdateItem> {
                 return Card(
                   elevation: 3.0,
                   child: ListTile(
-                    tileColor: colorBase,
+                    tileColor: colorWhite,
                     leading: Image.network(productData.image),
                     title: Text(
                       productData.name,
@@ -102,7 +102,7 @@ class _UpdateItemState extends State<UpdateItem> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        onPrimary: colorBase,
+                        onPrimary: colorWhite,
                         primary: colorPrimary,
                       ),
                       child: const Text('Edit Item'),

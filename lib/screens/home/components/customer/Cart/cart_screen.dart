@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import 'package:youmart_mobitech/model/order_model.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../controllers/cart_controller.dart';
+import '../../../../../model/order_model.dart';
 import '../../../../../model/user_model.dart';
 import 'cart_list.dart';
 
@@ -155,7 +155,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
             ],
-            backgroundColor: colorBase,
+            backgroundColor: colorWhite,
           ),
         ),
         style: ElevatedButton.styleFrom(

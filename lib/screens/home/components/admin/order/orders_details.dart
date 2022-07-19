@@ -196,7 +196,7 @@ class _OrdersDetailsState extends State<OrdersDetails> {
                   'Reject',
                   style: TextStyle(
                     fontSize: 15,
-                    color: colorBase,
+                    color: colorWhite,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -207,8 +207,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               child: ElevatedButton(
                 onPressed: acceptOrder,
                 style: ElevatedButton.styleFrom(
-                  onPrimary: colorBase,
-                  primary: colorBase,
+                  onPrimary: colorWhite,
+                  primary: colorWhite,
                 ),
                 child: const Text(
                   'Ready',

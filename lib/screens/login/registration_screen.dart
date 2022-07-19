@@ -200,7 +200,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           "Sign Up",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: colorBase, fontWeight: FontWeight.bold),
+              fontSize: 20, color: colorWhite, fontWeight: FontWeight.bold),
         ),
       ),
     );

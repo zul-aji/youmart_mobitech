@@ -142,7 +142,7 @@ class _UserProfileState extends State<UserProfile> {
           "Update Account",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorWhite, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -151,7 +151,7 @@ class _UserProfileState extends State<UserProfile> {
     final signOutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: colorBase,
+      color: colorWhite,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -217,14 +217,14 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
             ],
-            backgroundColor: colorBase,
+            backgroundColor: colorWhite,
           ),
         ),
         child: const Text(
           "Delete Account",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, color: colorBase, fontWeight: FontWeight.bold),
+              fontSize: 18, color: colorWhite, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -243,8 +243,7 @@ class _UserProfileState extends State<UserProfile> {
               },
             ),
           ),
-          body: Center(
-              child: SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Container(
                 color: colorWhite,
                 child: Padding(
@@ -282,7 +281,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                 )),
-          )),
+          ),
         ));
   }
 
