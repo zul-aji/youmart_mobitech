@@ -33,6 +33,17 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final upperLeftIcon3 = LayoutBuilder(builder: (context, constraints) {
+      if (loggedInUser.role == 'Guest') {
+        return const Text(" ");
+      } else {
+        return IconButton(
+          icon: const Icon(Icons.history, color: colorAccent),
+          onPressed: () => Get.to(() => const OrderHistory()),
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -54,10 +65,7 @@ class _OrderScreenState extends State<OrderScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: const Icon(Icons.history, color: colorAccent),
-              onPressed: () => Get.to(() => const OrderHistory()),
-            ),
+            child: upperLeftIcon3,
           ),
         ],
       ),

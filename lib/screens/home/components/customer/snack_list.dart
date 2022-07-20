@@ -20,7 +20,7 @@ class SnackList extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+              crossAxisSpacing: 10,
               childAspectRatio: 0.68,
             ),
             itemCount: productController.snackProduct.length,
@@ -53,8 +53,8 @@ class CatalogProductCard extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(13),
-              width: 160,
+              padding: const EdgeInsets.all(15),
+              width: 150,
               decoration: BoxDecoration(
                 color: colorPrimaryLight,
                 borderRadius: BorderRadius.circular(25),
