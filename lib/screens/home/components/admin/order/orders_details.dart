@@ -30,24 +30,24 @@ class OrdersDetails extends StatefulWidget {
 }
 
 class _OrdersDetailsState extends State<OrdersDetails> {
-  List<String> initialStock = [];
+  // List<String> initialStock = [];
 
-  @override
-  void initState() {
-    super.initState();
-    for (int i = 0; i < widget.pidList!.length; i++) {
-      FirebaseFirestore.instance
-          .collection('product')
-          .doc(widget.pidList![i])
-          .get()
-          .then((value) {
-        var fields = value.data();
-        setState(() {
-          initialStock.insert(i, fields!['stock']);
-        });
-      });
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   for (int i = 0; i < widget.pidList!.length; i++) {
+  //     FirebaseFirestore.instance
+  //         .collection('product')
+  //         .doc(widget.pidList![i])
+  //         .get()
+  //         .then((value) {
+  //       var fields = value.data();
+  //       setState(() {
+  //         initialStock.insert(i, fields!['stock']);
+  //       });
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -224,8 +224,8 @@ class _OrdersDetailsState extends State<OrdersDetails> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  updateStock();
-                  initialStock.clear();
+                  // updateStock();
+                  // initialStock.clear();
                   completeOrder();
                 },
                 style: ElevatedButton.styleFrom(
@@ -291,19 +291,19 @@ class _OrdersDetailsState extends State<OrdersDetails> {
     Navigator.of(context).pop();
   }
 
-  updateStock() {
-    for (int i = 0; i < widget.quantityList!.length; i++) {
-      var stockBefore = int.parse(initialStock[i]);
-      var stockTaken = widget.quantityList![i];
+  // updateStock() {
+  //   for (int i = 0; i < widget.quantityList!.length; i++) {
+  //     var stockBefore = int.parse(initialStock[i]);
+  //     var stockTaken = widget.quantityList![i];
 
-      String newStock = (stockBefore - stockTaken).toString();
+  //     String newStock = (stockBefore - stockTaken).toString();
 
-      FirebaseFirestore.instance
-          .collection("product")
-          .doc(widget.pidList![i])
-          .update({
-        'stock': newStock,
-      });
-    }
-  }
+  //     FirebaseFirestore.instance
+  //         .collection("product")
+  //         .doc(widget.pidList![i])
+  //         .update({
+  //       'stock': newStock,
+  //     });
+  //   }
+  // }
 }
