@@ -2,6 +2,9 @@
 
 Welcome to the **YouMart** project! This Android application was developed using **Flutter** and leverages **GetX** for state management and **Firebase** for its backend database. The app is designed for a local convenience store in Malaysia, serving both customers and administrators with a user-friendly interface and powerful functionality.
 
+![image](https://github.com/user-attachments/assets/c0ca821b-227d-4aa8-b505-d09c354aa405)
+![image](https://github.com/user-attachments/assets/c4c155ff-4bfd-49c7-8aa7-3c145349c50d)
+
 ---
 
 ## 📜 Project Overview
