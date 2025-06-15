@@ -40,14 +40,3 @@ The **YouMart** app provides a seamless shopping experience for customers and an
 
 - **Customers**: Easily browse and buy items without visiting the store unless necessary.  
 - **Administrators**: Simplify inventory and order management through a centralized platform.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-To run this project, ensure you have the following installed:  
-- **Flutter SDK** (latest version)  
-- **Android Studio** or **Visual Studio Code** with Flutter extensions  
-- Firebase account with a project set up  
